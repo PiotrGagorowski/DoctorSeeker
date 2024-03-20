@@ -67,4 +67,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
+#Authorization
 gem "devise", "~> 4.9"
+
