@@ -1,5 +1,5 @@
 <% if current_user %>
-    <p>Hello <%= current_user.email %></p>
+    <p>Hello <%= current_user.first_name %></p>
     <p>You are a [<%= current_user.role %>]</p>
 
     <% if current_user.patient? %>
