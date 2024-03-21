@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :user_reviews
+  resources :reviews
+  resources :user_appointments
+  resources :appointments
+  resources :comments
+  resources :medical_files
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

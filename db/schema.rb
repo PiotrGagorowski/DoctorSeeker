@@ -10,7 +10,60 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_18_202856) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_21_094056) do
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "appointment_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "doctor_user_id"
+    t.string "file_id"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_user_id"], name: "index_comments_on_doctor_user_id"
+    t.index ["file_id"], name: "index_comments_on_file_id"
+  end
+
+  create_table "medical_files", force: :cascade do |t|
+    t.integer "type"
+    t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_medical_files_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.float "score"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_appointments", force: :cascade do |t|
+    t.string "patient_user_id"
+    t.string "doctor_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "appointments_id"
+    t.index ["appointments_id"], name: "index_user_appointments_on_appointments_id"
+    t.index ["doctor_user_id"], name: "index_user_appointments_on_doctor_user_id"
+    t.index ["patient_user_id"], name: "index_user_appointments_on_patient_user_id"
+  end
+
+  create_table "user_reviews", force: :cascade do |t|
+    t.string "patient_user_id"
+    t.string "doctor_user_id"
+    t.string "review_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_user_id"], name: "index_user_reviews_on_doctor_user_id"
+    t.index ["patient_user_id"], name: "index_user_reviews_on_patient_user_id"
+    t.index ["review_id"], name: "index_user_reviews_on_review_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -24,4 +77,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_18_202856) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "medical_files", column: "file_id"
+  add_foreign_key "comments", "users", column: "doctor_user_id"
+  add_foreign_key "medical_files", "users"
+  add_foreign_key "user_appointments", "appointments", column: "appointments_id"
+  add_foreign_key "user_appointments", "users", column: "doctor_user_id"
+  add_foreign_key "user_appointments", "users", column: "patient_user_id"
+  add_foreign_key "user_reviews", "users", column: "doctor_user_id"
+  add_foreign_key "user_reviews", "users", column: "patient_user_id"
 end
