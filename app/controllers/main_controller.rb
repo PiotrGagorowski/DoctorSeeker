@@ -1,6 +1,4 @@
 class MainController < ApplicationController
-
-def login
-end
-
+  def login
+  end
 end
