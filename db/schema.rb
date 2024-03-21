@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_21_094056) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_21_113318) do
   create_table "appointments", force: :cascade do |t|
     t.datetime "appointment_date"
     t.datetime "created_at", null: false
@@ -79,10 +79,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_094056) do
 
   add_foreign_key "comments", "medical_files", column: "file_id"
   add_foreign_key "comments", "users", column: "doctor_user_id"
-  add_foreign_key "medical_files", "users"
+  add_foreign_key "medical_files", "users", column: "user_id"
   add_foreign_key "user_appointments", "appointments", column: "appointments_id"
   add_foreign_key "user_appointments", "users", column: "doctor_user_id"
   add_foreign_key "user_appointments", "users", column: "patient_user_id"
   add_foreign_key "user_reviews", "users", column: "doctor_user_id"
   add_foreign_key "user_reviews", "users", column: "patient_user_id"
+  add_foreign_key "user_reviews", "reviews", column: "review_id"
 end
