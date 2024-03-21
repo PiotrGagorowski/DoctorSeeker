@@ -73,6 +73,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_113318) do
     t.integer "role", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "pesel_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -86,4 +89,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_113318) do
   add_foreign_key "user_reviews", "users", column: "doctor_user_id"
   add_foreign_key "user_reviews", "users", column: "patient_user_id"
   add_foreign_key "user_reviews", "reviews", column: "review_id"
+
 end

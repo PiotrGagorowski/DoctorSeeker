@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :appointments
   resources :comments
   resources :medical_files
+
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -15,5 +16,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "main#index"
+
+  get 'login', to: 'main#login', as: 'login'
+
+  get 'index', to: 'main#index', as: 'index'
+
 
 end
