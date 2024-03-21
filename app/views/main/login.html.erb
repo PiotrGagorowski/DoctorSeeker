@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Spis wykonywanych badań</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-disabled="true">Pomoc</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" aria-disabled="true">Kontakt</a>
+      </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<center><button type="button" class="btn btn-primary btn-lg" style="margin-top: 200px; margin-bottom: 30px;"><%= link_to "Zaloguj się", new_user_session_path, style:"color:white; text-decoration: none;"%>
+</button>
+<h4>Jeśli nie masz jeszcze konta:</h4>
+<p><button type="button" class="btn btn-primary btn-lg" style="margin-top: 30px;"><%= link_to "Zarejestruj się", new_user_registration_path, style:"color:white; text-decoration: none;" %></button></p></center>
+
+<!--<% if current_user %>
+    <p>Hello <%= current_user.email %></p>
+    <p>You are a [<%= current_user.role %>]</p>
+
+    <% if current_user.patient? %>
+      <p>Welcome, patient!</p>
+    <% elsif current_user.admin? %>
+      <p>Welcome, admin!</p>
+    <% elsif current_user.doctor? %>
+      <p>Welcome, doctor!</p>
+    <% elsif current_user.labworker? %>
+      <p>Welcome, lab worker!</p>
+    <% end %>
+
+    <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
+<% else %>
+
+    <p>You are not signed in</p>
+
+<% end %>-->
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>
