@@ -12,4 +12,6 @@ Rails.application.routes.draw do
 
   get 'login', to: 'main#login', as: 'login'
 
+  get 'index', to: 'main#index', as: 'index'
+
 end

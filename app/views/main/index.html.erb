@@ -11,7 +11,7 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Strona główna</a>
+          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
@@ -26,9 +26,10 @@
             <li><a class="dropdown-item" href="#">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Spis wykonywanych badań</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Najczęściej zadawane pytania</a></li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-disabled="true">Pomoc</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-disabled="true">Kontakt</a>
@@ -44,20 +45,83 @@
 
 <div class="cont">
 <div class="left">
-<p><h2>Witaj w DoctorSeeker!</h2></p>
+<p><h2><center>Witaj w DoctorSeeker!</center></h2></p>
 
-<p>Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</p>
+<p><h6>Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h6></p>
 
-<p>Znajdź Lekarza: Przeglądaj profile lekarzy, czytaj opinie innych pacjentów i wybierz najlepszego specjalistę dla siebie.</p>
+<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
+  <div class="card-body">
+    <h5 class="card-title">Znajdź lekarza</h5>
+    <p class="card-text"><p>Przeglądaj profile lekarzy, czytaj opinie innych pacjentów i wybierz najlepszego specjalistę dla siebie.</p></p>
+  </div>
+</div>
 
-<p>Rezerwuj Wizyty: Wybierz dogodny termin i umów się na wizytę bezpośrednio przez naszą aplikację. Zarządzaj swoimi wizytami i przypomnieniami w jednym miejscu.</p>
+<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
+  <div class="card-body">
+    <h5 class="card-title">Rezerwuj Wizyty</h5>
+    <p class="card-text"><p>Wybierz dogodny termin i umów się na wizytę bezpośrednio przez naszą aplikację. Zarządzaj swoimi wizytami i przypomnieniami w jednym miejscu.</p>
+  </div>
+</div>
 
-<p>Zarządzaj Swoim Zdrowiem: Śledź swoje wizyty, badania i historię leczenia, aby mieć pełną kontrolę nad swoim zdrowiem.</p>
+<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
+  <div class="card-body">
+    <h5 class="card-title">Zarządzaj Swoim Zdrowiem</h5>
+    <p class="card-text"><p>Śledź swoje wizyty, badania i historię leczenia, aby mieć pełną kontrolę nad swoim zdrowiem.</p>
+  </div>
+</div>
 
-Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!
+
+<h6 style="padding:10px;">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h6>
+
+  <div class="card">
+  <h5 class="card-header">FAQ</h5>
+  <div class="card-body">
+    <h5 class="card-title">Najczęściej zadawane pytania</h5>
+    <p class="card-text">Sprawdź zakładkę najczęściej zadawane pytania.</p>
+    <a href="#" class="btn btn-primary">Kliknij tutaj</a>
+  </div>
+</div>
+
 </div>
 <div class="right">
+
 <%= image_tag "Logo.jpg", height: 450 %>
+
+<div id="carouselExampleCaptions" class="carousel slide" style="margin-top: 30px; width: 450px;">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+    <%= image_tag "doctor2.png", class:"d-block", height: 450 %>
+      <div class="carousel-caption d-none d-md-block" style="color:black; font-size:30px;">
+        <p><i><b>Nasi specjaliści zajmą się Tobą</i></b></p>
+      </div>
+    </div>
+    <div class="carousel-item">
+    <%= image_tag "doctor3.png", class:"d-block", height: 450 %>
+      <div class="carousel-caption d-none d-md-block">
+      </div>
+    </div>
+    <div class="carousel-item">
+    <%= image_tag "doctor1.png", class:"d-block", height: 450 %>
+      <div class="carousel-caption d-none d-md-block" style="color:black; font-size:22px;">
+        <p><i><b>Jesteśmy jedną z najlepszych przychodni w Polsce</i></b></p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+</div>
 </div>
 </div>
 
