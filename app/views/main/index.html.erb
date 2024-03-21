@@ -1,4 +1,9 @@
 
+<% if current_user %>
+    <p>Hello <%= current_user.first_name %></p>
+    <p>You are a [<%= current_user.role %>]</p> <%end%>
+
+
 <nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
