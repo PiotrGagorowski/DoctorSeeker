@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
          enum role: [:patient, :admin, :doctor, :labworker]
          after_initialize :set_default_role, :if => :new_record?
+         
+
+         validates :pesel_number, length: { is: 11}
 
          def set_default_role
           self.role ||= :patient
