@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "main#index"
 
+  get 'login', to: 'main#login', as: 'login'
+
+  get 'index', to: 'main#index', as: 'index'
+
 end
