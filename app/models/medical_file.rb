@@ -1,24 +1,18 @@
 class MedicalFile < ApplicationRecord
     belongs_to :user
-    has_one_attached :pdf
-
-    validates :pdf, presence: true
-
+    has_one_attached :file
+  
+    validates :file, presence: true
+    validate :validate_file_format
+  
     private
-
-    def validate_pdf_format
-        if pdf.attached? && !pdf.blob.content_type.in?(%w(application/pdf))
-          errors.add(:pdf, 'Musisz wybrać plik w formacie PDF.')
-        end
-    end
-
-
-    def check_pdf_attachment
-        if pdf.attached? && pdf.attachment
-          Rails.logger.debug("PDF attached? true")
-        else
-          Rails.logger.debug("PDF attached? false")
+  
+    def validate_file_format
+      if file.attached?
+        unless file.blob.content_type.in?(%w(application/pdf image/jpeg image/png))
+          errors.add(:file, 'Musisz wybrać plik w formacie PDF, JPG lub PNG.')
         end
       end
-
-end
+    end
+  end
+  

@@ -8,7 +8,7 @@
     <%= medical_file.user_id %>
   </p>
 
-  <% if medical_file.pdf.present? %>
-    <%= link_to medical_file.pdf.filename, medical_file.pdf %>
+  <% if medical_file.file.present? %>
+    <%= link_to medical_file.file.filename, medical_file.file %>
   <% end %>
 </div>

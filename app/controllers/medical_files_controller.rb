@@ -25,7 +25,7 @@ class MedicalFilesController < ApplicationController
 
     respond_to do |format|
       if @medical_file.save
-        @medical_file.pdf.attach(params [:medical_file][:pdf])
+        @medical_file.file.attach(params[:medical_file][:file])
         #format.html { redirect_to medical_file_url(@medical_file), notice: "Medical file was successfully created." }
         #format.json { render :show, status: :created, location: @medical_file }
        
@@ -67,6 +67,6 @@ class MedicalFilesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def medical_file_params
-      params.require(:medical_file).permit(:category, :user_id, :pdf)
+      params.require(:medical_file).permit(:category, :user_id, :file)
     end
 end
