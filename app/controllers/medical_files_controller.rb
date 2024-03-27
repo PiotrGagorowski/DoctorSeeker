@@ -25,8 +25,10 @@ class MedicalFilesController < ApplicationController
 
     respond_to do |format|
       if @medical_file.save
-        format.html { redirect_to medical_file_url(@medical_file), notice: "Medical file was successfully created." }
-        format.json { render :show, status: :created, location: @medical_file }
+        @medical_file.pdf.attach(params [:medical_file][:pdf])
+        #format.html { redirect_to medical_file_url(@medical_file), notice: "Medical file was successfully created." }
+        #format.json { render :show, status: :created, location: @medical_file }
+       
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @medical_file.errors, status: :unprocessable_entity }
@@ -65,6 +67,6 @@ class MedicalFilesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def medical_file_params
-      params.require(:medical_file).permit(:type, :user_id)
+      params.require(:medical_file).permit(:category, :user_id, :pdf)
     end
 end

@@ -1,12 +1,14 @@
 <div id="<%= dom_id medical_file %>">
   <p>
-    <strong>Type:</strong>
-    <%= medical_file.type %>
+    <strong>Category:</strong>
+    <%= medical_file.category %>
   </p>
-
   <p>
     <strong>User:</strong>
     <%= medical_file.user_id %>
   </p>
 
+  <% if medical_file.pdf.present? %>
+    <%= link_to medical_file.pdf.filename, medical_file.pdf %>
+  <% end %>
 </div>
