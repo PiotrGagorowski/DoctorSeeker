@@ -51,7 +51,7 @@
 }
 </style>
 
-
+<div class="cont_sing_up">
 <div class="centered-form">
   <div>
     <h1>Zarejestruj się</h1>
@@ -71,7 +71,7 @@
 
     <div class="form-floating mb-3" style="margin-top: 10px; margin-bottom: 10px;">
       <%= f.text_field :pesel_number, required: true, class: "form-control", id: "floatingInput" %>
-      <%= f.label :pesel_number, "Numer pesel", for: "floatingInput" %>
+      <%= f.label :pesel_number, "Numer PESEL", for: "floatingInput" %>
     </div>
 
     <div class="form-floating mb-3" style="margin-top: 10px; margin-bottom: 10px;">
@@ -105,7 +105,15 @@
     
     <% end %>
 
-    <%= render "devise/shared/links" %>
+    <%= render "devise/shared/links" %> 
   </div>
 </div>
+</div>
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>
+
+
 
