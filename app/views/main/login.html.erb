@@ -20,15 +20,15 @@
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true">Pomoc</a>
+          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
         </li>
         <li class="nav-item">
         <a class="nav-link active" aria-disabled="true">Kontakt</a>

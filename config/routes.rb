@@ -21,5 +21,12 @@ Rails.application.routes.draw do
 
   get 'index', to: 'main#index', as: 'index'
 
+  get 'help', to: 'main#help', as: 'help'
+
+  get 'doctors', to: 'main#doctors', as: 'doctors'
+
+  get 'price', to: 'main#price', as: 'price'
+
+  get 'lab', to: 'main#lab', as: 'lab'
 
 end
