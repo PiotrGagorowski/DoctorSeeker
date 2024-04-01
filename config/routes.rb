@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get 'login', to: 'main#login', as: 'login'
 
   get 'index', to: 'main#index', as: 'index'
+  get 'contact', to: 'main#contact', as: 'contact'
+
 
   get 'help', to: 'main#help', as: 'help'
 
