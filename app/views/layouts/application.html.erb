@@ -29,7 +29,7 @@
     overflow: auto;
   }
   .left {
-    margin-top: 50px;
+    margin-top: 5px;
     text-align: justify;
     padding: 30px;
     padding-left: 50px;
@@ -40,13 +40,36 @@
     float: right;
     width: 50%;
     height: 550px;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-left: 100px;
     padding: 30px;
     padding-left: 60px;
   }
+
+    .left_table {
+    text-align: justify;
+    padding: 30px;
+    padding-left: 50px;
+    float: left;
+    width: 50%;
+  }
+  .right_image {
+    float: right;
+    width: 40%;
+    height: 550px;
+    margin-left: 100px;
+    padding: 30px;
+    padding-left: 60px;
+  }
+   .cont_sing_up {
+    position: center;
+    height: 600px;
+    overflow: auto;
+  }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <%= yield %>
+
+    
   </body>
 </html>
