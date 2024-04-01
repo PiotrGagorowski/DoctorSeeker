@@ -23,5 +23,12 @@ Rails.application.routes.draw do
   get 'contact', to: 'main#contact', as: 'contact'
 
 
+  get 'help', to: 'main#help', as: 'help'
+
+  get 'doctors', to: 'main#doctors', as: 'doctors'
+
+  get 'price', to: 'main#price', as: 'price'
+
+  get 'lab', to: 'main#lab', as: 'lab'
 
 end

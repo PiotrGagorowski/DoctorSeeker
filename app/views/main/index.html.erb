@@ -21,15 +21,15 @@
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true">Pomoc</a>
+          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
@@ -43,11 +43,11 @@
   </div>
 </nav>
 
-<div class="cont">
+<div id="cont">
 <div class="left">
-<p><h2><center>Witaj w DoctorSeeker!</center></h2></p>
+<p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
 
-<p><h6>Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h6></p>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
 
 <div class="card text-bg-primary mb-3" style="max-width: 50rem;">
   <div class="card-body">
@@ -71,14 +71,14 @@
 </div>
 
 
-<h6 style="padding:10px;">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h6>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
 
   <div class="card">
   <h5 class="card-header">FAQ</h5>
   <div class="card-body">
     <h5 class="card-title">Najczęściej zadawane pytania</h5>
     <p class="card-text">Sprawdź zakładkę najczęściej zadawane pytania.</p>
-    <a href="#" class="btn btn-primary">Kliknij tutaj</a>
+    <a href="<%= help_path(@help) %>" class="btn btn-primary">Kliknij tutaj</a>
   </div>
 </div>
 
