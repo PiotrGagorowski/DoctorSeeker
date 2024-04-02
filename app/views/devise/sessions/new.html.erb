@@ -56,7 +56,6 @@
     <h1>Zaloguj się</h1>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="form-floating mb-3" style="margin-top: 30px; margin-bottom: 30px;">
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id: "floatingInput", placeholder: "name@example.com" %>

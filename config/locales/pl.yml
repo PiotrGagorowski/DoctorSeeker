@@ -4,6 +4,7 @@ pl:
       user:
         password: "Hasło"
         pesel_number: "Numer PESEL"
+        email: "E-mail"
     errors:
       models:
         user:
