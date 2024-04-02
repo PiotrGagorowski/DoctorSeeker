@@ -41,34 +41,3 @@
     </div>
   </div>
 </nav>
-
-<center><button type="button" class="btn btn-primary btn-lg" style="margin-top: 200px; margin-bottom: 30px;"><%= link_to "Zaloguj się", new_user_session_path, style:"color:white; text-decoration: none;"%>
-</button>
-<h4>Jeśli nie masz jeszcze konta:</h4>
-<p><button type="button" class="btn btn-primary btn-lg" style="margin-top: 30px;"><%= link_to "Zarejestruj się", new_user_registration_path, style:"color:white; text-decoration: none;" %></button></p></center>
-
-<!--<% if current_user %>
-    <p>Hello <%= current_user.email %></p>
-    <p>You are a [<%= current_user.role %>]</p>
-
-    <% if current_user.patient? %>
-      <p>Welcome, patient!</p>
-    <% elsif current_user.admin? %>
-      <p>Welcome, admin!</p>
-    <% elsif current_user.doctor? %>
-      <p>Welcome, doctor!</p>
-    <% elsif current_user.labworker? %>
-      <p>Welcome, lab worker!</p>
-    <% end %>
-
-    <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
-<% else %>
-
-    <p>You are not signed in</p>
-
-<% end %>-->
-
-
-<footer class="footer">
-<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
-</footer>
