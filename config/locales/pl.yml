@@ -5,6 +5,7 @@ pl:
         password: "Hasło"
         pesel_number: "Numer PESEL"
         email: "E-mail"
+        password_confirmation: "Powtórzone hasło"
     errors:
       models:
         user:
