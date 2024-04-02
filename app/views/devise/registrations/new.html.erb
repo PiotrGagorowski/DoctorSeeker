@@ -81,10 +81,10 @@
 
     <div class="form-floating mb-3" style="margin-top: 10px; margin-bottom: 10px;">
       <%= f.password_field :password, autocomplete: "new-password", required: true, class: "form-control", id: "floatingInput" %>
+      <%= f.label :password, "Hasło", for: "floatingInput" %>
       <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> znaków minimum)</em>
       <% end %><br />
-      <%= f.label :password, "Hasło", for: "floatingInput" %>
     </div>
 
     <div class="form-floating mb-3" style="margin-top: 10px; margin-bottom: 10px;">
