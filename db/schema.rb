@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
 
   create_table "medical_files", force: :cascade do |t|
     t.integer "category"
-    t.string "user_id", null: true
+    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_medical_files_on_user_id"
