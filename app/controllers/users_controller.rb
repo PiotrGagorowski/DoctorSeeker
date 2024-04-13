@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
-    def doctor  
+    def doctor 
+    end
+    def patient 
+    end
+    def labworker 
+    end
+    def admin 
     end
 end
