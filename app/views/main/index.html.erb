@@ -14,8 +14,18 @@
           <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
         </li>
         <li class="nav-item">
+          <% unless current_user %>
           <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <% end %>
         </li>
+        <% if current_user && current_user.patient? %>
+          <li class="nav-item">
+            <a class="nav-link active" href="<%= my_appointments_path %>">Moje wizyty</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="<%= my_tests_path %>">Moje badania</a>
+          </li>
+        <% end %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             O przychodni 
@@ -51,9 +61,11 @@
     <%= link_to "Wyloguj się", destroy_user_session_path, 'data-turbo-method': :delete %> <%end%>
 
 
+
 <p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
 
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
+>>>>>>> 2e080c9b5e256c81a9eb93ec586c1dbcef8c5e98
 
 <div class="card text-bg-primary mb-3" style="max-width: 50rem;">
   <div class="card-body">
