@@ -6,11 +6,20 @@ pl:
         pesel_number: "Numer PESEL"
         email: "E-mail"
         password_confirmation: "Powtórzone hasło"
+        reset_password_token: "Hasło"
     errors:
       models:
         user:
           attributes:
             password:
               too_short: "jest za krótkie (minimum to 6 znaków)"
+              blank: "nie zostało podane"
             pesel_number:
               wrong_length: "ma niewłaściwą długość (powinien mieć 11 znaków)"
+            email:
+              blank: "nie został podany"
+            reset_password_token:
+                too_short: "jest za krótkie (minimum to 6 znaków)"
+                blank: "nie zostało podane"
+                invalid: "jest niepoprawne"
+              
