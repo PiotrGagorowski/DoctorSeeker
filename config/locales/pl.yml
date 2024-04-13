@@ -13,6 +13,7 @@ pl:
           attributes:
             password:
               too_short: "jest za krótkie (minimum to 6 znaków)"
+              blank: "nie zostało podane"
             pesel_number:
               wrong_length: "ma niewłaściwą długość (powinien mieć 11 znaków)"
             email:
