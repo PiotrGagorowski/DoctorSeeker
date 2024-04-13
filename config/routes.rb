@@ -39,5 +39,5 @@ Rails.application.routes.draw do
 
   get 'lab', to: 'main#lab', as: 'lab'
 
-
+  get 'doctor', to: 'users#doctor'
 end
