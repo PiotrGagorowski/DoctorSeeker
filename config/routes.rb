@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :appointments
   resources :comments
   resources :medical_files
-
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   #root "medical_files#index"
@@ -31,5 +30,5 @@ Rails.application.routes.draw do
 
   get 'lab', to: 'main#lab', as: 'lab'
 
-
+  get 'doctor', to: 'users#doctor'
 end
