@@ -68,9 +68,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
   create_table "medical_files", force: :cascade do |t|
     t.integer "category"
     t.string "user_id", null: true
+    t.string "file_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_medical_files_on_user_id"
+    t.index ["file_id"], name: "index_medical_files_on_active_storage_attachments_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -122,11 +124,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "medical_files", column: "file_id"
   add_foreign_key "comments", "users", column: "doctor_user_id"
-  add_foreign_key "medical_files", "users"
+  add_foreign_key "medical_files", "users", column: "user_id"
   add_foreign_key "user_appointments", "appointments", column: "appointments_id"
   add_foreign_key "user_appointments", "users", column: "doctor_user_id"
   add_foreign_key "user_appointments", "users", column: "patient_user_id"
   add_foreign_key "user_reviews", "reviews"
   add_foreign_key "user_reviews", "users", column: "doctor_user_id"
   add_foreign_key "user_reviews", "users", column: "patient_user_id"
+  add_foreign_key "medical_files", "active_storage_attachments", column: "file_id"
 end
