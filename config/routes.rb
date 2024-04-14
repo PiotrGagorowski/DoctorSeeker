@@ -5,8 +5,7 @@ Rails.application.routes.draw do
   resources :appointments
   resources :comments
   resources :medical_files
-
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'users/sessions' }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   #root "medical_files#index"
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -35,5 +34,16 @@ Rails.application.routes.draw do
 
   get 'lab', to: 'main#lab', as: 'lab'
 
+  # Doctor
+  get 'doctor', to: 'doctor#doctor'
+  
+  #Patient
+  get 'patient', to: 'patient#patient'
+
+  #Labworker
+  get 'labworker', to: 'labworker#labworker'
+
+  #Admin
+  get 'admin', to: 'admin#admin'
 
 end
