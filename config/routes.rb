@@ -31,15 +31,15 @@ Rails.application.routes.draw do
   get 'lab', to: 'main#lab', as: 'lab'
 
   # Doctor
-  get 'doctor', to: 'users#doctor'
+  get 'doctor', to: 'doctor#doctor'
   
   #Patient
-  get 'patient', to: 'users#patient'
+  get 'patient', to: 'patient#patient'
 
   #Labworker
-  get 'labworker', to: 'users#labworker'
+  get 'labworker', to: 'labworker#labworker'
 
   #Admin
-  get 'admin', to: 'users#admin'
+  get 'admin', to: 'admin#admin'
 
 end
