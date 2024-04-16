@@ -1,6 +1,13 @@
 class AdminController < ApplicationController
+    before_action :authenticate_admin!
+
+
     def admin
-      @users = User.all
+        unless current_user.admin?
+            flash[:error] = 'Brak dostępu!'
+            redirect_to root_path
+          end
+          @users = User.all
     end
   
     def new_user
@@ -8,33 +15,42 @@ class AdminController < ApplicationController
     end
   
     def create_user
-      @user = User.new(user_params)
-      if @user.save
-        redirect_to admin_path, notice: 'Użytkownik został dodany.'
-      else
-        render :new_user
+        @user = User.new(user_params)
+        if @user.save
+          flash[:success] = 'Użytkownik został dodany.'
+          redirect_to admin_path
+        else
+          flash[:error] = 'Wystąpił błąd podczas dodawania użytkownika.'
+          render :new_user
+        end
       end
-    end
   
     def edit_user
       @user = User.find(params[:id])
     end
   
     def update_user
-      @user = User.find(params[:id])
-      if @user.update(user_params)
-        redirect_to admin_path, notice: 'Uprawnienia użytkownika zostały zaktualizowane.'
-      else
-        render :edit_user
+        @user = User.find(params[:id])
+        if @user.update(user_params)
+          flash[:success] = 'Uprawnienia użytkownika zostały zaktualizowane.'
+          redirect_to admin_path
+        else
+          flash[:error] = 'Wystąpił błąd podczas aktualizacji użytkownika.'
+          render :edit_user
+        end
       end
-    end
   
     def destroy_user
-      @user = User.find(params[:id])
-      @user.destroy
-      redirect_to admin_path, notice: 'Użytkownik został usunięty.'
-    end
-  
+        @user = User.find(params[:id])
+        if @user.destroy
+          flash[:success] = 'Użytkownik został usunięty.'
+        else
+          flash[:error] = 'Wystąpił błąd podczas usuwania użytkownika.'
+        end
+        redirect_to admin_path
+      end
+
+
     private
   
     def user_params
