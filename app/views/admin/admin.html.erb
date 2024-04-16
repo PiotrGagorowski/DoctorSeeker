@@ -52,11 +52,9 @@
     <li>
       <%= user.email %> | <%= user.role %> |
       <%= link_to 'Edytuj', edit_user_path(user) %> |
-      <% if !(current_user.admin? && current_user == user) %>
-        <%= form_tag destroy_user_path(user), method: :post, data: { confirm: 'Czy na pewno chcesz usunąć tego użytkownika?' } do %>
-          <%= hidden_field_tag :_method, :delete %>
-          <%= submit_tag 'Usuń' %>
-        <% end %>
+      <% unless current_user.admin? && current_user == user %>
+      <%= button_to 'Usuń', destroy_user_path(user), method: :delete, onclick: 'return confirmDelete()' %>
+
       <% end %>
     </li>
   <% end %>
@@ -65,6 +63,12 @@
 <!-- Przycisk dodawania nowego użytkownika -->
 <%= link_to 'Dodaj nowego użytkownika', admin_new_user_path %>
 
+<script>
+ 
+  function confirmDelete() {
+    return confirm("Czy na pewno chcesz usunąć tego użytkownika?");
+  }
+</script>
 
 
 <p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
