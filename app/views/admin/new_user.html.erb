@@ -1,0 +1,33 @@
+<%= form_with(model: @user, url: admin_create_user_path) do |form| %>
+    <!-- Pole dla adresu email -->
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  
+    <!-- Pole dla hasła -->
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  
+    <!-- Pole dla potwierdzenia hasła -->
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  
+    <!-- Pole dla imienia -->
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  
+    <!-- Pole dla nazwiska -->
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+  
+    <!-- Pole dla numeru PESEL -->
+    <%= form.label :pesel_number %>
+    <%= form.text_field :pesel_number %>
+  
+    <!-- Pole dla roli -->
+    <%= form.label :role %>
+    <%= form.select :role, User.roles.keys.map { |role| [role.humanize, role] } %>
+  
+    <!-- Przycisk zatwierdzający formularz -->
+    <%= form.submit 'Dodaj użytkownika' %>
+  <% end %>
+  

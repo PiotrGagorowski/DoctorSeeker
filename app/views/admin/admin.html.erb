@@ -45,6 +45,28 @@
 
 <div id="cont">
 <div class="left">
+
+<h2>Lista użytkowników</h2>
+<ul>
+  <% @users.each do |user| %>
+    <li>
+      <%= user.email %> | <%= user.role %> |
+      <%= link_to 'Edytuj', edit_user_path(user) %> |
+      <% if !(current_user.admin? && current_user == user) %>
+        <%= form_tag destroy_user_path(user), method: :post, data: { confirm: 'Czy na pewno chcesz usunąć tego użytkownika?' } do %>
+          <%= hidden_field_tag :_method, :delete %>
+          <%= submit_tag 'Usuń' %>
+        <% end %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<!-- Przycisk dodawania nowego użytkownika -->
+<%= link_to 'Dodaj nowego użytkownika', admin_new_user_path %>
+
+
+
 <p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
 
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
