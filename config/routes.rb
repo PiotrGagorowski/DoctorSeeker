@@ -45,7 +45,11 @@ Rails.application.routes.draw do
   get 'patient', to: 'patient#patient'
 
   #Labworker
-  get 'labworker', to: 'labworker#labworker'
+  get 'labworker', to: 'labworker#labworker', as: 'labworker'
+  get 'patients', to: 'labworker#patients', as: 'patients'
+  get 'comresearch', to: 'labworker#comresearch', as: 'comresearch'
+  get 'exeresearch', to: 'labworker#exeresearch', as: 'exeresearch'
+  get 'logout', to: 'labworker#logout', as: 'logout'
 
   #Admin
   get 'admin', to: 'admin#admin'

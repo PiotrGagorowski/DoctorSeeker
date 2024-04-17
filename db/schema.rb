@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
     t.integer "category"
     t.bigint "user_id", null: false
     t.bigint "additional_user_id", null: true
-    t.bigint "file_id", null: false
+    t.bigint "file_id", null: true
     t.date "utility_date", null: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
