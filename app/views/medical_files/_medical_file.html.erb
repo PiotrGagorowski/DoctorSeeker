@@ -1,0 +1,14 @@
+<div id="<%= dom_id medical_file %>">
+  <p>
+    <strong>Category:</strong>
+    <%= medical_file.category %>
+  </p>
+  <p>
+    <strong>User:</strong>
+    <%= medical_file.user_id %>
+  </p>
+
+  <% if medical_file.file.present? %>
+    <%= link_to medical_file.file.filename, medical_file.file %>
+  <% end %>
+</div>

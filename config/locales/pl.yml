@@ -1,0 +1,16 @@
+pl:
+  activerecord:
+    attributes:
+      user:
+        password: "Hasło"
+        pesel_number: "Numer PESEL"
+        email: "E-mail"
+        password_confirmation: "Powtórzone hasło"
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: "jest za krótkie (minimum to 6 znaków)"
+            pesel_number:
+              wrong_length: "ma niewłaściwą długość (powinien mieć 11 znaków)"
