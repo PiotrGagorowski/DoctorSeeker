@@ -18,4 +18,10 @@ class PatientController < ApplicationController
         @patient = current_user
         @appointments = UserAppointment.where(patient_user_id: @patient.id)
     end
+
+    def reviews
+        @patient = current_user
+        @user_reviews = UserReview.where(patient_user_id: @patient.id)
+        @reviews = @user_reviews.map(&:review)
+    end
 end
