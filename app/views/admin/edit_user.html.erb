@@ -1,0 +1,40 @@
+<head>
+  <%= stylesheet_link_tag 'forms', media: 'all' %>
+</head>
+
+<body class="form-body">
+  <div class="form-container">
+    <%= form_with(model: @user, url: update_user_path(@user), method: :patch, html: { class: 'user-form' }) do |form| %>
+      <!-- Pole dla adresu email -->
+      <%= form.label :email, class: 'form-label' %>
+      <%= form.text_field :email, class: 'form-input' %>
+  
+      <!-- Pole dla hasła -->
+      <%= form.label :password, class: 'form-label' %>
+      <%= form.password_field :password, class: 'form-input' %>
+  
+      <!-- Pole dla potwierdzenia hasła -->
+      <%= form.label :password_confirmation, class: 'form-label' %>
+      <%= form.password_field :password_confirmation, class: 'form-input' %>
+  
+      <!-- Pole dla imienia -->
+      <%= form.label :first_name, class: 'form-label' %>
+      <%= form.text_field :first_name, class: 'form-input' %>
+  
+      <!-- Pole dla nazwiska -->
+      <%= form.label :last_name, class: 'form-label' %>
+      <%= form.text_field :last_name, class: 'form-input' %>
+  
+      <!-- Pole dla numeru PESEL -->
+      <%= form.label :pesel_number, class: 'form-label' %>
+      <%= form.text_field :pesel_number, class: 'form-input' %>
+  
+      <!-- Pole dla roli -->
+      <%= form.label :role, class: 'form-label' %>
+      <%= form.select :role, options_for_select(User.roles.keys.map { |role| [role.humanize, role] }, @user.role), class: 'form-select' %>
+  
+      <!-- Przycisk zatwierdzający formularz -->
+      <%= form.submit 'Zapisz zmiany', class: 'form-submit' %>
+    <% end %>
+  </div>
+</body>

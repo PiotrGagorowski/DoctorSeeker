@@ -70,3 +70,4 @@ end
 #Authorization
 gem "devise", "~> 4.9"
 
+gem 'certified'
