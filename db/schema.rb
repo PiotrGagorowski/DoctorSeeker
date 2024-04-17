@@ -51,13 +51,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "appointment_date"
+    t.bigint "doctor_user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["doctor_user_id"], name: "index_users_on_doctor_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string "doctor_user_id"
-    t.string "file_id"
+    t.bigint "doctor_user_id"
+    t.bigint "file_id"
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -67,8 +69,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
 
   create_table "medical_files", force: :cascade do |t|
     t.integer "category"
-    t.string "user_id", null: true
-    t.string "file_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "additional_user_id", null: true
+    t.bigint "file_id", null: false
+    t.date "utility_date", null: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_medical_files_on_user_id"
@@ -83,20 +87,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
   end
 
   create_table "user_appointments", force: :cascade do |t|
-    t.string "patient_user_id"
-    t.string "doctor_user_id"
+    t.bigint "patient_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "appointments_id"
+    t.bigint "appointments_id"
     t.index ["appointments_id"], name: "index_user_appointments_on_appointments_id"
-    t.index ["doctor_user_id"], name: "index_user_appointments_on_doctor_user_id"
     t.index ["patient_user_id"], name: "index_user_appointments_on_patient_user_id"
   end
 
   create_table "user_reviews", force: :cascade do |t|
-    t.string "patient_user_id"
-    t.string "doctor_user_id"
-    t.string "review_id"
+    t.bigint "patient_user_id"
+    t.bigint "doctor_user_id"
+    t.bigint "review_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["doctor_user_id"], name: "index_user_reviews_on_doctor_user_id"
@@ -116,6 +118,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
     t.string "first_name"
     t.string "last_name"
     t.string "pesel_number"
+    t.text "about"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -125,8 +128,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
   add_foreign_key "comments", "medical_files", column: "file_id"
   add_foreign_key "comments", "users", column: "doctor_user_id"
   add_foreign_key "medical_files", "users", column: "user_id"
+  add_foreign_key "medical_files", "users", column: "additional_user_id"
   add_foreign_key "user_appointments", "appointments", column: "appointments_id"
-  add_foreign_key "user_appointments", "users", column: "doctor_user_id"
+  add_foreign_key "appointments", "users", column: "doctor_user_id"
   add_foreign_key "user_appointments", "users", column: "patient_user_id"
   add_foreign_key "user_reviews", "reviews"
   add_foreign_key "user_reviews", "users", column: "doctor_user_id"
