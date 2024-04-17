@@ -40,9 +40,9 @@ Rails.application.routes.draw do
   #Patient
   get 'patient', to: 'patient#patient'
 
-  get 'patient_appointments', to: 'patient#patient_appointments', as: 'patient_appointments'
-  get 'patient_tests', to: 'patient#patient_tests', as: 'patient_tests'
-  get 'patient_prescriptions', to: 'patient#patient_prescribtions', as: 'patient_prescriptions'
+  get 'patient/appointments', to: 'patient#appointments', as: 'patient_appointments'
+  get 'patient/tests', to: 'patient#lab_tests', as: 'patient_lab_tests'
+  get 'patient/prescriptions', to: 'patient#prescriptions', as: 'patient_prescriptions'
 
   #Labworker
   get 'labworker', to: 'labworker#labworker'

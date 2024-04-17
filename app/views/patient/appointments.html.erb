@@ -1,0 +1,13 @@
+<h1>Twoje wizyty</h1>
+
+<% if @appointments.any? %>
+  <% @appointments.each do |appointment| %>
+    <div>
+      <p>Data wizyty: <%= appointment.appointment_date.strftime("%d.%m.%Y %H:%M") %></p>
+      <p>Lekarz: </p>
+    </div>
+    <hr>
+  <% end %>
+<% else %>
+  <p>Nie masz żadnych zaplanowanych wizyt.</p>
+<% end %>
