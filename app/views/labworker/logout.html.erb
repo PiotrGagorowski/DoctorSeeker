@@ -39,9 +39,11 @@
 </nav>
 
 <h2>Czy na pewno chcesz się wylogować?</h2>
+
   <%= form_tag(destroy_user_session_path, method: :delete) do %>
     <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
   <% end %>
+
 </div>
 
 
