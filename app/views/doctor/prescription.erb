@@ -49,8 +49,9 @@
   <% if current_user %>
       <p>Hello <%= current_user.first_name %></p>
       <p>You are a [<%= current_user.role %>]</p> <%end%>
-  <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
-
+  <%= form_tag(destroy_user_session_path, method: :delete) do %>
+    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
+  <% end %>
 </div>
 <div class="right">
 
