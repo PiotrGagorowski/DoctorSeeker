@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
   # Doctor
   get 'doctor', to: 'doctor#doctor'
-  
+  get 'issue_prescription', to: 'doctor#prescription'
   #Patient
   get 'patient', to: 'patient#patient'
 
