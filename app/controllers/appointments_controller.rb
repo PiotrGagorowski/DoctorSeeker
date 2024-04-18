@@ -3,9 +3,14 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments or /appointments.json
   def index
-    @appointments = Appointment.all
+    if current_user.doctor?
+      @appointments = current_user.appointments_as_doctor
+    else
+      @reserved_appointments = Appointment.reserved.includes(:user_appointments)
+      @free_appointments = Appointment.free
+    end
   end
-
+  
   # GET /appointments/1 or /appointments/1.json
   def show
   end
@@ -18,11 +23,13 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1/edit
   def edit
   end
-
+  def appointments
+    @appointments = current_user.appointments.all
+  end
   # POST /appointments or /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-
+    @appointment.doctor_user_id = current_user.id
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to appointment_url(@appointment), notice: "Appointment was successfully created." }
@@ -65,6 +72,6 @@ class AppointmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def appointment_params
-      params.require(:appointment).permit(:appointment_date)
+      params.permit(:appointment_date)
     end
 end

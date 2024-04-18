@@ -65,6 +65,7 @@ class UserAppointmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_appointment_params
-      params.require(:user_appointment).permit(:patient_user_id, :appointment_id, :doctor_user_id)
+      params.require(:user_appointment).permit(:patient_user_id, :appointment_id)
     end
+    
 end
