@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :appointments
   resources :comments
   resources :medical_files
+
   devise_for :users, controllers: { sessions: 'users/sessions' }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   #root "medical_files#index"
@@ -30,14 +31,25 @@ Rails.application.routes.draw do
 
   get 'lab', to: 'main#lab', as: 'lab'
 
+  get 'appointment', to: 'appointments#index'
+
   # Doctor
   get 'doctor', to: 'doctor#doctor'
+  get 'issue_prescription', to: 'doctor#prescription'
+  get 'set_appointment', to: 'doctor#appointments'    
+  get 'doctor/appointments.json', to: 'appointments#index_json'
   
+  post 'doctor/appointments', to: 'doctor#create_appointment'
+
   #Patient
   get 'patient', to: 'patient#patient'
 
   #Labworker
-  get 'labworker', to: 'labworker#labworker'
+  get 'labworker', to: 'labworker#labworker', as: 'labworker'
+  get 'patients', to: 'labworker#patients', as: 'patients'
+  get 'comresearch', to: 'labworker#comresearch', as: 'comresearch'
+  get 'exeresearch', to: 'labworker#exeresearch', as: 'exeresearch'
+  get 'logout', to: 'labworker#logout', as: 'logout'
 
   #Admin
   get 'admin', to: 'admin#admin'
