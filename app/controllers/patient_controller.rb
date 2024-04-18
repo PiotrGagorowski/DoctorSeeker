@@ -12,9 +12,9 @@ class PatientController < ApplicationController
 
     before_action :authenticate_user!
 
-    def lab_tests
+    def lab_results
         @patient = current_user
-        @lab_tests = MedicalFile.where(user_id: @patient.id, category: MedicalFile.categories[:lab_test])
+        @lab_results = MedicalFile.where(user_id: @patient.id, category: MedicalFile.categories[:lab_results])
     end
 
     def prescriptions

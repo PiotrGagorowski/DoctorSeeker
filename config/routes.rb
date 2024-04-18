@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   get 'patient', to: 'patient#patient'
 
   get 'patient/appointments', to: 'patient#appointments', as: 'patient_appointments'
-  get 'patient/tests', to: 'patient#lab_tests', as: 'patient_lab_tests'
+  get 'patient/lab_results', to: 'patient#lab_results', as: 'patient_lab_results'
   get 'patient/prescriptions', to: 'patient#prescriptions', as: 'patient_prescriptions'
   get 'patient/reviews', to: 'patient#reviews', as: 'patient_reviews'
 

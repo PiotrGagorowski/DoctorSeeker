@@ -6,7 +6,11 @@
       <p>Data wystawienia recepty: <%= prescription.created_at.strftime("%d.%m.%Y") %></p>
       <p>Data ważności recepty: </p>
       <p>Lekarz wystawiający: </p>
-      <%= link_to "Pobierz", rails_blob_path(prescription.file_id, disposition: "attachment"), class: "btn btn-primary" %>
+      <% if prescription.file.attached? %>
+        <%= link_to "Wynik badań", rails_blob_url(prescription.file) %>
+      <% else %>
+        <p>Brak pliku do pobrania</p>
+      <% end %>
     </div>
     <hr>
   <% end %>

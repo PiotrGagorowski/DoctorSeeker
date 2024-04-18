@@ -15,5 +15,5 @@ class MedicalFile < ApplicationRecord
       end
     end
   end
-end
+
 
