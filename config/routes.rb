@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   get 'patient/prescriptions', to: 'patient#prescriptions', as: 'patient_prescriptions'
   get 'patient/reviews', to: 'patient#reviews', as: 'patient_reviews'
 
+
+
   #Labworker
   get 'labworker', to: 'labworker#labworker'
 
