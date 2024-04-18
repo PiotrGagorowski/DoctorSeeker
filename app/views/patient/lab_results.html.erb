@@ -1,0 +1,18 @@
+<h1>Badania laboratoryjne</h1>
+
+<% if @lab_results.any? %>
+  <% @lab_results.each do |lab_result| %>
+    <div>
+      <p>Data wystawienia wyników: <%= lab_result.created_at.strftime("%d.%m.%Y") %></p>
+      <p>Data wykonania badania: <%=lab_result.utility_date%></p>
+      <% if lab_result.file.attached? %>
+        <%= link_to "Wynik badań", rails_blob_url(lab_result.file) %>
+      <% else %>
+        <p>Brak pliku do pobrania</p>
+      <% end %>
+    </div>
+    <hr>
+  <% end %>
+<% else %>
+  <p>Nie posiadasz jeszcze żadnych wyników badań laboratoryjnych.</p>
+<% end %>

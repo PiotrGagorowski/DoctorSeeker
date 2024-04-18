@@ -1,0 +1,19 @@
+<h1>Recepty</h1>
+
+<% if @prescriptions.any? %>
+  <% @prescriptions.each do |prescription| %>
+    <div>
+      <p>Data wystawienia recepty: <%= prescription.created_at.strftime("%d.%m.%Y") %></p>
+      <p>Data ważności recepty: </p>
+      <p>Lekarz wystawiający: </p>
+      <% if prescription.file.attached? %>
+        <%= link_to "Wynik badań", rails_blob_url(prescription.file) %>
+      <% else %>
+        <p>Brak pliku do pobrania</p>
+      <% end %>
+    </div>
+    <hr>
+  <% end %>
+<% else %>
+  <p>Nie posiadasz jeszcze żadnych recept.</p>
+<% end %>
