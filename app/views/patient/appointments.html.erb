@@ -1,10 +1,10 @@
 <h1>Twoje wizyty</h1>
 
 <% if @appointments.any? %>
-  <% @appointments.each do |appointment| %>
+  <% @user_appointments.each do |appointment| %>
     <div>
-      <p>Data wizyty: <%= appointment.appointment_date.strftime("%d.%m.%Y %H:%M") %></p>
-      <p>Lekarz: </p>
+      <p>Data wizyty: <%= appointment.appointment.appointment_date %></p>
+      <p>Lekarz:  <%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></p>
     </div>
     <hr>
   <% end %>
