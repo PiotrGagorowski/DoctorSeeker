@@ -101,45 +101,85 @@
 </div>
 
 
+<% if current_user %>
+    <p>Hello <%= current_user.first_name %></p>
+    <p>You are a [<%= current_user.role %>]</p> <%end%>
+  <%= form_tag(destroy_user_session_path, method: :delete) do %>
+    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
+  <% end %>
+
 
 </div>
 <div class="right">
+<h1>Wszystkie terminy wizyt</h1>
+<% if @free_appointments.any? %>
+  <h2>Wolne terminy</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Doktor</th>
+        <th>Akcja</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @free_appointments.each do |appointment| %>
+        <% user_appointment = UserAppointment.new %>
 
-<%= image_tag "Logo.jpg", height: 450 %>
+        <tr>
+          <td><%= appointment.appointment_date %></td>
+          <td><%= appointment.doctor.first_name %> <%= appointment.doctor.last_name %></td>
+          <td>
+            <% if user_appointment.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(user_appointment.errors.count, "błąd") %> uniemożliwiło zapisanie tego terminu:</h2>
 
-<div id="carouselExampleCaptions" class="carousel slide" style="margin-top: 30px; width: 450px;">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-    <%= image_tag "doctor2.png", class:"d-block", height: 450 %>
-      <div class="carousel-caption d-none d-md-block" style="color:black; font-size:30px; text-shadow: 0 0 2px #333; border: 2px solid black; padding: 2px; background-color: white;">
-        <p><i><b>Nasi specjaliści zajmą się Tobą</i></b></p>
-      </div>
-    </div>
-    <div class="carousel-item">
-    <%= image_tag "doctor3.png", class:"d-block", height: 450 %>
-      <div class="carousel-caption d-none d-md-block">
-      </div>
-    </div>
-    <div class="carousel-item">
-    <%= image_tag "doctor1.png", class:"d-block", height: 450 %>
-      <div class="carousel-caption d-none d-md-block" style="color:black; font-size:22px; text-shadow: 0 0 2px #333; border: 2px solid black; padding: 0; background-color: white;">
-        <p><i><b>Jesteśmy jedną z najlepszych przychodni w Polsce</i></b></p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+                <ul>
+                  <% user_appointment.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <%= form_with model: user_appointment do |form| %>
+              <%= form.hidden_field :appointment_id, value: appointment.id %>
+              <%= form.hidden_field :patient_user_id, value: current_user.id %>
+              <%= form.submit "Zarezerwuj termin", class: "btn btn-primary" %>
+            <% end %>
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if @reserved_appointments.any? %>
+  <h2>Zarezerwowane terminy</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Doktor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reserved_appointments.each do |appointment| %>
+        <tr>
+          <td><%= appointment.appointment_date %></td>
+          <td><%= appointment.doctor.first_name %> <%= appointment.doctor.last_name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if !@free_appointments.any? && !@reserved_appointments.any? %>
+  <p>Brak dostępnych terminów.</p>
+<% end %>
+
+
 
 </div>
 </div>

@@ -21,4 +21,11 @@ pl:
                 too_short: "jest za krótkie (minimum to 6 znaków)"
                 blank: "nie zostało podane"
                 invalid: "jest niepoprawne"
-              
+        user_appointment:
+          attributes:
+            appointment:
+              required: "jest wymagany"
+              blank: "nie może być pusty"
+          
+      
+
