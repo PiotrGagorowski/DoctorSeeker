@@ -63,12 +63,37 @@
   <% if current_user %>
       <p>Hello <%= current_user.first_name %></p>
       <p>You are a [<%= current_user.role %>]</p> <%end%>
-  <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
-
+  <%= form_tag(destroy_user_session_path, method: :delete) do %>
+    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
+  <% end %>
 </div>
 <div class="right">
 
+<h3>Kalendarz terminów</h3>
+  <div id="calendar"></div>
 
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Pacjent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @appointments.each do |appointment| %>
+        <tr>
+          <td><%= appointment.appointment_date %></td>
+          <td>
+            <% if appointment.user_appointments.any? %>
+              <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
+            <% else %>
+              Wolny termin
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
 </div>
 </div>
