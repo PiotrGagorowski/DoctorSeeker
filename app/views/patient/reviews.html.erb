@@ -1,0 +1,16 @@
+<h1>Twoje recenzje</h1>
+
+<% if @reviews.any? %>
+  <ul>
+    <% @reviews.each do |review| %>
+      <li>
+        <p>Imię i nazwisko lekarza: <%= review.doctor.first_name %> <%= review.doctor.last_name %></p>
+        <p>Ocena: <%= review.score %></p>
+        <p>Recenzja: <%= review.comment %></p>
+        <p>Opublikowano: <%= review.created_at.strftime("%d-%m-%Y %H:%M") %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Nie wystawiłeś jeszcze żadnej recenzji.</p>
+<% end %>
