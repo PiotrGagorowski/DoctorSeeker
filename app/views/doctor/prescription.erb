@@ -52,9 +52,70 @@
   <%= form_tag(destroy_user_session_path, method: :delete) do %>
     <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
   <% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nr ID Pacjenta</th>
+      <th>Imie</th>
+      <th>Nazwisko</th>
+      <th>Pesel</th>
+      <th>Adres email</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @patients.present? %>
+      <% @patients.each do |user| %>
+        <tr>
+          <td class="id"><%= user.id %></td>
+          <td><%= user.first_name %></td>
+          <td><%= user.last_name %></td>
+          <td><%= user.pesel_number %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%= form_with(model: @medical_file, url: medical_files_path) do |form| %>
+              <%= form.file_field :file, class: "btn btn-primary"%>
+              <%= form.hidden_field :category, value: 'prescription' %>
+              <%= form.hidden_field :user_id, value: user.id %>
+              <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
+              <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
 </div>
 <div class="right">
-
+<table>
+  <thead>
+    <tr>
+      <th>Nr ID Pacjenta</th>
+      <th>Imie</th>
+      <th>Nazwisko</th>
+      <th>Pesel</th>
+      <th>Adres email</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @patients_with_prescription.present? %>
+      <% @patients_with_prescription.each do |user| %>
+        <tr>
+          <td class="id"><%= user.id %></td>
+          <td><%= user.first_name %></td>
+          <td><%= user.last_name %></td>
+          <td><%= user.pesel_number %></td>
+          <td><%= user.email %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 
 
 </div>

@@ -4,8 +4,8 @@
   <% @prescriptions.each do |prescription| %>
     <div>
       <p>Data wystawienia recepty: <%= prescription.created_at.strftime("%d.%m.%Y") %></p>
-      <p>Data ważności recepty: </p>
-      <p>Lekarz wystawiający: </p>
+      <p>Data ważności recepty: <%=prescription.utility_date%></p>
+      <p>Lekarz wystawiający: <%= User.find(prescription.additional_user_id).first_name %> <%= User.find(prescription.additional_user_id).last_name %></p>
       <% if prescription.file.attached? %>
         <%= link_to "Wynik badań", rails_blob_url(prescription.file) %>
       <% else %>
