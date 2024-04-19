@@ -26,10 +26,9 @@ pl:
           required: "MedicalFile jest wymagany"
       messages:
         required: "jest wymagane"
-            email:
-              blank: "nie został podany"
-            reset_password_token:
-                too_short: "jest za krótkie (minimum to 6 znaków)"
-                blank: "nie zostało podane"
-                invalid: "jest niepoprawne"
-              
+        email:
+          blank: "nie został podany"
+        reset_password_token:
+          too_short: "jest za krótkie (minimum to 6 znaków)"
+          blank: "nie zostało podane"
+          invalid: "jest niepoprawne"
