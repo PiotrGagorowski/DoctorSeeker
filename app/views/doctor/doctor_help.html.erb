@@ -1,0 +1,222 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= doctor_login_path(@login) %>">Logowanie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div id="cont">
+<div style="width:50%; height:300px; float:left">
+<div class="card mb-3" style="max-width: 540px; margin-left: 120px; margin-top: 30px; margin-top:110px; height: 200px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+    <%= image_tag "helpdesk.jpg", class:"d-block", height: 200%>
+    </div>
+    <div class="col-md-8" style="padding-left:20px">
+      <div class="card-body">
+        <h5 class="card-title">Witaj w zakładce <span class="badge text-bg-primary" style="font-size:16px">Pomoc</span></h5>
+        <p class="card-text">Znajdziesz tutaj najczęściej zadawane pytania na temat naszej przychodni oraz sekcję gdzie sam możesz zadać nam wybrane pytanie.</p>
+        <p class="card-text"><small class="text-body-secondary">© DoctorSeeker</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div style="width:50%; height:300px; float: right">
+<div class="card border-primary mb-3" style="max-width: 540px; margin-top: 30px; margin-left: 90px; height:370px;">
+  <div class="card-body">
+  <h5 class="card-title"><b>Napisz do nas</b></h5>
+    <p class="card-text">A my postaramy się odpowiedzieć najszybciej jak to możliwe.</p>
+    <div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Adres e-mail</label>
+  <input type="email" class="form-control" id="exampleFormControlInput1">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Pytanie</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Tutaj wpisz swoje pytanie..."></textarea>
+</div>
+<button type="button" class="btn btn-primary">Wyślij</button>
+  </div>
+</div>
+</div>
+</div>
+
+<center><h2 class="fw-lighter" style="margin-top: 430px; margin-bottom:30px"> <b>FAQ:</b> Najczęściej zadawane pytania 🤔 </h2></center>
+<div class="accordion" id="accordionExample" style="width: 90%; margin-left: 80px; margin-bottom: 100px;">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+      Jak mogę umówić się na wizytę u lekarza za pośrednictwem DoctorSeeker?
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Aby umówić się na wizytę, wystarczy przejść na naszą stronę internetową lub użyć naszej aplikacji mobilnej. Następnie wybierz preferowanego lekarza, termin i rodzaj wizyty, a system DoctorSeeker przeprowadzi Cię przez proces rezerwacji.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+      Czy DoctorSeeker umożliwia dodawanie opinii o lekarzach?
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      Tak, nasza platforma umożliwia pacjentom dodawanie opinii i recenzji na temat lekarzy. Chcemy, aby nasi użytkownicy mieli możliwość dzielenia się swoimi doświadczeniami, co pomaga innym w wyborze odpowiedniego specjalisty.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+    Jakie rodzaje badań mogę umówić za pomocą DoctorSeeker?
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+    DoctorSeeker umożliwia umawianie się na różnego rodzaju badania diagnostyczne, w tym badania krwi, obrazowe (np. MRI, RTG), ultrasonograficzne i wiele innych. Możesz sprawdzić dostępność konkretnych badań w naszym systemie podczas rezerwacji wizyty.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+    Czy mogę umówić się na wizytę u specjalisty za pośrednictwem DoctorSeeker?
+    </button>
+  </h2>
+  <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+    Tak, DoctorSeeker umożliwia rezerwację wizyt u specjalistów różnych dziedzin medycyny, takich jak kardiologia, dermatologia, neurologia, itp. Wystarczy wybrać odpowiednią specjalizację podczas procesu rezerwacji.
+    </div>
+  </div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header">
+  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+  Jakie informacje będę potrzebować, aby umówić się na wizytę za pośrednictwem DoctorSeeker?
+  </button>
+</h2>
+<div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+  <div class="accordion-body">
+  Aby zarezerwować wizytę, będziesz potrzebować podstawowych informacji, takich jak imię, nazwisko, adres e-mail, numer telefonu oraz preferowany termin wizyty. Niektóre specjalistyczne wizyty mogą wymagać dodatkowych informacji, więc upewnij się, że masz je przy sobie.
+  </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header">
+  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+  Czy mogę anulować lub zmienić termin wizyty zarezerwowanej za pośrednictwem DoctorSeeker?
+  </button>
+</h2>
+<div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+  <div class="accordion-body">
+  Tak, w przypadku konieczności zmiany lub anulowania wizyty, możesz to zrobić za pośrednictwem naszej platformy internetowej lub aplikacji mobilnej. Wystarczy zalogować się na swoje konto i skorzystać z opcji zmiany lub anulowania wizyty.
+  </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header">
+  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+  Czy DoctorSeeker oferuje usługi medyczne tylko w określonym regionie?
+  </button>
+</h2>
+<div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+  <div class="accordion-body">
+  Nasza platforma oferuje usługi medyczne w wielu regionach, jednak dostępność konkretnych usług może się różnić w zależności od lokalizacji. Możesz sprawdzić dostępność usług w Twoim regionie, korzystając z naszej platformy.
+  </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header">
+  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+  Czy mogę przeglądać opinie innych pacjentów o lekarzach na DoctorSeeker?
+  </button>
+</h2>
+<div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+  <div class="accordion-body">
+  Tak, na DoctorSeeker możesz przeglądać opinie innych pacjentów na temat lekarzy, co pomaga w podjęciu świadomej decyzji dotyczącej wyboru specjalisty. Staramy się zapewnić transparentność i uczciwe opinie na naszej platformie.
+  </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header">
+  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+  Czy DoctorSeeker współpracuje z ubezpieczycielami medycznymi?
+  </button>
+</h2>
+<div id="collapseNine" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+  <div class="accordion-body">
+  Tak, DoctorSeeker może współpracować z wybranymi ubezpieczycielami medycznymi, co umożliwia pacjentom korzystanie z naszych usług w ramach ich polisy ubezpieczeniowej. Prosimy o kontakt z nami, aby uzyskać więcej informacji na ten temat.
+  </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header">
+  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+  Jakie są korzyści korzystania z DoctorSeeker w porównaniu z tradycyjnymi metodami umawiania wizyt lekarskich?
+  </button>
+</h2>
+<div id="collapseTen" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+  <div class="accordion-body">
+  DoctorSeeker oferuje wygodę, szybkość i dostępność. Dzięki naszej platformie możesz łatwo znaleźć i zarezerwować wizytę u lekarza bez konieczności dzwonienia lub osobistego odwiedzania przychodni. Ponadto, nasza platforma umożliwia przeglądanie opinii innych pacjentów, co ułatwia wybór odpowiedniego specjalisty.
+  </div>
+</div>
+</div>
+
+  
+</div>
+
+
+</div>
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>
