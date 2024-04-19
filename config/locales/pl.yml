@@ -6,6 +6,9 @@ pl:
         pesel_number: "Numer PESEL"
         email: "E-mail"
         password_confirmation: "Powtórzone hasło"
+      user_appointment:
+        patient: "Pacjent"
+        appointment: "Termin"
         reset_password_token: "Hasło"
     errors:
       models:
@@ -26,6 +29,12 @@ pl:
             appointment:
               required: "jest wymagany"
               blank: "nie może być pusty"
-          
-      
+        medical_file:
+          attributes:
+            user:
+              required: "Użytkownik jest wymagany"
+          required: "MedicalFile jest wymagany"
+      messages:
+        required: "jest wymagane"
 
+         

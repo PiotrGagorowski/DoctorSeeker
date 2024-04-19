@@ -58,11 +58,16 @@ Rails.application.routes.draw do
   #Admin
   get 'admin', to: 'admin#admin'
 
+  resources :medical_files do
+    collection do
+      get 'prescription'
+    end
+  end
+
   get 'admin/new_user', to: 'admin#new_user'
   post 'admin/create_user', to: 'admin#create_user'
   get 'admin/edit_user/:id', to: 'admin#edit_user', as: 'edit_user'
   patch 'admin/update_user/:id', to: 'admin#update_user', as: 'update_user'
   delete 'admin/destroy_user/:id', to: 'admin#destroy_user', as: 'destroy_user'
-
 
 end
