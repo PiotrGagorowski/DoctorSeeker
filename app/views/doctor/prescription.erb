@@ -75,11 +75,11 @@
           <td><%= user.email %></td>
           <td>
             <%= form_with(model: @medical_file, url: medical_files_path) do |form| %>
-              <%= form.file_field :file %>
+              <%= form.file_field :file, class: "btn btn-primary"%>
               <%= form.hidden_field :category, value: 'prescription' %>
               <%= form.hidden_field :user_id, value: user.id %>
               <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
-              <%= form.submit "Dodaj receptę" %>
+              <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
             <% end %>
           </td>
         </tr>
