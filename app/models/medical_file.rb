@@ -4,7 +4,7 @@ class MedicalFile < ApplicationRecord
   
     validates :file, presence: true
     validate :validate_file_format
-  
+    enum category: [:prescription, :lab_results, :photo]
     private
   
     def validate_file_format
@@ -15,4 +15,5 @@ class MedicalFile < ApplicationRecord
       end
     end
   end
-  
+
+

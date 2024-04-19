@@ -4,3 +4,7 @@ import "controllers"
 
 import "trix"
 import "@rails/actiontext"
+//= require jquery
+//= require jquery_ujs
+//= require_tree .
+
