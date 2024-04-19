@@ -22,6 +22,7 @@ class MedicalFilesController < ApplicationController
   # POST /medical_files or /medical_files.json
   def create
     @medical_file = MedicalFile.new(medical_file_params)
+    @medical_file.additional_user_id = current_user.id
 
     respond_to do |format|
       if @medical_file.save
@@ -67,6 +68,6 @@ class MedicalFilesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def medical_file_params
-      params.require(:medical_file).permit(:category, :user_id, :file, :utility_date)
+      params.require(:medical_file).permit(:category, :user_id, :file, :utility_date, :additional_user_id)
     end
 end
