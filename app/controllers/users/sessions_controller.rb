@@ -26,9 +26,9 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    super
+  end
 
   # protected
 
@@ -36,4 +36,8 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  def appointments
+    Appointment.joins(:user_appointments_as_patient).where(user_appointments_as_patient: { patient_user_id: self.id })
+  end
+  
 end

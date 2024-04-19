@@ -1,5 +1,4 @@
-<p style="color: green"><%= notice %></p>
-<% if current_user.labworker? %>
+
 <nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
@@ -38,9 +37,54 @@
     </div>
   </div>
 </nav>
-<h1>Medical files</h1>
-<%= link_to "New medical file", new_medical_file_path %>
-<% end %>
+
+<div id="cont">
+<div class="left">
+<p><h2 class="fw-lighter"><strong><center>Zlecone Badania:</strong></center></h2></p>
+<table>
+  <thead>
+    <tr>
+      <th>Nr ID Pacjenta</th>
+      <th>Imie</th>
+      <th>Nazwisko</th>
+      <th>Pesel</th>
+      <th>Adres email</th>
+      <th>Rola</th>
+      <th> Wyniki badań </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.each do |user| %>
+      <% if user.role == "patient" %>
+      <tr>
+      <td class="id"><%= user.id %></td>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.pesel_number %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+        <td><button onclick="window.location.href = 'medical_files'">Pacjent przybył na badania</td>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
+</div>
+<div class="right">
 
 
 
+
+
+
+</div>
+</div>
+</div>
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

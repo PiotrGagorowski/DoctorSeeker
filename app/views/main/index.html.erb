@@ -16,6 +16,13 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
         </li>
+        <% if current_user %>
+          <% if current_user.doctor? %>
+            <li class="nav-item">
+              <a class="nav-link active" href="<%= doctor_path %>">Funkcjonalności</a>
+            </li>
+          <% end %>
+        <% end %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             O przychodni 

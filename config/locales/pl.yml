@@ -6,7 +6,6 @@ pl:
         pesel_number: "Numer PESEL"
         email: "E-mail"
         password_confirmation: "Powtórzone hasło"
-        reset_password_token: "Hasło"
     errors:
       models:
         user:
@@ -15,6 +14,18 @@ pl:
               too_short: "jest za krótkie (minimum to 6 znaków)"
             pesel_number:
               wrong_length: "ma niewłaściwą długość (powinien mieć 11 znaków)"
+        user_appointment:
+          attributes:
+            appointment:
+              required: "jest wymagany"
+              blank: "nie może być pusty"
+        medical_file:
+          attributes:
+            user:
+              required: "Użytkownik jest wymagany"
+          required: "MedicalFile jest wymagany"
+      messages:
+        required: "jest wymagane"
             email:
               blank: "nie został podany"
             reset_password_token:
