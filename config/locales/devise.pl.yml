@@ -59,8 +59,8 @@ pl:
       not_found: "nie znaleziono"
       not_locked: "nie było zablokowane"
       not_saved:
-        one: "1 błąd uniemożliwił zapisanie tego użytkownika:"
-        other: "%{count} błędy uniemożliwiły zapisanie tego użytkownika:"
+        one: "Wystąpił 1 błąd:"
+        other: "Wystąpiły %{count} błędy:"
       taken: "jest już zajęty"
       confirmation: "nie pasuje do podanego wcześniej hasła"
       

@@ -10,5 +10,6 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "New appointment", new_appointment_path %>
+<% if current_user.doctor? %>
+  <%= link_to "New appointment", new_appointment_path %>
+<%end%>
