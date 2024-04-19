@@ -53,32 +53,39 @@
 
 <div class="centered-form">
   <div>
-    <center><h1>Zaloguj się</h1></center>
+<% if flash[:alert] %>
+  <div class="alert alert-danger" role="alert">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<center><h1>Zaloguj się</h1></center>
 
-    <div class="form-floating mb-3" style="margin-top: 30px; margin-bottom: 30px;">
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id: "floatingInput", placeholder: "name@example.com" %>
-      <%= f.label :email, "Adres e-mail", for: "floatingInput" %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="form-floating mb-3" style="margin-top: 30px; margin-bottom: 30px;">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id: "floatingInput", placeholder: "name@example.com" %>
+    <%= f.label :email, "Adres e-mail", for: "floatingInput" %>
+  </div>
+
+  <div class="form-floating">
+    <%= f.password_field :password, autocomplete: "current-password", class: "form-control", id: "floatingPassword", placeholder: "Hasło" %>
+    <%= f.label :password, "Hasło", for: "floatingPassword" %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="form-check">
+      <%= f.check_box :remember_me, class: "form-check-input" %>
+      <%= f.label :remember_me, "Zapamiętaj mnie", class: "form-check-label" %>
     </div>
+  <% end %>
 
-    <div class="form-floating">
-      <%= f.password_field :password, autocomplete: "current-password", class: "form-control", id: "floatingPassword", placeholder: "Hasło" %>
-      <%= f.label :password, "Hasło", for: "floatingPassword" %>
-    </div>
-
-      <% if devise_mapping.rememberable? %>
-        <div class="form-check">
-        <%= f.check_box :remember_me, class: "form-check-input" %>
-        <%= f.label :remember_me, "Zapamiętaj mnie", class: "form-check-label" %>
-        </div>
-      <% end %>
-
-      <center><div class="actions" style="margin-top: 30px; margin-bottom: 20px;">
+  <center>
+    <div class="actions" style="margin-top: 30px; margin-bottom: 20px;">
       <%= f.submit "Zaloguj się", class: "btn btn-primary btn-lg", data: {turbo: false}, style:"color:white; text-decoration: none;" %>
-      </div></center>
-      
-    <% end %>
+    </div>
+  </center>
+<% end %>
+
 
     <%= render "devise/shared/links" %>
   </div>
