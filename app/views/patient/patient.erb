@@ -24,8 +24,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
-            <li><a class="dropdown-item" href="<%= patient_tests_path %>">Badania</a></li>
+            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
             <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
           </ul>
         </li>
 
@@ -99,12 +100,14 @@
   </div>
 </div>
 
+
 <% if current_user %>
     <p>Hello <%= current_user.first_name %></p>
     <p>You are a [<%= current_user.role %>]</p> <%end%>
   <%= form_tag(destroy_user_session_path, method: :delete) do %>
     <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
   <% end %>
+
 
 </div>
 <div class="right">

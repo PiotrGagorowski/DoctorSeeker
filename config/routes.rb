@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :medical_files
 
   devise_for :users, controllers: { sessions: 'users/sessions' }
+  
+ 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   #root "medical_files#index"
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -18,21 +20,12 @@ Rails.application.routes.draw do
   root "main#index"
   
   get 'login', to: 'main#login', as: 'login'
-
   get 'index', to: 'main#index', as: 'index'
   get 'contact', to: 'main#contact', as: 'contact'
-
-  
-
-
-
-
   get 'help', to: 'main#help', as: 'help'
-
   get 'doctors', to: 'main#doctors', as: 'doctors'
-
+  get '/doctors/:id', to: 'main#show', as: 'doctor_id'
   get 'price', to: 'main#price', as: 'price'
-
   get 'lab', to: 'main#lab', as: 'lab'
 
   get 'appointment', to: 'appointments#index'
@@ -48,9 +41,12 @@ Rails.application.routes.draw do
   #Patient
   get 'patient', to: 'patient#patient'
 
-  get 'patient_appointments', to: 'patient#patient_appointments', as: 'patient_appointments'
-  get 'patient_tests', to: 'patient#patient_tests', as: 'patient_tests'
-  get 'patient_prescriptions', to: 'patient#patient_prescribtions', as: 'patient_prescriptions'
+  get 'patient/appointments', to: 'patient#appointments', as: 'patient_appointments'
+  get 'patient/lab_results', to: 'patient#lab_results', as: 'patient_lab_results'
+  get 'patient/prescriptions', to: 'patient#prescriptions', as: 'patient_prescriptions'
+  get 'patient/reviews', to: 'patient#reviews', as: 'patient_reviews'
+
+
 
   #Labworker
   get 'labworker', to: 'labworker#labworker', as: 'labworker'
@@ -61,11 +57,13 @@ Rails.application.routes.draw do
 
   #Admin
   get 'admin', to: 'admin#admin'
+
   resources :medical_files do
     collection do
       get 'prescription'
     end
   end
+
   get 'admin/new_user', to: 'admin#new_user'
   post 'admin/create_user', to: 'admin#create_user'
   get 'admin/edit_user/:id', to: 'admin#edit_user', as: 'edit_user'
@@ -73,4 +71,11 @@ Rails.application.routes.draw do
   delete 'admin/destroy_user/:id', to: 'admin#destroy_user', as: 'destroy_user'
 
 
+=========
+  resources :medical_files do
+    collection do
+      get 'prescription'
+    end
+  end
+>>>>>>>>> Temporary merge branch 2
 end
