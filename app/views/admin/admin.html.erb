@@ -45,6 +45,32 @@
 
 <div id="cont">
 <div class="left">
+
+<h2>Lista użytkowników</h2>
+<ul>
+  <% @users.each do |user| %>
+    <li>
+      <%= user.email %> | <%= user.role %> |
+      <%= link_to 'Edytuj', edit_user_path(user) %> |
+      <% unless current_user.admin? && current_user == user %>
+      <%= button_to 'Usuń', destroy_user_path(user), method: :delete, onclick: 'return confirmDelete()' %>
+
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<!-- Przycisk dodawania nowego użytkownika -->
+<%= link_to 'Dodaj nowego użytkownika', admin_new_user_path %>
+
+<script>
+ 
+  function confirmDelete() {
+    return confirm("Czy na pewno chcesz usunąć tego użytkownika?");
+  }
+</script>
+
+
 <p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
 
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
@@ -85,7 +111,9 @@
 <% if current_user %>
     <p>Hello <%= current_user.first_name %></p>
     <p>You are a [<%= current_user.role %>]</p> <%end%>
- <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
+  <%= form_tag(destroy_user_session_path, method: :delete) do %>
+    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
+  <% end %>
 
 </div>
 <div class="right">
