@@ -49,10 +49,17 @@ class UserAppointmentsController < ApplicationController
 
   # DELETE /user_appointments/1 or /user_appointments/1.json
   def destroy
-    @user_appointment.destroy!
+    @user_appointment = UserAppointment.find(params[:id])
+  
+  if @user_appointment
+    @user_appointment.destroy
+    notice_message = 'Your appointment has been canceled.'
+  else
+    notice_message = 'You are not authorized to cancel this appointment.'
+  end
 
     respond_to do |format|
-      format.html { redirect_to user_appointments_url, notice: "User appointment was successfully destroyed." }
+      format.html { redirect_to patient_appointments_path, notice: "User appointment was successfully destroyed." }
       format.json { head :no_content }
     end
   end

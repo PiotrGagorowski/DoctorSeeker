@@ -1,12 +1,38 @@
 <h1>Twoje wizyty</h1>
 
-<% if @appointments.any? %>
+<% if @user_appointments.any? %>
+  <h2>Aktualne wizyty:</h2>
+  <% has_current_appointments = false %>
   <% @user_appointments.each do |appointment| %>
-    <div>
-      <p>Data wizyty: <%= appointment.appointment.appointment_date %></p>
-      <p>Lekarz:  <%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></p>
-    </div>
-    <hr>
+    <% if appointment.appointment.appointment_date >= Date.today %>
+      <% has_current_appointments = true %>
+      <div>
+        <p>Data wizyty: <%= appointment.appointment.appointment_date %></p>
+        <p>Lekarz: <%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></p>
+        <%= link_to 'Zrezygnuj z wizyty', user_appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure you want to cancel this appointment?' } %>
+      </div>
+      <hr>
+    <% end %>
+  <% end %>
+  <% unless has_current_appointments %>
+    <p>Nie posiadasz żadnych aktualnych wizyt.</p>
+  <% end %>
+
+  <h2>Minione wizyty:</h2>
+  <% has_past_appointments = false %>
+  <% @user_appointments.each do |appointment| %>
+    <% if appointment.appointment.appointment_date < Date.today %>
+      <% has_past_appointments = true %>
+      <div>
+        <p>Data wizyty: <%= appointment.appointment.appointment_date %></p>
+        <p>Lekarz: <%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></p>
+        <!-- Dodaj tutaj inne informacje o minionej wizycie -->
+      </div>
+      <hr>
+    <% end %>
+  <% end %>
+  <% unless has_past_appointments %>
+    <p>Nie posiadasz żadnych minionych wizyt.</p>
   <% end %>
 <% else %>
   <p>Nie masz żadnych zaplanowanych wizyt.</p>
