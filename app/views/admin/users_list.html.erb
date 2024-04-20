@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= admin_path(@admin) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= admin_login_path(@admin_login) %>">Logowanie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= admin_doctors_path(@admin_doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_price_path(@admin_price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_lab_path(@admin_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_help_path(@admin_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_contact_path(@admin_contact) %>">Kontakt</a></li>
+          </ul>
+        </li>
+       <li class="nav-item">
+          <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
+        </li>
+        </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="cont_users_list">
+  <center><h1>Lista użytkowników</h1></center>
+  <table class="table table-hover">
+    <center><%= link_to 'Dodaj nowego użytkownika', admin_new_user_path, class: 'btn btn-primary' %> </center>
+    <thead>
+      <tr>
+        <th><center>E-mail</center></th>
+        <th><center><strong>Rola</strong></center></th>
+        <th><center>Edycja konta</center></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><center><%= user.email %></center></td>
+          <td><center><strong><%= user.role %></strong></center></td>
+          <td><center>
+            <div class="btn-group mr-2" role="group" aria-label="Edytuj i usuń">
+                <%= link_to 'Edytuj', edit_user_path(user), class: 'btn btn-primary' %>
+                    </div>
+                        <% unless current_user.admin? && current_user == user %>
+                    <div class="btn-group" role="group" aria-label="Edytuj i usuń">
+                <%= button_to 'Usuń', destroy_user_path(user), method: :delete, onclick: 'return confirmDelete()', class: 'btn btn-danger' %>
+             </div>
+            <% end %></center>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+ 
+  function confirmDelete() {
+    return confirm("Czy na pewno chcesz usunąć tego użytkownika?");
+  }
+</script>
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

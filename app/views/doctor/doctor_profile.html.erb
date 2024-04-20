@@ -49,52 +49,37 @@
   </div>
 </nav>
 
+<div class="cont_contact">
 
 <div id="cont">
-<div class="left">
-
-   <!-- Formularz do tworzenia nowego terminu -->
-    <h3><center>Dodaj nowy termin</center></h3>
-    <%= form_with model: @appointment, url: appointments_path do |form| %>
-      <div class="mb-3">
-        <%= form.label :appointment_date, "Data i godzina" %>
-        <%= form.datetime_local_field :appointment_date, class: "form-control" %>
-      </div>
-      <center><%= form.submit "Dodaj termin", class: "btn btn-primary" %></center>
-    <% end %>
+<div style="height:900px;">
+<center>
+<div class="card" style="width: 20rem; margin:50px;">
+ <% if current_user.email == 'aleksandra.nowak@example.com' %>
+    <center><%= image_tag "doctor1.png", height: 317 %></center>
+  <% elsif current_user.email == 'tomasz.kowalczyk@example.com' %>
+    <center><%= image_tag "doctor2.png", height: 317 %> </center>
+  <% elsif current_user.email == 'marta.lewandowska@example.com' %>
+    <center><%= image_tag "doctor3.png", height: 317 %> </center>
+  <% end %>
+  <div class="card-body">
+    <h5 class="card-title fw-lighter"><b><span class="badge text-bg-primary" style="font-size:20px">Twój profil</span></b></h5>
+    <p class="card-text fw-lighter" style="text-align:left;">Tutaj możesz zobaczyć informacje o swoim profilu. Zapewniamy, że Twoje dane są bezpieczne i poufne.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item fw-lighter" style="text-align:left;"><span style="font-weight:500">E-mail:</span> <%= current_user.email %></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Imię:</span> <%= current_user.first_name %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Nazwisko:</span> <%= current_user.last_name %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">PESEL:</span> <%= current_user.pesel_number %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Rola:</span> <%= current_user.role %></b></li>
+  </ul>
 </div>
-</div>
-
-<div class="right">
-  <h3><center>Kalendarz terminów</center></h3>
-  <div id="calendar"></div>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th><center>Data</center></th>
-        <th><center>Pacjent</center></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @appointments.each do |appointment| %>
-        <tr>
-          <td><center><%= appointment.appointment_date %></center></td>
-          <td><center>
-            <% if appointment.user_appointments.any? %>
-              <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
-            <% else %>
-              Wolny termin
-            <% end %></center>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+</center>
 </div>
 
+</div>
 </div>
 
 <footer class="footer">
-<p><b>Prawa autorskie © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
