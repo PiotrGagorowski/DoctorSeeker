@@ -7,7 +7,7 @@
       <p>Data ważności recepty: <%=prescription.utility_date%></p>
       <p>Lekarz wystawiający: <%= User.find(prescription.additional_user_id).first_name %> <%= User.find(prescription.additional_user_id).last_name %></p>
       <% if prescription.file.attached? %>
-        <%= link_to "Wynik badań", rails_blob_url(prescription.file) %>
+        <%= link_to "Recepta", rails_blob_url(prescription.file) %>
       <% else %>
         <p>Brak pliku do pobrania</p>
       <% end %>

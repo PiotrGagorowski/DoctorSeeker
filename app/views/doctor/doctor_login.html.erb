@@ -50,51 +50,33 @@
 </nav>
 
 
-<div id="cont">
-<div class="left">
+<center><button type="button" class="btn btn-primary btn-lg" style="margin-top: 200px; margin-bottom: 30px;"><%= link_to "Zaloguj się", new_user_session_path, style:"color:white; text-decoration: none;"%>
+</button>
+<h4>Jeśli nie masz jeszcze konta:</h4>
+<p><button type="button" class="btn btn-primary btn-lg" style="margin-top: 30px;"><%= link_to "Zarejestruj się", new_user_registration_path, style:"color:white; text-decoration: none;" %></button></p></center>
 
-   <!-- Formularz do tworzenia nowego terminu -->
-    <h3><center>Dodaj nowy termin</center></h3>
-    <%= form_with model: @appointment, url: appointments_path do |form| %>
-      <div class="mb-3">
-        <%= form.label :appointment_date, "Data i godzina" %>
-        <%= form.datetime_local_field :appointment_date, class: "form-control" %>
-      </div>
-      <center><%= form.submit "Dodaj termin", class: "btn btn-primary" %></center>
+<!--<% if current_user %>
+    <p>Hello <%= current_user.email %></p>
+    <p>You are a [<%= current_user.role %>]</p>
+
+    <% if current_user.patient? %>
+      <p>Welcome, patient!</p>
+    <% elsif current_user.admin? %>
+      <p>Welcome, admin!</p>
+    <% elsif current_user.doctor? %>
+      <p>Welcome, doctor!</p>
+    <% elsif current_user.labworker? %>
+      <p>Welcome, lab worker!</p>
     <% end %>
-</div>
-</div>
 
-<div class="right">
-  <h3><center>Kalendarz terminów</center></h3>
-  <div id="calendar"></div>
+    <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
+<% else %>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th><center>Data</center></th>
-        <th><center>Pacjent</center></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @appointments.each do |appointment| %>
-        <tr>
-          <td><center><%= appointment.appointment_date %></center></td>
-          <td><center>
-            <% if appointment.user_appointments.any? %>
-              <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
-            <% else %>
-              Wolny termin
-            <% end %></center>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+    <p>You are not signed in</p>
 
-</div>
+<% end %>-->
+
 
 <footer class="footer">
-<p><b>Prawa autorskie © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>

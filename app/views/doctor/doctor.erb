@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
@@ -11,10 +10,10 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active" href="<%= doctor_login_path(@login) %>">Logowanie</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
@@ -27,18 +26,19 @@
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
+          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -51,44 +51,47 @@
 
 <div id="cont">
 <div class="left">
-  <p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
-
-  <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
-
-
-
-  <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
-
-
-  <% if current_user %>
-      <p>Hello <%= current_user.first_name %></p>
-      <p>You are a [<%= current_user.role %>]</p> <%end%>
+  <p><h2 class="fw-lighter"><strong><center><% if current_user %>
+    <p>Witaj <%= current_user.first_name %></p>
+    <p>Jesteś zalogowany jako [<%= current_user.role %>]</p> <%end%>
   <%= form_tag(destroy_user_session_path, method: :delete) do %>
     <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
+  <% end %></strong></center></h2></p>
+
+  <% if current_user.email == 'aleksandra.nowak@example.com' %>
+    <center><%= image_tag "doctor1.png", height: 450 %></center>
+  <% elsif current_user.email == 'tomasz.kowalczyk@example.com' %>
+    <center><%= image_tag "doctor2.png", height: 450 %> </center>
+  <% elsif current_user.email == 'marta.lewandowska@example.com' %>
+    <center><%= image_tag "doctor3.png", height: 450 %> </center>
   <% end %>
+
 </div>
+
+
+
 <div class="right">
 
-<h3>Kalendarz terminów</h3>
+<h3><center>Kalendarz terminów</center></h3>
   <div id="calendar"></div>
 
   <table class="table">
     <thead>
       <tr>
-        <th>Data</th>
-        <th>Pacjent</th>
+        <th><center>Data</center></th>
+        <th><center>Pacjent</center></th>
       </tr>
     </thead>
     <tbody>
       <% @appointments.each do |appointment| %>
         <tr>
-          <td><%= appointment.appointment_date %></td>
-          <td>
+          <td><center><%= appointment.appointment_date %></center></td>
+          <td><center>
             <% if appointment.user_appointments.any? %>
               <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
             <% else %>
               Wolny termin
-            <% end %>
+            <% end %></center>
           </td>
         </tr>
       <% end %>
