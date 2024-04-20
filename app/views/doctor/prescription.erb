@@ -49,8 +49,7 @@
   </div>
 </nav>
 
-
-<div id="cont_prescription">
+<div class="cont_prescription">
 <div class="left_prescription">
 
 <center><h1>Odbyte wizyty </h1></center>
@@ -58,22 +57,22 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Nr ID Pacjenta</th>
-      <th>Imie</th>
-      <th>Nazwisko</th>
-      <th>Pesel</th>
-      <th>Akcje</th>
+      <th><center>Nr ID Pacjenta</center></th>
+      <th><center>Imie</center></th>
+      <th><center>Nazwisko</center></th>
+      <th><center>Pesel</center></th>
+      <th><center>Akcje</center></th>
     </tr>
   </thead>
   <tbody>
     <% if @patients.present? %>
       <% @patients.each do |user| %>
         <tr>
-          <td><%= user.id %></td>
-          <td><%= user.first_name %></td>
-          <td><%= user.last_name %></td>
-          <td><%= user.pesel_number %></td>
-          <td>
+          <td><center><%= user.id %></center></td>
+          <td><center><%= user.first_name %></center></td>
+          <td><center><%= user.last_name %></center></td>
+          <td><center><%= user.pesel_number %></center></td>
+          <td><center>
             <%= form_with(model: @medical_file, url: medical_files_path) do |form| %>
               <%= form.file_field :file, class: "form-control-file btn btn-secondary" %>
               <%= form.hidden_field :category, value: 'prescription' %>
@@ -82,7 +81,7 @@
               <div class="btn-group mt-2" role="group" aria-label="Akcje">
                 <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
               </div>
-            <% end %>
+            <% end %></center>
           </td>
         </tr>
       <% end %>
@@ -96,39 +95,73 @@
 </div>
 
 
+<center><h1>Formularz recept </h1></center>
+<!--<center><%= image_tag "recepta.jpg", height: 450 %></center> -->
 
+<!-- Tutaj będzie trzeba zmmienić ja tylko dodałam żeby wyglądało  -->
+<%= form_with(model: @user, url: admin_create_user_path, html: { class: 'user-form' }) do |form| %>
+
+      <div class="form-floating mb-3">
+        <!-- Pole dla imienia -->
+        <%= form.text_field :first_name, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :first_name, 'Imię', class: 'floatingFirstName' %>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <!-- Pole dla nazwiska -->
+        <%= form.text_field :last_name, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :last_name, 'Nazwisko', class: 'floatingLastName' %>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <!-- Pole dla numeru PESEL -->
+        <%= form.text_field :pesel_number, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :pesel_number, 'Numer PESEL', class: 'floatingPeselNumber' %>
+      </div>
+
+      <div class="form-floating mb-3">
+      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+      <label for="floatingTextarea2">Recepta</label>
+      </div>
+      
+      <!-- Przycisk zatwierdzający formularz -->
+      <%= form.submit 'Dodaj recpetę', class: 'btn btn-primary' %>
+    <% end %>
 
 </div>
+
+
+
 <div class="right_prescription">
   <center><h1>Wystawione recepty </h1></center>
-<div class="cont_prescription">
+
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Nr ID Pacjenta</th>
-      <th>Imie</th>
-      <th>Nazwisko</th>
-      <th>Pesel</th>
-      <th>Adres email</th>
-      <th>Akcje</th>
+      <th><center>Nr ID Pacjenta</center></th>
+      <th><center>Imie</center></th>
+      <th><center>Nazwisko</center></th>
+      <th><center>Pesel</center></th>
+      <!-- <th>Adres email</th> -->
+      <th><center>Akcje</center></th>
     </tr>
   </thead>
   <tbody>
     <% if @patients_with_prescription.present? %>
       <% @patients_with_prescription.each do |user| %>
         <tr>
-          <td><%= user.id %></td>
-          <td><%= user.first_name %></td>
-          <td><%= user.last_name %></td>
-          <td><%= user.pesel_number %></td>
-          <td><%= user.email %></td>
-          <td>
+          <td><center><%= user.id %></center></td>
+          <td><center><%= user.first_name %></center></td>
+          <td><center><%= user.last_name %></center></td>
+          <td><center><%= user.pesel_number %></center></td>
+          <!-- <td><%= user.email %></td> -->
+          <td><center>
             <%= form_with(model: @medical_file, url: medical_files_path) do |form| %>
               <%= form.hidden_field :category, value: 'prescription' %>
               <%= form.hidden_field :user_id, value: user.id %>
               <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
               <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
-            <% end %>
+            <% end %></center>
           </td>
         </tr>
       <% end %>
@@ -140,9 +173,10 @@
   </tbody>
 </table>
 
-
-
 </div>
+
+
+
 </div>
 
 

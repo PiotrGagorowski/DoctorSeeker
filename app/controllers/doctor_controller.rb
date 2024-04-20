@@ -63,7 +63,11 @@ class DoctorController < ApplicationController
     end
     def medical_file_params
         params.require(:medical_file).permit(:file, :category, :utility_date, :user_id)
-      end
+    end
+
+
+
+  
       
 end
 

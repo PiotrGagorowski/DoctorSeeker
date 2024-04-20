@@ -53,51 +53,46 @@
 <div id="cont">
 <div class="left">
 
-   <% if current_user %>
-      <p>Hello <%= current_user.first_name %></p>
-      <p>You are a [<%= current_user.role %>]</p> <%end%>
-  <%= form_tag(destroy_user_session_path, method: :delete) do %>
-    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
-  <% end %>
    <!-- Formularz do tworzenia nowego terminu -->
-    <h3>Dodaj nowy termin</h3>
+    <h3><center>Dodaj nowy termin</center></h3>
     <%= form_with model: @appointment, url: appointments_path do |form| %>
       <div class="mb-3">
         <%= form.label :appointment_date, "Data i godzina" %>
         <%= form.datetime_local_field :appointment_date, class: "form-control" %>
       </div>
-      <%= form.submit "Dodaj termin", class: "btn btn-primary" %>
+      <center><%= form.submit "Dodaj termin", class: "btn btn-primary" %></center>
     <% end %>
 </div>
 </div>
 
 <div class="right">
-  <h3>Kalendarz terminów</h3>
+  <h3><center>Kalendarz terminów</center></h3>
   <div id="calendar"></div>
 
   <table class="table">
     <thead>
       <tr>
-        <th>Data</th>
-        <th>Pacjent</th>
+        <th><center>Data</center></th>
+        <th><center>Pacjent</center></th>
       </tr>
     </thead>
     <tbody>
       <% @appointments.each do |appointment| %>
         <tr>
-          <td><%= appointment.appointment_date %></td>
-          <td>
+          <td><center><%= appointment.appointment_date %></center></td>
+          <td><center>
             <% if appointment.user_appointments.any? %>
               <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
             <% else %>
               Wolny termin
-            <% end %>
+            <% end %></center>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+
 </div>
 
 <footer class="footer">

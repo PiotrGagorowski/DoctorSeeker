@@ -58,8 +58,18 @@
     <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
   <% end %></strong></center></h2></p>
 
- 
+  <% if current_user.email == 'aleksandra.nowak@example.com' %>
+    <center><%= image_tag "doctor1.png", height: 450 %></center>
+  <% elsif current_user.email == 'tomasz.kowalczyk@example.com' %>
+    <center><%= image_tag "doctor2.png", height: 450 %> </center>
+  <% elsif current_user.email == 'marta.lewandowska@example.com' %>
+    <center><%= image_tag "doctor3.png", height: 450 %> </center>
+  <% end %>
+
 </div>
+
+
+
 <div class="right">
 
 <h3><center>Kalendarz terminów</center></h3>
