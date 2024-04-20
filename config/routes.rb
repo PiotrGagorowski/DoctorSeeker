@@ -70,12 +70,4 @@ Rails.application.routes.draw do
   patch 'admin/update_user/:id', to: 'admin#update_user', as: 'update_user'
   delete 'admin/destroy_user/:id', to: 'admin#destroy_user', as: 'destroy_user'
 
-
-=========
-  resources :medical_files do
-    collection do
-      get 'prescription'
-    end
-  end
->>>>>>>>> Temporary merge branch 2
 end
