@@ -14,15 +14,24 @@
   <body>
   <style> 
 
-  .flash-messages {
-    position: fixed;
-    top: 3px;
-    right: 300px;
-    z-index: 1000;
-    width: 300px;
-    padding: 20px;
-    text-align: center;
-  }
+.flash-messages {
+  position: fixed;
+  top: 3px;
+  right: 300px;
+  z-index: 1000;
+  width: 300px;
+  padding: 20px;
+  text-align: center;
+  visibility: visible; /* Ustawienie widoczności na początku */
+  opacity: 1; /* Ustawienie pełnej przejrzystości na początku */
+  animation: fadeOut 3s forwards; /* Dodaj animację fadeOut z czasem trwania 3 sekund */
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; } /* Początkowa wartość przezroczystości */
+  90% { opacity: 1; } /* Utrzymaj pełną przejrzystość do 90% animacji */
+  100% { opacity: 0; visibility: hidden; } /* Końcowa wartość przezroczystości i ukrycie elementu */
+}
 
   .flash-message {
     margin-bottom: 10px;
@@ -170,6 +179,5 @@
   
     <%= yield %>
 
-    
   </body>
 </html>

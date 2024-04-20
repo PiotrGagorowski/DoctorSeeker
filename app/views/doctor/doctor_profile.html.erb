@@ -55,7 +55,13 @@
 <div style="height:900px;">
 <center>
 <div class="card" style="width: 20rem; margin:50px;">
-<%= image_tag "admin.jpg", height: 300 %>
+ <% if current_user.email == 'aleksandra.nowak@example.com' %>
+    <center><%= image_tag "doctor1.png", height: 317 %></center>
+  <% elsif current_user.email == 'tomasz.kowalczyk@example.com' %>
+    <center><%= image_tag "doctor2.png", height: 317 %> </center>
+  <% elsif current_user.email == 'marta.lewandowska@example.com' %>
+    <center><%= image_tag "doctor3.png", height: 317 %> </center>
+  <% end %>
   <div class="card-body">
     <h5 class="card-title fw-lighter"><b><span class="badge text-bg-primary" style="font-size:20px">Twój profil</span></b></h5>
     <p class="card-text fw-lighter" style="text-align:left;">Tutaj możesz zobaczyć informacje o swoim profilu. Zapewniamy, że Twoje dane są bezpieczne i poufne.</p>
