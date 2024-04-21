@@ -1,0 +1,104 @@
+
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="cont">
+<div class="left">
+  <p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
+
+  <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
+
+
+
+  <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
+
+
+  <% if current_user %>
+      <p>Hello <%= current_user.first_name %></p>
+      <p>You are a [<%= current_user.role %>]</p> <%end%>
+  <%= form_tag(destroy_user_session_path, method: :delete) do %>
+    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
+  <% end %>
+</div>
+<div class="right">
+
+<h3>Kalendarz terminów</h3>
+  <div id="calendar"></div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Pacjent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @appointments.each do |appointment| %>
+        <tr>
+          <td><%= appointment.appointment_date %></td>
+          <td>
+            <% if appointment.user_appointments.any? %>
+              <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
+            <% else %>
+              Wolny termin
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+</div>
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

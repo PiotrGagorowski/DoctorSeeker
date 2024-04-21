@@ -1,0 +1,122 @@
+
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        
+        
+        <li class="nav-item dropdown">
+        <li class="nav-item">
+        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Strona główna</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+        <li class="nav-item">
+        <a class="nav-link active" aria-disabled="true" href="<%= profile_path(@profile) %>">Mój profil</a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-disabled="true" href="<%= patients_path(@patients) %>">Pacjenci</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Badania
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= logout_labworker_path(@logout_labworker) %>">Wyloguj</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="cont">
+
+
+<span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Kliknij na ikonę, aby zadać nam pytanie, a my odpowiemy najszybciej jak to możliwe!" data-bs-placement="left" style=" margin-left:1380px; position: fixed; margin-top:500px">
+<button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<%= image_tag "question_mark.jpg", height: 80, style:"border-radius:30px; border:2px solid #333" %>
+</button>
+</span>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 badge text-bg-primary" id="exampleModalLabel">Skontaktuj się z nami!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <label for="exampleFormControlInput1" class="form-label">Adres e-mail</label>
+      <input type="email" class="form-control" id="exampleFormControlInput1">
+      <label for="exampleFormControlTextarea1" class="form-label">Pytanie</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Tutaj wpisz swoje pytanie..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+        <button type="button" class="btn btn-primary">Wyślij</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Witaj w Panelu Laboratorium Medycznego</span></h1>
+<hr style="width:80%; margin-bottom:0" />
+</center>
+
+<div style="width:40%; height:100px; float: left; padding:30px; margin-top:10px; margin-left:70px">
+
+<% if current_user %>
+<center><h3 class="fw-lighter" style="color:black; font-size:30px; text-shadow: 0 0 2px #333; padding-bottom:5px"><strong>Witaj <%= current_user.first_name %>! 😊</strong></h3></center>
+<% end %>
+
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
+Jesteś teraz zalogowany do Panelu Laboratorium Medycznego. Tutaj możesz przeglądać, aktualizować i zarządzać wszystkimi badaniami laboratoryjnymi oraz danymi pacjentów dla naszej przychodni lekarskiej. Dzięki tej platformie możesz efektywnie monitorować postępy, przypisywać wyniki badań oraz generować raporty.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
+Skorzystaj z paska nawigacyjnego, aby szybko przejść do potrzebnych funkcji.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px"> 
+Jeśli potrzebujesz pomocy lub masz jakiekolwiek pytania, nie wahaj się skontaktować z nami. 
+</h5>
+<h5 class="text-body-secondary" style="margin-left:150px"><span class="badge rounded-pill text-bg-warning">Życzymy owocnej pracy!</span></h5>
+
+</div>
+
+<div style="width:55%; height:100px; float:right; padding-left:150px; margin-top:0px;">
+
+<%= image_tag "lab.png", class:"d-block", height: 520 %>
+
+</div>
+
+<center><hr style="width:50%; margin-top:500px; padding:50px" /></center>
+</div>
+
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>
+
+<script>
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+</script>

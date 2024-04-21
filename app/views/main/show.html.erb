@@ -1,0 +1,21 @@
+<h1>Doktor <%= @doctor.first_name %> <%= @doctor.last_name %></h1>
+
+<p><strong>Specjalizacja:</strong> </p>
+<p><strong>Opis:</strong> </p>
+<p><strong>Średnia ocena: <%=@average_score %></strong></p>
+
+<h2>Recenzje:</h2>
+<% if @reviews.any? %>
+  <ul>
+    <% @reviews.each do |review| %>
+      <li>
+        <p><strong>Ocena:</strong> <%= review.score %></p>
+        <p><strong>Komentarz:</strong> <%= review.comment %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Brak recenzji dla tego lekarza.</p>
+<% end %>
+
+

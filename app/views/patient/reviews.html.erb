@@ -1,0 +1,187 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
+        </li>
+        <li class="nav-item">
+          <% unless current_user %>
+          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <%end%>
+        </li>
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Moje
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+      </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="cont">
+<center><hr style="width:50%; margin-bottom:0" /></center>
+<div style="width:40%; height:100px; float: left; padding:30px; margin-top:10px; margin-left:70px">
+<center>
+<%= image_tag "review.jpg", class:"d-block", height: 400, style:"border-radius:20px"%>
+</center>
+<h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Recenzje</span></h1>
+
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:20px">
+Witaj w sekcji recenzji! Tutaj możesz podzielić się swoimi opiniami na temat naszych usług lub przeglądać swoje wcześniejsze recenzje. Cieszymy się, że masz chęć podzielić się swoimi doświadczeniami z nami oraz innymi pacjentami.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:50px; margin-top:20px">
+Jeśli chcesz przeglądać recenzje innych użytkowników przejdź do sekcji <span class="badge text-bg-primary">O przychodni</span> ➡️ <span class="badge text-bg-primary">Lekarze</span>.</h5>
+</div>
+
+<div style="width:55%; height:100px; float:right; margin-left:40px">
+
+<span class="btn btn-outline-primary" style="font-size:20px; margin-left:100px">Dodaj recenzję</span>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:20px; margin-left:100px">
+Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
+</h5>
+
+
+<div class="card border-primary mb-3" style="max-width: 540px; margin-top: 30px; margin-left: 100px; height:370px; ">
+<div class="card-body">
+<form style="width:500px">
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label"><span class="badge text-bg-warning">Imię i nazwisko lekarza</span></label>
+  <select class="form-select" aria-label="Default select example">
+  <option selected>Kliknij, aby wybrać lekarza</option>
+  <option value="1">Dr. Aleksandra Nowak</option>
+  <option value="2">Dr. Tomasz Kowalczyk</option>
+  <option value="3">Dr. Marta Lewandowska</option>
+  <option value="4">Dr. Katarzyna Nowakowska</option>
+  <option value="5">Dr. Marcin Wojciechowski</option>
+  <option value="6">Dr. Joanna Kowalska</option>
+  <option value="7">Dr. Magdalena Szymańska</option>
+  <option value="8">Dr. Zbigniew Adamczyk</option>
+  <option value="9">Dr. Tomasz Kaczmarek</option>
+  <option value="10">Dr. Paweł Nowicki</option>
+</select>
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label"><span class="badge text-bg-warning">Ocena</span></label>
+  <select class="form-select" aria-label="Default select example">
+  <option selected>Wybierz ocenę</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</select>
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label"><span class="badge text-bg-warning">Komentarz</span></label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Tutaj wpisz tekst..."></textarea>
+</div>
+<button type="button" class="btn btn-primary">Wyślij</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+<center><hr style="width:80%; margin-top:800px" /></center>
+<div style="width:40%; margin-top:20px; margin-left:50px; float:left; margin-bottom:20px">
+
+<p>
+<span class="btn btn-outline-primary" style="font-size:20px; margin-top:30px; margin-left:50px">Twoje recenzje</span>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:20px; margin-left:50px">Poniżej znajdziesz swoje wcześniejsze recenzje:</h5>
+
+  <% if @reviews.any? %>
+  <% @reviews.each do |review| %>
+  <table class="table table-bordered table-striped bg-primary text-white">
+    <thead>
+      <tr>
+        <th>Imię i nazwisko lekarza</th>
+        <th>Wystatwiona ocena</th>
+        <th>Recenzja</th>
+        <th>Opublikowano</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= review.doctor.first_name %> <%= review.doctor.last_name %></td>
+        <td><%= review.score %></td>
+        <td><%= review.comment %></td>
+        <td><%= review.created_at.strftime("%d-%m-%Y %H:%M") %></td>
+      </tr>
+    </tbody>
+  </table>
+  <% end %>
+  <% else %>
+  <span class="badge text-bg-danger" style="font-size:20px; margin-left:50px">Nie wystawiłeś jeszcze żadnej recenzji ☹️</span>
+  <% end %>
+
+
+</div>
+
+<div style="width:50%; margin-top:20px; margin-left:98px; float:right; padding:10px; margin-bottom:20px">
+
+<%= image_tag "discount.jpg", class:"d-block", height: 400, style:"border-radius:70px; margin-left:60px; margin-bottom:30px"%>
+
+<div class="card" style="width: 35rem;">
+  <div class="card-body">
+    <h5 class="card-title">Zdobądź zniżkę!</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">Zbieraj punkty</h6>
+    <p class="card-text">W ramach naszej wdzięczności za Twoje zaangażowanie i opinię, przygotowaliśmy specjalną ofertę. Im więcej recenzji napiszesz, tym większą zniżkę możesz otrzymać! Każda Twoja recenzja to krok bliżej do obniżki cenowej.</p>
+      <h5 class="card-title">Jak to działa?</h5>
+      <p class="card-text">Napisz recenzję, a my przyznamy Ci punkty za każdą opinię. Kiedy uzbierasz odpowiednią ilość punktów, otrzymasz specjalny kod zniżkowy, który możesz wykorzystać przy kolejnej wizycie.</p>
+      </div>
+</div>
+
+</div>
+
+</div>
+<center><hr style="width:50%; margin-top:600px; margin-bottom:100px;" /></center>
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>
