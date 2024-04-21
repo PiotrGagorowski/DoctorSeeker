@@ -14,20 +14,29 @@
         
         <li class="nav-item dropdown">
         <li class="nav-item">
-        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Menu</a>
+        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Strona główna</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+        <li class="nav-item">
+        <a class="nav-link active" aria-disabled="true" href="<%= profile_path(@profile) %>">Mój profil</a>
         </li>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-disabled="true" href="<%= patients_path(@patients) %>">Pacjenci</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Badania
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
+          </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Wykonane Badania</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= logout_path(@logout) %>">Wyloguj</a>
+          <a class="nav-link active" href="<%= logout_labworker_path(@logout_labworker) %>">Wyloguj</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -39,18 +48,18 @@
 </nav>
 
 <div id="cont">
-<div class="left">
-<p><h2 class="fw-lighter"><strong><center>Zlecone Badania:</strong></center></h2></p>
-<table>
+<div style="width:50%; height:100px; float: left; padding:20px; margin-top:20px; margin-left:40px">
+
+<table class="table" style="margin-top:0px; width:700px">
   <thead>
     <tr>
-      <th>Nr ID Pacjenta</th>
-      <th>Imie</th>
-      <th>Nazwisko</th>
-      <th>Pesel</th>
-      <th>Adres email</th>
-      <th>Rola</th>
-      <th> Wyniki badań </th>
+    <th scope="col" style="background-color:#c6c6c6">ID</th>
+    <th scope="col" style="background-color:#c6c6c6">Imie</th>
+    <th scope="col" style="background-color:#c6c6c6">Nazwisko</th>
+    <th scope="col" style="background-color:#c6c6c6">Pesel</th>
+    <th scope="col" style="background-color:#c6c6c6">Email</th>
+    <th scope="col" style="background-color:#c6c6c6">Rola</th>
+    <th scope="col" style="background-color:#c6c6c6">Badanie</th>
     </tr>
   </thead>
   <tbody>
@@ -63,7 +72,7 @@
         <td><%= user.pesel_number %></td>
         <td><%= user.email %></td>
         <td><%= user.role %></td>
-        <td><button onclick="window.location.href = 'medical_files'">Pacjent przybył na badania</td>
+        <td><button onclick="window.location.href = 'medical_files'" type="button" class="btn btn-outline-success">Potwierdź wykonanie badania</td>
         </td>
       </tr>
       <% end %>
@@ -73,10 +82,15 @@
 
 
 </div>
-<div class="right">
-
-
-
+<div style="width:45%; height:100px; float:right; padding:30px; margin-top:10px; margin-left:0px">
+<center><h1><span class="badge text-bg-primary" style="margin-bottom:10px">Sekcja Zlecone Badania</span></h1>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
+Jako pracownik laboratorium, masz tutaj dostęp do listy zleconych badań dla naszych pacjentów. 
+Możesz przeglądać, aktualizować i zarządzać zleceniami laboratoryjnymi, sprawdzając ich status oraz przypisywane terminy. 
+Zapewnijcie dokładność i terminowość w wykonywaniu badań, dbając o wysoką jakość usług medycznych, jaką świadczymy naszym pacjentom. 
+<p><b>Dziękujemy za Twoje zaangażowanie w poprawę opieki zdrowotnej.</b></p>
+</h5>
+<%= image_tag "comresearch.jpg", class:"rounded mx-auto d-block", height: 280 %>
 
 
 
