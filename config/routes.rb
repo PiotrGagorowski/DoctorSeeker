@@ -39,13 +39,19 @@ Rails.application.routes.draw do
   post 'doctor/appointments', to: 'doctor#create_appointment'
 
   #Patient
-  get 'patient', to: 'patient#patient'
+  get 'patient', to: 'patient#patient', as: 'patient'
 
   get 'patient/appointments', to: 'patient#appointments', as: 'patient_appointments'
   get 'patient/lab_results', to: 'patient#lab_results', as: 'patient_lab_results'
   get 'patient/prescriptions', to: 'patient#prescriptions', as: 'patient_prescriptions'
   get 'patient/reviews', to: 'patient#reviews', as: 'patient_reviews'
-
+  get 'patient/logout_patient', to: 'patient#logout_patient', as: 'logout_patient'
+  get 'patient/help_patient', to: 'patient#help_patient', as: 'help_patient'
+  get 'patient/contact_patient', to: 'patient#contact_patient', as: 'contact_patient'
+  get 'patient/doctors_patient', to: 'patient#doctors_patient', as: 'doctors_patient'
+  get 'patient/price_patient', to: 'patient#price_patient', as: 'price_patient'
+  get 'patient/lab_patient', to: 'patient#lab_patient', as: 'lab_patient'
+  get 'patient/profile_patient', to: 'patient#profile_patient', as: 'profile_patient'
 
 
   #Labworker
@@ -53,7 +59,8 @@ Rails.application.routes.draw do
   get 'patients', to: 'labworker#patients', as: 'patients'
   get 'comresearch', to: 'labworker#comresearch', as: 'comresearch'
   get 'exeresearch', to: 'labworker#exeresearch', as: 'exeresearch'
-  get 'logout', to: 'labworker#logout', as: 'logout'
+  get 'logout_labworker', to: 'labworker#logout_labworker', as: 'logout_labworker'
+  get 'profile', to: 'labworker#profile_labworker', as:'profile'
 
   #Admin
   get 'admin', to: 'admin#admin'
