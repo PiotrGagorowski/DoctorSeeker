@@ -35,6 +35,17 @@ Rails.application.routes.draw do
   get 'issue_prescription', to: 'doctor#prescription'
   get 'set_appointment', to: 'doctor#appointments'    
   get 'doctor/appointments.json', to: 'appointments#index_json'
+  get 'doctor_contact', to: 'doctor#doctor_contact', as: 'doctor_contact'
+  get 'doctor_login', to: 'doctor#doctor_login', as: 'doctor_login'
+  get 'doctor_doctors', to: 'doctor#doctor_doctors', as: 'doctor_doctors'
+  get 'doctor_lab', to: 'doctor#doctor_lab', as: 'doctor_lab'
+  get 'doctor_price', to: 'doctor#doctor_price', as: 'doctor_price'
+  get 'doctor_help', to: 'doctor#doctor_help', as: 'doctor_help'
+  get 'doctor_profile', to: 'doctor#doctor_profile', as: 'doctor_profile'
+
+
+
+
   
   post 'doctor/appointments', to: 'doctor#create_appointment'
 
@@ -63,7 +74,16 @@ Rails.application.routes.draw do
   get 'profile', to: 'labworker#profile_labworker', as:'profile'
 
   #Admin
-  get 'admin', to: 'admin#admin'
+  get 'admin', to: 'admin#admin', as: 'admin'
+  get 'users_list', to: 'admin#users_list', as: 'users_list'
+  get 'admin_contact', to: 'admin#admin_contact', as: 'admin_contact'
+  get 'admin_login', to: 'admin#admin_login', as: 'admin_login'
+  get 'admin_doctors', to: 'admin#admin_doctors', as: 'admin_doctors'
+  get 'admin_lab', to: 'admin#admin_lab', as: 'admin_lab'
+  get 'admin_price', to: 'admin#admin_price', as: 'admin_price'
+  get 'admin_help', to: 'admin#admin_help', as: 'admin_help'
+  get 'admin_profile', to: 'admin#admin_profile', as: 'admin_profile'
+
 
   resources :medical_files do
     collection do
