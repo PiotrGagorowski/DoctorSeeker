@@ -1,0 +1,254 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= doctor_login_path(@login) %>">Logowanie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div id="cont">
+<center><h1><span class="badge text-bg-primary" style="margin-top: 10px;">Karta Stałego Klienta DoctorSeeker</span></h1>
+<hr style="width:80%" />
+</center>
+
+<div style="width:40%; height:100px; float: left; padding:30px; margin-top:0;">
+<center>
+<%= image_tag "cart.jpg", class:"d-block", height:400, style:"margin-left:30px"%>
+<h4 class="fw-lighter" style="border: 3px solid #0d6efd; padding:8px; width:610px; text-shadow: 0 0 2px #333; background-color:white; margin-top:20px"><b>Cena Miesięcznej Opłaty: TYLKO 50 zł/miesiąc</b></h4>
+</center>
+</div>
+
+
+<div style="width:55%; height:100px; float:right; padding:30px;">
+<center>
+<h4 class="fw-lighter" style="padding:8px; width:610px;">Zostań Naszym Stałym Klientem i Ciesz Się Korzyściami!</h4>
+<h4 class="fw-lighter"><span style="color:#0d6efd; font-weight:bold;text-shadow: 0 0 1px #333">Karta Stałego Klienta DoctorSeeker</span> - Twój Klucz do Zdrowia i Wygody</h4>
+
+<div class="list-group" style="margin-top:30px">
+  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Zalety, które oferujemy naszym stałym klientom:</h5>
+    </div>
+    <p class="mb-1" style="text-align:left;"></p>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action">
+  <div class="d-flex w-100 justify-content-between">
+    <h5 class="mb-1">Priorytetowy Dostęp do Usług Medycznych</h5>
+  </div>
+  <p class="mb-1" style="text-align:left;">Jako posiadacz Karty Stałego Klienta DoctorSeeker, będziesz mieć pierwszeństwo w umawianiu wizyt i skróconych czasach oczekiwania.</p>
+    </a>
+  <a href="#" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Zniżki na Usługi Medyczne</h5>
+    </div>
+    <p class="mb-1" style="text-align:left;">Ciesz się korzystnymi cenami na wizyty lekarskie, badania diagnostyczne, oraz inne usługi medyczne dostępne w naszej przychodni.</p>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Program Profilaktyki i Promocji Zdrowia</h5>
+    </div>
+    <p class="mb-1" style="text-align:left;">Otrzymuj regularne powiadomienia o kampaniach zdrowotnych, szczepieniach, oraz innych programach promujących zdrowy styl życia.</p>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Opieka Koordynowana przez Lekarza Rodzinnego</h5>
+    </div>
+    <p class="mb-1" style="text-align:left;">Nasz zespół lekarzy zapewni Ci spersonalizowaną opiekę medyczną, koordynującą Twoje leczenie i dbającą o Twoje zdrowie na każdym etapie.</p>
+  </a>
+</div>
+
+
+</center>
+</div>
+
+<div style="width:100%;height:300px; margin: 620px 0px 1900px 0px">
+<h5 class="fw-lighter" style="text-align:justify; margin-left:20px; margin-right:20px">Nie zwlekaj! Zainwestuj w swoje zdrowie i wygodę już dziś poprzez wykupienie Karty Stałego Klienta DoctorSeeker. Skontaktuj się z nami, aby dowiedzieć się więcej lub umówić się na wizytę rejestracyjną. Z nami, troska o Twoje zdrowie staje się łatwiejsza i bardziej dostępna niż kiedykolwiek wcześniej!</h5>
+<center><p class="fw-lighter" style="color:#120a8f"><b><i>Zdrowie to najcenniejszy skarb - razem dbajmy o niego!</p></b></i></center>
+<center><hr style="width:50%" /></center>
+
+<center><h1><span class="badge text-bg-primary" style="margin-top: 10px;">Cennik naszych usług lekarskich</span></h1>
+
+<table class="table" style="margin-top:50px; width:1000px">
+  <thead>
+    <tr>
+      <th scope="col" style="width:20%; background-color:#c6c6c6">Nazwa Poradni</th>
+      <th scope="col" style="width:20%; background-color:#c6c6c6">Imię i nazwisko lekarza</th>
+      <th scope="col" style="width:150px; background-color:#c6c6c6">Usługi i cena</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3"><span class="badge text-bg-primary">Poradnia Ogólna</span></td>
+      <td>Dr. Aleksandra Nowak</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item">Konsultacja lekarska: 120 zł</li>
+      <li class="list-group-item">Badanie kontrolne: 100 zł</li>
+      <li class="list-group-item">Zaszywanie ran: 150 zł</li>
+      <li class="list-group-item">Iniekcja przeciwbólowa: 80 zł</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Dr. Tomasz Kowalczyk</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item">Konsultacja lekarska: 130 zł</li>
+      <li class="list-group-item">Badanie krwi: 70 zł</li>
+      <li class="list-group-item">Iniekcja przeciwzapalna: 100 zł</li>
+      <li class="list-group-item">Konsultacja zdalna (telemedycyna): 90 zł</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Dr. Marta Lewandowska</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item">Konsultacja lekarska: 110 zł</li>
+      <li class="list-group-item">Badanie ogólne moczu: 50 zł</li>
+      <li class="list-group-item">Zabieg usuwania szwów: 80 zł</li>
+      <li class="list-group-item">Ocena stanu zdrowia przed podróżą: 150 zł</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td><span class="badge rounded-pill text-bg-warning">Poradnia Dziecięca</span></td>
+    <td>Dr. Katarzyna Nowak</td>
+    <td>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">Konsultacja lekarska: 100 zł</li>
+    <li class="list-group-item">Badanie kontrolne: 80 zł</li>
+    <li class="list-group-item">Szczepienia: cena zależna od typu szczepionki</li>
+    <li class="list-group-item">Wizyta domowa: 150 zł (w obrębie miasta)</li>
+    </ul>
+    </td>
+  </tr>
+   </tr>
+    <tr>
+    <td><span class="badge rounded-pill text-bg-success">Poradnia Rehabilitacyjna</span></td>
+    <td>Dr. Marcin Wojciechowski</td>
+    <td>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">Konsultacja rehabilitacyjna: 120 zł</li>
+    <li class="list-group-item">Sesja fizjoterapii: 60 zł</li>
+    <li class="list-group-item">Terapia manualna: 80 zł</li>
+    <li class="list-group-item">Badanie USG narządu ruchu: 180 zł</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+  <td><span class="badge rounded-pill text-bg-danger">Poradnia Medycyny Pracy</span></td>
+  <td>Dr. Joanna Kowalska</td>
+  <td>
+  <ul class="list-group list-group-flush">
+  <li class="list-group-item">Badania wstępne dla pracowników: 200 zł</li>
+  <li class="list-group-item">Badania okresowe: 150 zł</li>
+  <li class="list-group-item">Badania kontrolne po wypadku: 250 zł</li>
+  <li class="list-group-item">Badania przesiewowe: 100 zł</li>
+  </ul>
+  </td>
+</tr>
+<tr>
+<td><span class="badge rounded-pill text-bg-info">Poradnia Ginekologiczna</span></td>
+<td>Dr. Magdalena Szymańska</td>
+<td>
+<ul class="list-group list-group-flush">
+<li class="list-group-item">Konsultacja ginekologiczna: 150 zł</li>
+<li class="list-group-item">Badanie cytologiczne: 80 zł</li>
+<li class="list-group-item">Badanie USG ginekologiczne: 200 zł</li>
+<li class="list-group-item">Kolposkopia: 250 zł</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><span class="badge rounded-pill" style="background-color:#fd7e14">Poradnia Laryngologiczna</span></td>
+<td>Dr. Zbigniew Adamczyk</td>
+<td>
+<ul class="list-group list-group-flush">
+<li class="list-group-item">Konsultacja laryngologiczna: 120 zł</li>
+<li class="list-group-item">Badanie audiometryczne: 100 zł</li>
+<li class="list-group-item">Endoskopia nosa i gardła: 180 zł</li>
+<li class="list-group-item">Usuwanie wosku z uszu: 50 zł</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><span class="badge rounded-pill" style="background-color:purple">Poradnia Stomatologiczna</span></td>
+<td>Dr. Tomasz Kaczmarek</td>
+<td>
+<ul class="list-group list-group-flush">
+<li class="list-group-item">Badanie stomatologiczne: 80 zł</li>
+<li class="list-group-item">Plomba: 150 zł - 300 zł</li>
+<li class="list-group-item">Wybielanie zębów: 600 zł - 1000 zł</li>
+<li class="list-group-item">Ekstrakcja zęba: 200 zł - 400 zł</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><span class="badge rounded-pill" style="background-color:#d63384">Poradnia Kardiologiczna</span></td>
+<td>Dr. Paweł Nowicki</td>
+<td>
+<ul class="list-group list-group-flush">
+<li class="list-group-item">Konsultacja kardiologiczna: 150 zł</li>
+<li class="list-group-item">EKG: 80 zł</li>
+<li class="list-group-item">Echo serca: 250 zł</li>
+<li class="list-group-item">Test wysiłkowy: 300 zł</li>
+</ul>
+</td>
+</tr>
+  </tbody>
+</table>
+
+</div>
+
+
+
+</div>
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

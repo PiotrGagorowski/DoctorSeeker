@@ -49,55 +49,73 @@
   </div>
 </nav>
 
-<div id="cont">
-<div class="left">
-  <p><h2 class="fw-lighter"><strong><center><% if current_user %>
-    <p>Witaj <%= current_user.first_name %></p>
-    <p>Jesteś zalogowany jako [<%= current_user.role %>]</p> <%end%>
-  <%= form_tag(destroy_user_session_path, method: :delete) do %>
-    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
-  <% end %></strong></center></h2></p>
-
-  <% if current_user.email == 'aleksandra.nowak@example.com' %>
-    <center><%= image_tag "doctor1.png", height: 450 %></center>
-  <% elsif current_user.email == 'tomasz.kowalczyk@example.com' %>
-    <center><%= image_tag "doctor2.png", height: 450 %> </center>
-  <% elsif current_user.email == 'marta.lewandowska@example.com' %>
-    <center><%= image_tag "doctor3.png", height: 450 %> </center>
-  <% end %>
-
-</div>
 
 
+<div class="cont_contact">
+<section id="contact-info">
 
-<div class="right">
+  
+    <center><h1>Kontakt</h1></center>
+    
+    <div class="alert alert-secondary" role="alert">
+    <center><strong>Adres: ul. Zdrowia 112, 00-999 Uzdrowisko</strong></center>
+    </div>
 
-<h3><center>Kalendarz terminów</center></h3>
-  <div id="calendar"></div>
+    <div class="right_image">
+    <%= image_tag "mapa.jpg", height: 420 %>
+    </div>
 
+<div class="left_table">
+  
   <table class="table">
-    <thead>
-      <tr>
-        <th><center>Data</center></th>
-        <th><center>Pacjent</center></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @appointments.each do |appointment| %>
-        <tr>
-          <td><center><%= appointment.appointment_date %></center></td>
-          <td><center>
-            <% if appointment.user_appointments.any? %>
-              <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
-            <% else %>
-              Wolny termin
-            <% end %></center>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Poradnia</th>
+      <th scope="col">Numer telefonu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Poradnia Ogólna</td>
+      <td>+48 112 999 112</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Poradnia Dziecięca</td>
+      <td>+48 644 864 294</td>
+    </tr>
+    <th scope="row">3</th>
+      <td>Poradnia Ginekologiczna</td>
+      <td>+48 874 975 468</td>
+    </tr>
+    <th scope="row">4</th>
+      <td>Poradnia Medycyny Pracy</td>
+      <td>+48 345 670 987</td>
+    </tr>
+    <th scope="row">5</th>
+      <td>Poradnia Rehabilitacyjna</td>
+      <td>+48 457 865 456</td>
+    </tr>
+    <th scope="row">6</th>
+      <td>Poradnia Laryngologiczna</td>
+      <td>+48 675 456 665</td>
+    </tr>
+    <th scope="row">7</th>
+      <td>Poradnia Stomatologiczna</td>
+      <td>+48 544 445 643</td>
+    </tr>
+    <th scope="row">8</th>
+      <td>Poradnia Kardiologiczna</td>
+      <td>+48 654 456 654</td>
+    </tr>
+    <th scope="row">9</th>
+      <td>E-mail</td>
+      <td>kontakt@doctorseeker.pl</td>
+    </tr>
+  </tbody>
+</table>
 </div>
 </div>
 

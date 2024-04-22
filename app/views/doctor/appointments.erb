@@ -6,32 +6,39 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+          <a class="nav-link active" href="<%= doctor_login_path(@login) %>">Logowanie</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            O przychodni
+            O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
+          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -42,54 +49,78 @@
   </div>
 </nav>
 
+
 <div id="cont">
 <div class="left">
 
-   <% if current_user %>
-      <p>Hello <%= current_user.first_name %></p>
-      <p>You are a [<%= current_user.role %>]</p> <%end%>
-  <%= form_tag(destroy_user_session_path, method: :delete) do %>
-    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
-  <% end %>
+<div id="carouselExampleDark" class="carousel carousel-dark slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+       <%= image_tag "kwiecień.png", class:"d-block w-100" %>
+    </div>
+    <div class="carousel-item">
+    <%= image_tag "maj.png", class:"d-block w-100" %>
+    </div>
+    <div class="carousel-item">
+     <%= image_tag "maj.png", class:"d-block w-100" %>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+</div>
+
    <!-- Formularz do tworzenia nowego terminu -->
-    <h3>Dodaj nowy termin</h3>
+    <h3><center>Dodaj nowy termin</center></h3>
     <%= form_with model: @appointment, url: appointments_path do |form| %>
       <div class="mb-3">
         <%= form.label :appointment_date, "Data i godzina" %>
         <%= form.datetime_local_field :appointment_date, class: "form-control" %>
       </div>
-      <%= form.submit "Dodaj termin", class: "btn btn-primary" %>
+      <center><%= form.submit "Dodaj termin", class: "btn btn-primary" %></center>
     <% end %>
 </div>
 </div>
 
 <div class="right">
-  <h3>Kalendarz terminów</h3>
+  <h3><center>Kalendarz terminów</center></h3>
   <div id="calendar"></div>
 
   <table class="table">
     <thead>
       <tr>
-        <th>Data</th>
-        <th>Pacjent</th>
+        <th><center>Data</center></th>
+        <th><center>Pacjent</center></th>
       </tr>
     </thead>
     <tbody>
       <% @appointments.each do |appointment| %>
         <tr>
-          <td><%= appointment.appointment_date %></td>
-          <td>
+          <td><center><%= appointment.appointment_date %></center></td>
+          <td><center>
             <% if appointment.user_appointments.any? %>
               <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
             <% else %>
               Wolny termin
-            <% end %>
+            <% end %></center>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+
 </div>
 
 <footer class="footer">
