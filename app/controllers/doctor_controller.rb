@@ -1,6 +1,11 @@
 class DoctorController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:file]
     before_action :authenticate_user!
+
+    def doctor_doctors
+      @doctors = User.where(role: :doctor)
+    end
+
     def doctor
         @appointments = current_user.appointments_as_doctor
                                 .joins(:user_appointments)
@@ -58,6 +63,11 @@ class DoctorController < ApplicationController
     end
     def medical_file_params
         params.require(:medical_file).permit(:file, :category, :utility_date, :user_id)
-      end
+    end
+
+
+
+  
       
 end
+

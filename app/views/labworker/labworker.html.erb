@@ -14,20 +14,29 @@
         
         <li class="nav-item dropdown">
         <li class="nav-item">
-        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Menu</a>
+        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Strona główna</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+        <li class="nav-item">
+        <a class="nav-link active" aria-disabled="true" href="<%= profile_path(@profile) %>">Mój profil</a>
         </li>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-disabled="true" href="<%= patients_path(@patients) %>">Pacjenci</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Badania
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
+          </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Wykonane Badania</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= logout_path(@logout) %>">Wyloguj</a>
+          <a class="nav-link active" href="<%= logout_labworker_path(@logout_labworker) %>">Wyloguj</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -39,31 +48,75 @@
 </nav>
 
 <div id="cont">
-<div class="left">
-<% if current_user %>
-<p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker <%= current_user.first_name %> !</strong></center></h2></p>
- <%end%>
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Cieszymy się, że dołączyłeś do naszego zespołu laboratorium, gdzie codziennie podejmujemy się wyzwań w dziedzinie medycyny i zdrowia. Tutaj Twoja wiedza i umiejętności będą miały szansę na rozwój, a Twoja praca przyczyni się do poprawy jakości życia naszych pacjentów. Bądź częścią naszej inspirującej społeczności, gdzie nauka, innowacje i dbałość o zdrowie łączą siły dla dobra wszystkich.</h5>
 
 
-</div>
-<div class="right">
+<span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Kliknij na ikonę, aby zadać nam pytanie, a my odpowiemy najszybciej jak to możliwe!" data-bs-placement="left" style=" margin-left:1380px; position: fixed; margin-top:500px">
+<button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<%= image_tag "question_mark.jpg", height: 80, style:"border-radius:30px; border:2px solid #333" %>
+</button>
+</span>
 
-<%= image_tag "Logo.jpg", height: 450 %>
 
-<div id="carouselExampleCaptions" class="carousel slide" style="margin-top: 30px; width: 450px;">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 badge text-bg-primary" id="exampleModalLabel">Skontaktuj się z nami!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <label for="exampleFormControlInput1" class="form-label">Adres e-mail</label>
+      <input type="email" class="form-control" id="exampleFormControlInput1">
+      <label for="exampleFormControlTextarea1" class="form-label">Pytanie</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Tutaj wpisz swoje pytanie..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+        <button type="button" class="btn btn-primary">Wyślij</button>
+      </div>
+    </div>
   </div>
+</div>
 
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Witaj w Panelu Laboratorium Medycznego</span></h1>
+<hr style="width:80%; margin-bottom:0" />
+</center>
+
+<div style="width:40%; height:100px; float: left; padding:30px; margin-top:10px; margin-left:70px">
+
+<% if current_user %>
+<center><h3 class="fw-lighter" style="color:black; font-size:30px; text-shadow: 0 0 2px #333; padding-bottom:5px"><strong>Witaj <%= current_user.first_name %>! 😊</strong></h3></center>
+<% end %>
+
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
+Jesteś teraz zalogowany do Panelu Laboratorium Medycznego. Tutaj możesz przeglądać, aktualizować i zarządzać wszystkimi badaniami laboratoryjnymi oraz danymi pacjentów dla naszej przychodni lekarskiej. Dzięki tej platformie możesz efektywnie monitorować postępy, przypisywać wyniki badań oraz generować raporty.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
+Skorzystaj z paska nawigacyjnego, aby szybko przejść do potrzebnych funkcji.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px"> 
+Jeśli potrzebujesz pomocy lub masz jakiekolwiek pytania, nie wahaj się skontaktować z nami. 
+</h5>
+<h5 class="text-body-secondary" style="margin-left:150px"><span class="badge rounded-pill text-bg-warning">Życzymy owocnej pracy!</span></h5>
 
 </div>
+
+<div style="width:55%; height:100px; float:right; padding-left:150px; margin-top:0px;">
+
+<%= image_tag "lab.png", class:"d-block", height: 520 %>
+
 </div>
+
+<center><hr style="width:50%; margin-top:500px; padding:50px" /></center>
 </div>
+
 
 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+</script>

@@ -1,3 +1,18 @@
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    /* Dodatkowe style */
+    .checked {
+      color: orange; /* Kolor gwiazdek */
+    }
+  </style>
+
+</head>
+
+
 <nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
@@ -10,29 +25,52 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
         </li>
+        <li class="nav-item">
+          <% unless current_user %>
+          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <%end%>
+        </li>
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Moje
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+          </ul>
+        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
+          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
+          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+      </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -42,34 +80,27 @@
   </div>
 </nav>
 
+
 <div id="cont">
 
-<h1>Lista lekarzy</h1>
-
-<% @doctors.each do |doctor| %>
-  <div>
-    <h2><%= link_to "#{doctor.first_name} #{doctor.last_name}", doctor_id_path(doctor), class: 'btn btn-primary' %></h2>
-  </div>
-  <hr>
-<% end %>
 <center><h1 style="margin-bottom:20px"><b>Witaj w sekcji<span class="badge text-bg-primary" style="margin-top: 30px; margin-left:10px">Lekarze</span></h1></center></b>
 <center><hr class="hr hr-blurry" style="width:80%; margin:0"></center>
-<div style="width:50%; height:100px; float: left; padding:30px;">
-<h5 class="fw-lighter" style="text-align:justify">Jesteśmy dumni z zespołu wybitnych lekarzy, którzy z pasją i zaangażowaniem poświęcają się opiece zdrowotnej naszych pacjentów. Każdy z naszych lekarzy to specjalista w swojej dziedzinie, gotowy zapewnić kompleksową opiekę medyczną na najwyższym poziomie. </h5>
+<div style="width:50%; height:80px; float: left; padding:30px;">
+<h5 class="fw-lighter" style="text-align:justify">Zakładka "Lekarze" zawiera profile naszych specjalistów, wraz z informacjami o ich specjalizacji oraz doświadczeniu. </h5>
 <h5 class="fw-lighter" style="text-align:justify">
-Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każdy z naszych lekarzy dba o to, abyś czuł się bezpiecznie i komfortowo podczas wizyty, a nasza opieka medyczna była skuteczna i dostosowana do Twoich potrzeb.</h5>
+Wartościowym elementem są również recenzje od pacjentów, które pomagają w wyborze odpowiedniego lekarza.</h5>
 </div>
 
-<div style="width:50%; height:100px; float:right; padding:30px">
-<h5 class="fw-lighter" style="text-align:justify">Niezależnie od Twoich potrzeb zdrowotnych, znajdziesz u nas lekarza odpowiedniego dla Ciebie. Od pediatrów, przez ginekologów, po kardiologów i specjalistów innych dziedzin medycyny – nasz zespół jest gotowy sprostać różnorodnym potrzebom zdrowotnym pacjentów w każdym wieku.</h5>
-<h5 class="fw-lighter" style="text-align:justify">Czekamy na Ciebie w naszej przychodni, abyśmy mogli razem dbać o Twoje zdrowie i dobre samopoczucie.</h5>
+<div style="width:50%; height:80px; float:right; padding:30px">
+<h5 class="fw-lighter" style="text-align:justify">Dzięki nim możesz poznać opinie innych osób na temat kompetencji i empatii danego specjalisty.</h5>
+<h5 class="fw-lighter" style="text-align:justify">Zachęcamy do zapoznania się z profilami naszych lekarzy i dzielenia się swoimi doświadczeniami.</h5>
 
 <div class="alert alert-primary" role="alert" style="margin-top:10px">
-<p class="fw-lighter"> ℹ️ Aby czytać i wystawiać opinie o lekarzach prosimy o <b>zalogowanie się</b> na naszej platformie.</p>
+<p class="fw-lighter"> ℹ️ Aby wystawić opinię o lekarzu prosimy o przejście do sekcji <b>Moje ➡️ Recenzje</b>.</p>
 </div>
 </div>
 
-<div style="width:100%;height:300px; margin: 300px 0px 2450px 0px">
+<div style="width:100%;height:300px; margin: 250px 0px 2450px 0px">
 
 <center><hr class="hr hr-blurry" style="width:50%"></center>
 
@@ -79,10 +110,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
     <div class="card h-100">
     <%= image_tag "doctor1.png", class:"d-block", height:450%>
       <div class="card-body">
-        <h5 class="card-title">Dr. Aleksandra Nowak</h5>
+        <h5 class="card-title">Dr. Aleksandra Nowak
+        <span style="float:right;">
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        </span>
+        </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
+        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal20" style="margin-top:20px">
+        Recenzje
+        </button></p>
         <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -112,10 +154,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
     <div class="card h-100">
       <%= image_tag "doctor2.png", class:"d-block", height:450%>
       <div class="card-body">
-        <h5 class="card-title">Dr. Tomasz Kowalczyk</h5>
+        <h5 class="card-title">Dr. Tomasz Kowalczyk
+        <span style="float:right;">
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        </span>
+        </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
+        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal19" style="margin-top:20px">
+        Recenzje
+        </button></p>
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -145,10 +198,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
   <div class="card h-100">
     <%= image_tag "doctor3.png", class:"d-block", height:450%>
     <div class="card-body">
-      <h5 class="card-title">Dr. Marta Lewandowska</h5>
+      <h5 class="card-title">Dr. Marta Lewandowska
+      <span style="float:right;">
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      </span>
+      </h5>
       <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
       Kliknij tutaj, aby dowiedzieć się więcej
       </button>
+      <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal18" style="margin-top:20px">
+        Recenzje
+        </button></p>
       <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -181,10 +245,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
     <div class="card h-100">
     <%= image_tag "doctor5.jpg", class:"d-block", height:450%>
       <div class="card-body">
-        <h5 class="card-title">Dr. Katarzyna Nowakowska</h5>
+        <h5 class="card-title">Dr. Katarzyna Nowakowska
+        <span style="float:right;">
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        </span>
+        </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal4">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
+        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal17" style="margin-top:20px">
+        Recenzje
+        </button></p>
         <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -214,10 +289,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
     <div class="card h-100">
       <%= image_tag "doctor4.jpg", class:"d-block", height:450%>
       <div class="card-body">
-        <h5 class="card-title">Dr. Marcin Wojciechowski</h5>
+        <h5 class="card-title">Dr. Marcin Wojciechowski
+        <span style="float:right;">
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        </span>
+        </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal5">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
+        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal16" style="margin-top:20px">
+        Recenzje
+        </button></p>
         <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -247,10 +333,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
   <div class="card h-100">
     <%= image_tag "doctor8.jpg", class:"d-block", height:450%>
     <div class="card-body">
-      <h5 class="card-title">Dr. Joanna Kowalska</h5>
+      <h5 class="card-title">Dr. Joanna Kowalska
+      <span style="float:right;">
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      </span>
+      </h5>
       <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal6">
       Kliknij tutaj, aby dowiedzieć się więcej
       </button>
+      <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal15" style="margin-top:20px">
+        Recenzje
+        </button></p>
       <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -283,10 +380,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
     <div class="card h-100">
     <%= image_tag "doctor6.jpg", class:"d-block", height:450%>
       <div class="card-body">
-        <h5 class="card-title">Dr. Magdalena Szymańska</h5>
+        <h5 class="card-title">Dr. Magdalena Szymańska
+        <span style="float:right;">
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        </span>
+        </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal7">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
+        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal14" style="margin-top:20px">
+        Recenzje
+        </button></p>
         <div class="modal fade" id="exampleModal7" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -316,10 +424,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
     <div class="card h-100">
       <%= image_tag "doctor7.jpg", class:"d-block", height:450%>
       <div class="card-body">
-        <h5 class="card-title">Dr. Zbigniew Adamczyk</h5>
+        <h5 class="card-title">Dr. Zbigniew Adamczyk
+        <span style="float:right;">
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        </span>
+        </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal8">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
+        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal13" style="margin-top:20px">
+        Recenzje
+        </button></p>
         <div class="modal fade" id="exampleModal8" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -349,10 +468,21 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
   <div class="card h-100">
     <%= image_tag "doctor9.jpg", class:"d-block", height:450%>
     <div class="card-body">
-      <h5 class="card-title">Dr. Tomasz Kaczmarek</h5>
+      <h5 class="card-title">Dr. Tomasz Kaczmarek
+      <span style="float:right;">
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      </span>
+      </h5>
       <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal9">
       Kliknij tutaj, aby dowiedzieć się więcej
       </button>
+      <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal12" style="margin-top:20px">
+        Recenzje
+        </button></p>
       <div class="modal fade" id="exampleModal9" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -381,14 +511,24 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
 
 <div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
 
-  <div class="col" style="margin-left:468px">
+  <div class="col" style="margin-left:468px; margin-bottom:100px">
     <div class="card h-100">
     <%= image_tag "doctor10.jpg", class:"d-block", height:450%>
       <div class="card-body">
-        <h5 class="card-title">Dr. Paweł Nowicki</h5>
+        <h5 class="card-title">Dr. Paweł Nowicki
+        <span style="float:right;">
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        </span></h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal10">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
+        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal11" style="margin-top:20px">
+        Recenzje
+        </button></p>
         <div class="modal fade" id="exampleModal10" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -419,9 +559,180 @@ Zapraszamy do zapoznania się z naszymi lekarzami oraz ich specjalizacjami. Każ
 </div>
 </div>
 
+<!-- Sekcja recenzje do przycisku Recenzja -->
 
+<div class="modal fade" tabindex="-1" id="exampleModal11">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Pawła Nowickiego</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="modal fade" tabindex="-1" id="exampleModal12">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Tomasza Kaczmarka</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal13">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Zbigniewa Adamczyka</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal14">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Magdaleny Szymańskiej</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal15">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Joanny Kowalskiej</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal16">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Marcina Wojciechowskiego</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal17">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Katarzyny Nowakowskiej</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal18">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Marty Lewandowskiej</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal19">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Tomasza Kowalczyka</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal20">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzje użytkowników</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tutaj beda recenzje Aleksandy Nowak</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
