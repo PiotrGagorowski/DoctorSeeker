@@ -1,39 +1,179 @@
-<h1>Twoje wizyty</h1>
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
+        </li>
+        <li class="nav-item">
+          <% unless current_user %>
+          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <%end%>
+        </li>
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Moje
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+          </ul>
+        </li>
 
-<% if @user_appointments.any? %>
-  <h2>Aktualne wizyty:</h2>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+      </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="cont">
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Moje Wizyty</span></h1></center>
+
+<div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:150px">
+
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Tutaj znajdziesz wszystkie informacje dotyczące Twoich planowanych i zrealizowanych wizyt w naszej przychodni lekarskiej. Dzięki temu narzędziu możesz łatwo zarządzać swoimi terminami i mieć pełną kontrolę nad swoim zdrowiem.
+</h5>
+
+<div class="d-flex justify-content-between" style="margin-top:20px; margin-bottom:20px">
+<div class="card text-bg-primary mb-3" style="max-width: 16rem;">
+  <div class="card-body">
+    <h5 class="card-title fw-lighter"><span style="font-weight:600">Nadchodzące wizyty</span></h5>
+    <p class="card-text fw-lighter">Nie przegap żadnego terminu! Tutaj znajdziesz listę zaplanowanych wizyt w naszej przychodni. Znajdziesz tu datę, godzinę oraz nazwę lekarza lub specjalisty, który będzie Cię przyjmować. Możesz także zrezygnować z wizyty w każdej chwili.</p>
+  </div>
+</div>
+
+<div class="card text-bg-info mb-3" style="max-width: 16rem;">
+  <div class="card-body">
+    <h5 class="card-title fw-lighter"><span style="font-weight:600">Historia wizyt</span></h5>
+    <p class="card-text fw-lighter">Zapoznaj się z historią Twoich dotychczasowych wizyt. Dzięki temu możesz śledzić przebieg leczenia, zalecenia lekarza oraz wyniki badań. To doskonałe narzędzie do monitorowania swojego zdrowia i prowadzenia spójnej dokumentacji medycznej.</p>
+  </div>
+</div>
+</div>
+
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+<center>Dziękujemy, że korzystasz z naszych usług! Dbamy o Twoje zdrowie i zawsze staramy się zapewnić Ci najlepszą opiekę medyczną.</center>
+</h5>
+</div>
+
+<div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:150px">
+
+<center><%= image_tag "Logo.jpg", class:"d-block", height: 400, style:"border-radius:50px; margin-top:40px" %></center>
+
+</div>
+<center><hr style="width:80%; margin-bottom:0; margin-top:600px" />
+
+<h2 class="mb-4" style="margin-top:20px">Moje wizyty ⬇️</h2></center>
+
+<div style="width:40%; height:50px; float: left; padding:30px; margin-left:70px; margin-bottom:300px">
+
+  <h2 class="mb-4" style="text-align:center">Nadchodzące Wizyty</h2>
+  <% if @user_appointments.any? %>
   <% has_current_appointments = false %>
   <% @user_appointments.each do |appointment| %>
-    <% if appointment.appointment.appointment_date >= Date.today %>
-      <% has_current_appointments = true %>
-      <div>
-        <p>Data wizyty: <%= appointment.appointment.appointment_date %></p>
-        <p>Lekarz: <%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></p>
-        <%= link_to 'Zrezygnuj z wizyty', user_appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure you want to cancel this appointment?' } %>
-      </div>
-      <hr>
-    <% end %>
+  <% if appointment.appointment.appointment_date >= Date.today %>
+  <% has_current_appointments = true %>
+  <table class="table table-bordered table-striped bg-primary text-white">
+    <thead>
+      <tr>
+        <th>Data wizyty</th>
+        <th>Imię i nazwisko lekarza</th>
+        <th>Rezygnacja</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= appointment.appointment.appointment_date %></td>
+        <td><%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></td>
+        <td><%= link_to 'Zrezygnuj z wizyty', user_appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure you want to cancel this appointment?' } %></td>
+      </tr>
+    </tbody>
+  </table>
   <% end %>
-  <% unless has_current_appointments %>
-    <p>Nie posiadasz żadnych aktualnych wizyt.</p>
+  <% end %>
+  <% else %>
+  <center><span class="badge text-bg-danger" style="font-size:20px;">Nie masz żadnych nadchodzących wizyt ☹️</span></center>
   <% end %>
 
-  <h2>Minione wizyty:</h2>
+
+
+</div>
+
+<div style="width:40%; height:50px; float: right; padding:30px; margin-right:70px; margin-bottom:300px">
+
+  <h2 class="mb-4" style="text-align:center">Historia wizyt</h2>
+  <% if @user_appointments.any? %>
   <% has_past_appointments = false %>
   <% @user_appointments.each do |appointment| %>
-    <% if appointment.appointment.appointment_date < Date.today %>
-      <% has_past_appointments = true %>
-      <div>
-        <p>Data wizyty: <%= appointment.appointment.appointment_date %></p>
-        <p>Lekarz: <%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></p>
-        <!-- Dodaj tutaj inne informacje o minionej wizycie -->
-      </div>
-      <hr>
-    <% end %>
-  <% end %>
-  <% unless has_past_appointments %>
-    <p>Nie posiadasz żadnych minionych wizyt.</p>
-  <% end %>
-<% else %>
-  <p>Nie masz żadnych zaplanowanych wizyt.</p>
+  <% if appointment.appointment.appointment_date < Date.today %>
+  <% has_past_appointments = true %>
+  <table class="table table-bordered table-striped bg-primary text-white">
+    <thead>
+      <tr>
+        <th>Data wizyty</th>
+        <th>Imię i nazwisko lekarza</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= appointment.appointment.appointment_date %></td>
+        <td><%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></td>
+      </tr>
+    </tbody>
+  </table>
 <% end %>
+<% end %>
+<% else %>
+<center><span class="badge text-bg-danger" style="font-size:20px;">Nie masz żadnych minionych wizyt ☹️</span></center>
+<% end %>
+
+</div>
+
+</div>
+
+
+
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>
