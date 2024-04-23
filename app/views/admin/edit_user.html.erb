@@ -5,36 +5,50 @@
 <body class="form-body">
   <div class="form-container">
     <%= form_with(model: @user, url: update_user_path(@user), method: :patch, html: { class: 'user-form' }) do |form| %>
-      <!-- Pole dla adresu email -->
-      <%= form.label :email, class: 'form-label' %>
-      <%= form.text_field :email, class: 'form-input' %>
-  
-      <!-- Pole dla hasła -->
-      <%= form.label :password, class: 'form-label' %>
-      <%= form.password_field :password, class: 'form-input' %>
-  
-      <!-- Pole dla potwierdzenia hasła -->
-      <%= form.label :password_confirmation, class: 'form-label' %>
-      <%= form.password_field :password_confirmation, class: 'form-input' %>
-  
-      <!-- Pole dla imienia -->
-      <%= form.label :first_name, class: 'form-label' %>
-      <%= form.text_field :first_name, class: 'form-input' %>
-  
-      <!-- Pole dla nazwiska -->
-      <%= form.label :last_name, class: 'form-label' %>
-      <%= form.text_field :last_name, class: 'form-input' %>
-  
-      <!-- Pole dla numeru PESEL -->
-      <%= form.label :pesel_number, class: 'form-label' %>
-      <%= form.text_field :pesel_number, class: 'form-input' %>
-  
-      <!-- Pole dla roli -->
-      <%= form.label :role, class: 'form-label' %>
-      <%= form.select :role, options_for_select(User.roles.keys.map { |role| [role.humanize, role] }, @user.role), class: 'form-select' %>
-  
+      <div class="form-floating mb-3">
+        <!-- Pole dla adresu email -->
+        <%= form.text_field :email, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :email, 'Adres email', class: 'floatingInput' %>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <!-- Pole dla hasła -->
+        <%= form.password_field :password, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :password, 'Hasło', class: 'floatingPassword' %>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <!-- Pole dla potwierdzenia hasła -->
+        <%= form.password_field :password_confirmation, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :password_confirmation, 'Potwierdź hasło', class: 'floatingPasswordConfirmation' %>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <!-- Pole dla imienia -->
+        <%= form.text_field :first_name, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :first_name, 'Imię', class: 'floatingFirstName' %>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <!-- Pole dla nazwiska -->
+        <%= form.text_field :last_name, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :last_name, 'Nazwisko', class: 'floatingLastName' %>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <!-- Pole dla numeru PESEL -->
+        <%= form.text_field :pesel_number, placeholder: ' ', class: 'form-control' %>
+        <%= form.label :pesel_number, 'Numer PESEL', class: 'floatingPeselNumber' %>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <!-- Pole dla roli -->
+        <%= form.select :role, options_for_select(User.roles.keys.map { |role| [role.humanize, role] }, @user.role), {}, { class: 'form-select' } %>
+        <%= form.label :role, 'Rola', class: 'floatingRole' %>
+      </div>
+      
       <!-- Przycisk zatwierdzający formularz -->
-      <%= form.submit 'Zapisz zmiany', class: 'form-submit' %>
+      <%= form.submit 'Zapisz zmiany', class: 'btn btn-primary' %>
     <% end %>
   </div>
 </body>

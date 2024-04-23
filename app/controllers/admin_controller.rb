@@ -9,7 +9,21 @@ class AdminController < ApplicationController
           end
           @users = User.all
     end
-  
+
+    def users_list
+      unless current_user.admin?
+          flash[:error] = 'Brak dostępu!'
+          redirect_to root_path
+        end
+        @users = User.all
+    end
+
+
+    def admin_doctors
+      @doctors = User.where(role: :doctor)
+    end
+    
+
     def new_user
       @user = User.new
     end
