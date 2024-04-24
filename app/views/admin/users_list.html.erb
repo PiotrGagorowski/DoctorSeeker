@@ -13,9 +13,6 @@
           <a class="nav-link active" aria-current="page" href="<%= admin_path(@admin) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= admin_login_path(@admin_login) %>">Logowanie</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
         </li>
         <li class="nav-item dropdown">
@@ -37,6 +34,9 @@
        <li class="nav-item">
           <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= admin_logout_path(@admin_logout) %>">Wyloguj</a>
+      </li>
         </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -46,10 +46,31 @@
   </div>
 </nav>
 
-<div class="cont_users_list">
-  <center><h1>Lista użytkowników</h1></center>
+<div id="cont">
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Lista użytkowników</span></h1></center>
+
+<div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:150px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Znajdziesz tutaj szczegółowe informacje dotyczące wszytskich użytkowników. Dbamy o to, abyś miał łatwy dostęp do edycji oraz w prosty sposób dodać nowego użytkownika.
+</h5>
+</div>
+<div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:150px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Poniżej możesz wygodnie przeglądać dane dotyczące pacjentów, lekarzy, pracowników labolatorium oraz innych administartorów.
+Jeśli masz jakiekolwiek pytania lub wątpliwości dotyczące edycji, nie wahaj się skontaktować z innym administratorem. 
+Pamiętaj aby z rozwagą dokonywać wszytskich zmain.</h5>
+<h5 class="fw-lighter" style="text-align:center; margin-bottom:10px">Dziękujemy, że jesteś częścią naszej przychodni lekarskiej!<p><i><b><span style="color: #000080">~ DoctorSeeker</i></b></span></p></h5>
+</div>
+
+<center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
+
+<div style="width:98%; margin-bottom:100px">
+  <h2 class="mb-4" style="text-align:center; margin-top:20px">Lista wszystkich użytkowników ⬇️</h2>
   <table class="table table-hover">
-    <center><%= link_to 'Dodaj nowego użytkownika', admin_new_user_path, class: 'btn btn-primary' %> </center>
+  <center><%= link_to 'Dodaj nowego użytkownika', admin_new_user_path, class: 'btn btn-primary' %> </center>
+
+  <center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
+
     <thead>
       <tr>
         <th><center>E-mail</center></th>
@@ -77,7 +98,7 @@
     </tbody>
   </table>
 </div>
-
+</div>
 <script>
  
   function confirmDelete() {

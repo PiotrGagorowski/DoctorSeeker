@@ -13,9 +13,6 @@
           <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= doctor_login_path(@login) %>">Logowanie</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
         </li>
         <li class="nav-item">
@@ -40,6 +37,9 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -48,7 +48,6 @@
     </div>
   </div>
 </nav>
-
 <div class="cont_contact">
 
 <div id="cont">
