@@ -13,9 +13,6 @@
           <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= doctor_login_path(@login) %>">Logowanie</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
         </li>
         <li class="nav-item">
@@ -40,6 +37,9 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -51,7 +51,42 @@
 
 
 <div id="cont">
+
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Dostępne terminy wizyt</span></h1></center>
+<div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:200px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+W tym miejscu masz możliowść dodać termin, podczas którego możesz spotkać się z pacjentem. Po prawej stronie znajduje się formularz do dodawania terminów natomiast po lewej stronie jest spis termniów, które dodałeś.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Jeśli potrzebujesz zmienić termin lub masz pytania dotyczące dodawania nowych terminów, zachęcamy do kontaktu z naszym działem administracji.
+</h5>
+</div>
+
+<div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:200px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Pamiętaj, aby podczas dodawania terminów wybrać konkrenty dzień oraz godzinę spotkania. 
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Dziękujemy, że jesteś częścią naszej przychodni.
+</h5>
+<h5 class="fw-lighter" style="text-align:center; margin-bottom:10px"><i>
+<span style="color: #000080;">Zespół Przychodni Lekarskiej <b>DoctorSeeker</b></span></i>
+</h5>
+</div>
+
+<center><hr style="width:80%; margin-top:10px; padding:0px" /></center>
+
 <div class="left">
+
+   <!-- Formularz do tworzenia nowego terminu -->
+    <center><h3 class="mb-4" style="margin-top:5px">Dodaj nowy termin ⬇️</h3></center>
+    <%= form_with model: @appointment, url: appointments_path do |form| %>
+      <div class="mb-3">
+        <%= form.label :appointment_date, "Data i godzina" %>
+        <%= form.datetime_local_field :appointment_date, class: "form-control" %>
+      </div>
+      <center><%= form.submit "Dodaj termin", class: "btn btn-primary" %></center>
+    <% end %>
 
 <div id="carouselExampleDark" class="carousel carousel-dark slide">
   <div class="carousel-indicators">
@@ -81,23 +116,15 @@
 
 </div>
 
-   <!-- Formularz do tworzenia nowego terminu -->
-    <h3><center>Dodaj nowy termin</center></h3>
-    <%= form_with model: @appointment, url: appointments_path do |form| %>
-      <div class="mb-3">
-        <%= form.label :appointment_date, "Data i godzina" %>
-        <%= form.datetime_local_field :appointment_date, class: "form-control" %>
-      </div>
-      <center><%= form.submit "Dodaj termin", class: "btn btn-primary" %></center>
-    <% end %>
+  
 </div>
 </div>
 
 <div class="right">
-  <h3><center>Kalendarz terminów</center></h3>
+  <center><h3 class="mb-4" style="margin-top:5px">Kalendarz terminów ⬇️</h3></center>
   <div id="calendar"></div>
 
-  <table class="table">
+  <table class="table table-bordered table-striped bg-primary text-white">
     <thead>
       <tr>
         <th><center>Data</center></th>
