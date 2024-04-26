@@ -48,7 +48,7 @@
 
 <% @doctors.each do |doctor| %>
   <div>
-    <h2><%= link_to "#{doctor.first_name} #{doctor.last_name}", doctor_id_path(doctor) %></h2>
+    <h2><%= link_to "#{doctor.first_name} #{doctor.last_name}", doctor_id_path(doctor), class: 'btn btn-primary' %></h2>
   </div>
   <hr>
 <% end %>

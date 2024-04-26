@@ -1,0 +1,235 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= admin_path(@admin) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= admin_doctors_path(@admin_doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_price_path(@admin_price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_lab_path(@admin_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_help_path(@admin_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_contact_path(@admin_contact) %>">Kontakt</a></li>
+          </ul>
+        </li>
+       <li class="nav-item">
+          <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= admin_logout_path(@admin_logout) %>">Wyloguj</a>
+      </li>
+        </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="cont">
+<center><h1><span class="badge text-bg-primary" style="margin-top: 10px;">Laboratorium</span></h1>
+<hr style="width:80%" />
+</center>
+
+<div style="width:40%; height:100px; float: left; padding:30px; margin-top:0;">
+<h5 class="fw-lighter" style="text-align:justify; margin-left:30px; margin-right:20px">Zapraszamy do skorzystania z usług naszego laboratorium, które oferuje szeroki zakres badań diagnostycznych, pomagających w identyfikacji i monitorowaniu różnorodnych schorzeń. Nasz wykwalifikowany personel oraz nowoczesne wyposażenie gwarantują dokładne i rzetelne wyniki.</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-left:30px; margin-right:20px;">Zapraszamy do kontaktu z naszym laboratorium w celu umówienia się na badania oraz uzyskania bardziej szczegółowych informacji na temat dostępnych badań i ich cen. Nasz personel służy pomocą i fachowym doradztwem.</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-left:30px; margin-right:20px;"><strong>Badania dostępne w naszym laboratorium ➡️</strong></h5>
+
+<%= image_tag "lab.png", class:"d-block", height:550, style:"margin-left:10px"%>
+
+</div>
+
+<div style="width:55%; height:100px; float:right; padding:30px;">
+
+<table class="table" style="margin-top:0px; width:700px">
+  <thead>
+    <tr>
+      <th scope="col" style="width:30%; background-color:#c6c6c6">Nazwa Badania</th>
+      <th scope="col" style="width:60%; background-color:#c6c6c6">Opis i cena</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pełna morfologia krwi</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Badanie obejmuje liczbę krwinek czerwonych, białych oraz płytek krwi, które są istotnym wskaźnikiem zdrowia organizmu.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 60 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie lipidowe</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Pozwala na ocenę poziomu cholesterolu całkowitego, HDL (lipoproteiny o dużej gęstości), LDL (lipoproteiny o małej gęstości) oraz trójglicerydów, co jest istotne dla oceny ryzyka chorób serca i układu krążenia.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 80 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie poziomu glukozy we krwi (cukrzyca)</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Pomaga w diagnozowaniu cukrzycy oraz monitorowaniu kontroli poziomu cukru we krwi.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 50 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie moczu ogólnego</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Badanie ocenia fizykochemiczne właściwości moczu oraz obecność ewentualnych nieprawidłowości, co może być pomocne w diagnozowaniu chorób nerek, układu moczowego oraz cukrzycy.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 40 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie moczu na obecność bakterii (posiew moczu)</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Badanie wykonywane w celu identyfikacji bakterii w moczu, co jest istotne w diagnostyce infekcji dróg moczowych.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 70 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie poziomu hormonów (np. TSH, T3, T4)</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Pomaga w ocenie funkcjonowania tarczycy oraz innych narządów endokrynologicznych.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 120 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+</tbody>
+</table>
+</div>
+
+<div style="width:100%;height:300px; margin: 950px 0px 920px 0px">
+<center><hr style="width:50%" /></center>
+<center><h1><span class="badge text-bg-primary" style="margin-top: 10px;">Dbamy o Zdrowie Twojego Dziecka</span></h1>
+<h5 class="fw-lighter" style="text-align:justify; margin-left:200px; margin-right:200px; margin-top:30px">Czy wiesz, że nasze laboratorium oferuje szeroki zakres badań diagnostycznych, które mogą pomóc w monitorowaniu zdrowia i rozwijaniu Twojego dziecka? Niezależnie od tego, czy potrzebujesz rutynowych badań kontrolnych, czy specjalistycznych testów diagnostycznych, nasz zespół jest gotowy sprostać Twoim oczekiwaniom.
+</h5></center>
+
+<div style="width:40%; height:100px; float: left; padding:30px; margin-top:0;">
+
+<h4 class="fw-lighter" style="margin-left:30px"><span style="color:#0d6efd; font-weight:bold;text-shadow: 0 0 1px #333; margin-top:50px;">Zapraszamy do skorzystania z naszych usług dla najmłodszych pacjentów!</span></h4>
+
+<h5 class="fw-lighter" style="text-align:justify; margin-left:70px; margin-right:20px; margin-top:30px; margin-bottom:20px"><strong>Dlaczego warto wybrać nasze laboratorium? ⤵️</strong> </h5>
+
+<div class="list-group" style="margin-bottom:20px">
+<a class="list-group-item list-group-item-action list-group-item-primary" style="text-align:left; margin-left:20px">💡 Badania dostosowane do potrzeb dzieci i młodzieży</a>
+<a class="list-group-item list-group-item-action list-group-item-primary" style="text-align:left; margin-left:20px">💡 Wykwalifikowany personel, który dba o komfort i bezpieczeństwo najmłodszych pacjentów</a>
+<a class="list-group-item list-group-item-action list-group-item-primary" style="text-align:left; margin-left:20px">💡 Nowoczesne wyposażenie zapewniające dokładne i rzetelne wyniki</a>
+    <a class="list-group-item list-group-item-action list-group-item-primary" style="text-align:left; margin-left:20px">💡 Indywidualne podejście do każdego dziecka, dbając o jego emocje i dobrostan</a>    
+</div>
+
+<h5 class="fw-lighter" style="text-align:justify; margin-left:30px; margin-right:20px; margin-top:10px; margin-bottom:20px">Skontaktuj się z nami już dziś, aby umówić się na badania dla Twojego dziecka. Nasz zespół z przyjemnością udzieli wszelkich potrzebnych informacji i zapewni fachową opiekę diagnostyczną dla Twojego dziecka.
+</h5>
+
+<%= image_tag "child.jpg", class:"d-block", height:410, style:"margin-left:60px; margin-top:40px"%>
+
+</div>
+
+<div style="width:55%; height:100px; float:right; padding:30px;">
+
+<table class="table" style="margin-top:0px; width:700px">
+  <thead>
+    <tr>
+      <th scope="col" style="width:30%; background-color:#c6c6c6">Nazwa Badania</th>
+      <th scope="col" style="width:60%; background-color:#c6c6c6">Opis i cena</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Badanie morfologii krwi u dzieci</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Podobnie jak u dorosłych, badanie obejmuje liczbę krwinek czerwonych, białych oraz płytek krwi, co pozwala na ocenę ogólnego stanu zdrowia dziecka.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 50 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie przeciwciał anty-HBs (Hepatitis B) u dzieci
+    </td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Badanie przeciwciał pozwala ocenić odporność dziecka na wirusa zapalenia wątroby typu B i może być wykonywane w celach profilaktycznych lub kontrolnych po szczepieniu.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 60 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie CRP (białko C-reaktywne) u dzieci</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Badanie to pozwala na ocenę stopnia zapalenia w organizmie dziecka i może być przydatne w diagnozowaniu różnorodnych chorób, w tym infekcji.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 40 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie w kierunku alergii pokarmowej u dzieci</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Badanie to ocenia reakcje immunologiczne na różne pokarmy, co może pomóc w diagnozowaniu alergii pokarmowej u dzieci.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 150 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie stężenia żelaza we krwi u dzieci</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Badanie to pozwala na ocenę poziomu żelaza we krwi dziecka, co jest istotne dla diagnostyki niedoborów żelaza i anemii.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 50 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+    <td>Badanie RTG zębów mlecznych u dzieci</td>
+      <td>
+      <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="text-align:justify">Badanie radiologiczne zębów mlecznych pozwala ocenić stan uzębienia dziecka i diagnozować ewentualne problemy z zębami mlecznymi.</li>
+      <li class="list-group-item"><span class="badge text-bg-primary">Cena: 80 zł</span></li>
+      </ul>
+      </td>
+    </tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

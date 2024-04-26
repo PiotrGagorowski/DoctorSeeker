@@ -35,17 +35,35 @@ Rails.application.routes.draw do
   get 'issue_prescription', to: 'doctor#prescription'
   get 'set_appointment', to: 'doctor#appointments'    
   get 'doctor/appointments.json', to: 'appointments#index_json'
+  get 'doctor_contact', to: 'doctor#doctor_contact', as: 'doctor_contact'
+  get 'doctor_login', to: 'doctor#doctor_login', as: 'doctor_login'
+  get 'doctor_doctors', to: 'doctor#doctor_doctors', as: 'doctor_doctors'
+  get 'doctor_lab', to: 'doctor#doctor_lab', as: 'doctor_lab'
+  get 'doctor_price', to: 'doctor#doctor_price', as: 'doctor_price'
+  get 'doctor_help', to: 'doctor#doctor_help', as: 'doctor_help'
+  get 'doctor_profile', to: 'doctor#doctor_profile', as: 'doctor_profile'
+  get 'doctor_logout', to: 'doctor#doctor_logout', as: 'doctor_logout'
+
+
+
+
   
   post 'doctor/appointments', to: 'doctor#create_appointment'
 
   #Patient
-  get 'patient', to: 'patient#patient'
+  get 'patient', to: 'patient#patient', as: 'patient'
 
   get 'patient/appointments', to: 'patient#appointments', as: 'patient_appointments'
   get 'patient/lab_results', to: 'patient#lab_results', as: 'patient_lab_results'
   get 'patient/prescriptions', to: 'patient#prescriptions', as: 'patient_prescriptions'
   get 'patient/reviews', to: 'patient#reviews', as: 'patient_reviews'
-
+  get 'patient/logout_patient', to: 'patient#logout_patient', as: 'logout_patient'
+  get 'patient/help_patient', to: 'patient#help_patient', as: 'help_patient'
+  get 'patient/contact_patient', to: 'patient#contact_patient', as: 'contact_patient'
+  get 'patient/doctors_patient', to: 'patient#doctors_patient', as: 'doctors_patient'
+  get 'patient/price_patient', to: 'patient#price_patient', as: 'price_patient'
+  get 'patient/lab_patient', to: 'patient#lab_patient', as: 'lab_patient'
+  get 'patient/profile_patient', to: 'patient#profile_patient', as: 'profile_patient'
 
 
   #Labworker
@@ -53,10 +71,21 @@ Rails.application.routes.draw do
   get 'patients', to: 'labworker#patients', as: 'patients'
   get 'comresearch', to: 'labworker#comresearch', as: 'comresearch'
   get 'exeresearch', to: 'labworker#exeresearch', as: 'exeresearch'
-  get 'logout', to: 'labworker#logout', as: 'logout'
+  get 'logout_labworker', to: 'labworker#logout_labworker', as: 'logout_labworker'
+  get 'profile', to: 'labworker#profile_labworker', as:'profile'
 
   #Admin
-  get 'admin', to: 'admin#admin'
+  get 'admin', to: 'admin#admin', as: 'admin'
+  get 'users_list', to: 'admin#users_list', as: 'users_list'
+  get 'admin_contact', to: 'admin#admin_contact', as: 'admin_contact'
+  get 'admin_login', to: 'admin#admin_login', as: 'admin_login'
+  get 'admin_doctors', to: 'admin#admin_doctors', as: 'admin_doctors'
+  get 'admin_lab', to: 'admin#admin_lab', as: 'admin_lab'
+  get 'admin_price', to: 'admin#admin_price', as: 'admin_price'
+  get 'admin_help', to: 'admin#admin_help', as: 'admin_help'
+  get 'admin_profile', to: 'admin#admin_profile', as: 'admin_profile'
+  get 'admin_logout', to: 'admin#admin_logout', as: 'admin_logout'
+
 
   resources :medical_files do
     collection do
