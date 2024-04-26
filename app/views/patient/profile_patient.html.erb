@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
+        </li>
+        <li class="nav-item">
+          <% unless current_user %>
+          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <%end%>
+        </li>
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Moje
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+      </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="cont">
+<div style="height:800px; margin-top:0">
+
+<center>
+<div class="card" style="width: 20rem; margin-top:20px;">
+<%= image_tag "profile.jpg", height: 300 %>
+  <div class="card-body">
+    <h5 class="card-title fw-lighter"><b><span class="badge text-bg-primary" style="font-size:20px">Twój profil</span></b></h5>
+    <p class="card-text fw-lighter" style="text-align:left;">Tutaj możesz zobaczyć informacje o swoim profilu. Zapewniamy, że Twoje dane są bezpieczne i poufne.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item fw-lighter" style="text-align:left;"><span style="font-weight:500">E-mail:</span> <%= current_user.email %></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Imię:</span> <%= current_user.first_name %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Nazwisko:</span> <%= current_user.last_name %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">PESEL:</span> <%= current_user.pesel_number %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Rola:</span> <%= current_user.role %></b></li>
+  </ul>
+  <div class="card-body">
+    <a href="<%= patient_path(@patient) %>" class="card-link">Zarezerwuj wizytę</a>
+    <a href="<%= patient_reviews_path(@patient_reviews) %>" class="card-link">Dodaj recenzję</a>
+  </div>
+</div>
+</center>
+</div>
+
+</div>
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

@@ -1,18 +1,127 @@
-<h1>Badania laboratoryjne</h1>
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
+        </li>
+        <li class="nav-item">
+          <% unless current_user %>
+          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <%end%>
+        </li>
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Moje
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+          </ul>
+        </li>
 
-<% if @lab_results.any? %>
-  <% @lab_results.each do |lab_result| %>
-    <div>
-      <p>Data wystawienia wyników: <%= lab_result.created_at.strftime("%d.%m.%Y") %></p>
-      <p>Data wykonania badania: <%=lab_result.utility_date%></p>
-      <% if lab_result.file.attached? %>
-        <%= link_to "Wynik badań", rails_blob_url(lab_result.file) %>
-      <% else %>
-        <p>Brak pliku do pobrania</p>
-      <% end %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+      </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
     </div>
-    <hr>
+  </div>
+</nav>
+
+
+<div id="cont">
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Moje Badania</span></h1></center>
+
+<div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:150px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Znajdziesz tutaj szczegółowe informacje dotyczące Twoich badań medycznych. Dbamy o to, abyś miał łatwy dostęp do swoich wyników, abyś mógł śledzić swoje zdrowie i wspólnie z nami podejmować najlepsze decyzje dotyczące Twojej opieki zdrowotnej.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Pamiętaj, że regularne badania są kluczowe dla utrzymania zdrowia. Dzięki naszej platformie masz możliwość śledzenia swojej historii zdrowia i podejmowania świadomych decyzji dotyczących Twojego dobrostanu.
+</h5>
+</div>
+<div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:150px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Poniżej możesz wygodnie przeglądać swoje wyniki badania, porównywać je z poprzednimi i zastanawiać się nad ewentualnymi zmianami. 
+Jeśli masz jakiekolwiek pytania lub wątpliwości dotyczące swoich wyników, nie wahaj się skontaktować z nami. 
+Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędnych informacji.</h5>
+<h5 class="fw-lighter" style="text-align:center; margin-bottom:10px">Dziękujemy, że jesteś częścią naszej przychodni lekarskiej!<p><i><b><span style="color: #000080">~ DoctorSeeker</i></b></span></p></h5>
+</div>
+
+<center><%= image_tag "lab.png", class:"d-block", height: 280 %>
+<hr style="width:80%; margin-bottom:0" />
+<h2 class="mb-4" style="text-align:center; margin-top:20px">Moje badania laboratoryjne ⬇️</h2>
+</center>
+
+<div style="width:98%; margin-bottom:100px">
+
+  <% if @lab_results.any? %>
+  <% @lab_results.each do |lab_result| %> 
+  <table class="table table-bordered table-striped" style="margin:20px">
+    <thead class="thead-dark">
+      <tr>
+        <th>Data wystawienia wyników</th>
+        <th>Data wykonania badania</th>
+        <th>Wynik badań</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><%= lab_result.created_at.strftime("%d.%m.%Y") %></td>
+      <td><%=lab_result.utility_date%></td>
+      <% if lab_result.file.attached? %>
+      <td><%= link_to "Wynik badań", rails_blob_url(lab_result.file) %>
+      <% else %>
+      Brak pliku do pobrania</td>
+      <% end %>
+    </tr>
+    </tbody>
+  </table>
   <% end %>
-<% else %>
-  <p>Nie posiadasz jeszcze żadnych wyników badań laboratoryjnych.</p>
-<% end %>
+  <% else %>
+  <center><span class="badge text-bg-danger" style="font-size:20px; margin-left:50px;">Nie posiadasz jeszcze żadnych wyników badań laboratoryjnych ☹️</span></center>
+  <% end %>
+
+  
+</div>
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>
