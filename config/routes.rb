@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :user_reviews
-  resources :reviews
+  resources :reviews, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :user_appointments
   resources :appointments
   resources :comments
@@ -52,6 +52,7 @@ Rails.application.routes.draw do
 
   #Patient
   get 'patient', to: 'patient#patient', as: 'patient'
+  get 'patient/doctor_appointments/:doctor_id', to: 'patient#doctor_appointments', as: 'patient_doctor_appointments'
 
   get 'patient/appointments', to: 'patient#appointments', as: 'patient_appointments'
   get 'patient/lab_results', to: 'patient#lab_results', as: 'patient_lab_results'
