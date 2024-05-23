@@ -23,6 +23,12 @@ class UserAppointmentsController < ApplicationController
   def create
     @user_appointment = UserAppointment.new(user_appointment_params)
 
+    if overlapping_appointments?(@user_appointment)
+      flash[:alert] = "Twoje nowe wizyty się pokrywają z istniejącymi. Nie możesz mieć dwóch wizyt jednocześnie."
+      redirect_to patient_path
+      return
+    end
+
     respond_to do |format|
       if @user_appointment.save
         format.html { redirect_to user_appointment_url(@user_appointment), notice: "User appointment was successfully created." }
@@ -73,6 +79,23 @@ class UserAppointmentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_appointment_params
       params.require(:user_appointment).permit(:patient_user_id, :appointment_id)
+    end
+
+    def overlapping_appointments?(new_appointment)
+      new_appointment_start_time = new_appointment.appointment.appointment_date
+      new_appointment_end_time = new_appointment_start_time + 30.minutes
+      existing_appointments = UserAppointment.where(patient_user_id: current_user.id)
+    
+      existing_appointments.each do |existing_user_appointment|
+        existing_appointment_start_time = existing_user_appointment.appointment.appointment_date
+        existing_appointment_end_time = existing_appointment_start_time + 30.minutes
+    
+        if (new_appointment_start_time..new_appointment_end_time).overlaps?(existing_appointment_start_time..existing_appointment_end_time)
+          return true
+        end
+      end
+    
+      false
     end
     
 end
