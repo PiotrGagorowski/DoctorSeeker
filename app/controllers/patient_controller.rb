@@ -26,13 +26,14 @@ class PatientController < ApplicationController
 
     def appointments
         @patient = current_user
-        @user_appointments = UserAppointment.where(patient_user_id: @patient.id)
+        @user_appointments = UserAppointment.joins(:appointment)
+        .where(patient_user_id: @patient.id)
+        .order('appointments.appointment_date DESC')
         @appointments = UserAppointment.where(patient_user_id: @patient.id).map(&:appointment)
     end
 
     def reviews
         @patient = current_user
-        #@user_appointments = UserAppointment.where(patient_user_id: @patient.id)
         @user_reviews = UserReview.where(patient_user_id: @patient.id)
         @reviews = @user_reviews.map(&:review)
         @doctors = User.where(role: User.roles[:doctor])
@@ -42,9 +43,7 @@ class PatientController < ApplicationController
 
     def doctor_appointments
         @doctor = User.find(params[:doctor_id])
-        #@doctor_free_appointments = @doctor.appointments_as_doctor.free
         @doctor_free_appointments = @doctor.appointments_as_doctor.free.order(appointment_date: :asc)
     end
-
 end
 
