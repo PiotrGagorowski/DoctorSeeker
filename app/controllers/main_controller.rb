@@ -3,7 +3,7 @@ class MainController < ApplicationController
   end
 
   def doctors
-  @doctors = User.where(role: :doctor)
+  @doctors = User.where(role: :doctor).order(:last_name, :first_name)
   end
 
   def show
