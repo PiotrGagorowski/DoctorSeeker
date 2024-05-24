@@ -91,6 +91,7 @@ Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
 
 
 <!-- Formularz do dodawania nowej recenzji -->
+<!--
 <div class="container">
   <h2>Dodaj nową recenzję</h2>
   <%= form_with(model: @review, local: true) do |form| %>
@@ -115,6 +116,40 @@ Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
     </div>
   <% end %>
 </div>
+-->
+
+<%= form_with(model: @user_review, local: true) do |form| %>
+  <% if @user_review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_review.errors.count, "error") %> prohibited this user_review from being saved:</h2>
+
+      <ul>
+        <% @user_review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :doctor_user_id %>
+    <%= form.collection_select :doctor_user_id, User.where(role: 'doctor').map { |u| ["#{u.first_name} #{u.last_name}", u.id] }, :second, :first, prompt: "Select a doctor" %>
+  </div>
+
+  <div class="field">
+    <%= form.fields_for :review do |review_fields| %>
+      <%= review_fields.label :score %>
+      <%= review_fields.number_field :score %>
+
+      <%= review_fields.label :comment %>
+      <%= review_fields.text_area :comment %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
 
 <center><hr style="width:80%; margin-top:800px" /></center>
 <div style="width:40%; margin-top:20px; margin-left:50px; float:left; margin-bottom:20px">
