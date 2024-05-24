@@ -52,6 +52,7 @@ class UserReviewsController < ApplicationController
   # DELETE /user_reviews/1 or /user_reviews/1.json
   def destroy
     @user_review.destroy!
+    @user_review.review.destroy if @user_review.review.present?
 
     respond_to do |format|
       format.html { redirect_to user_reviews_url, notice: "User review was successfully destroyed." }

@@ -160,28 +160,32 @@ Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
 
   <% if @reviews.any? %>
   <% @reviews.each do |review| %>
-  <table class="table table-bordered table-striped bg-primary text-white">
-    <thead>
-      <tr>
-        <th>Imię i nazwisko lekarza</th>
-        <th>Wystatwiona ocena</th>
-        <th>Recenzja</th>
-        <th>Opublikowano</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><%= review.doctor.first_name %> <%= review.doctor.last_name %></td>
-        <td><%= review.score %></td>
-        <td><%= review.comment %></td>
-        <td><%= review.created_at.strftime("%d-%m-%Y %H:%M") %></td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table table-bordered table-striped bg-primary text-white">
+      <thead>
+        <tr>
+          <th>Imię i nazwisko lekarza</th>
+          <th>Wystawiona ocena</th>
+          <th>Recenzja</th>
+          <th>Opublikowano</th>
+          <th>Akcje</th> <!-- Dodany nagłówek dla przycisku usuwania -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= review.doctor.first_name %> <%= review.doctor.last_name %></td>
+          <td><%= review.score %></td>
+          <td><%= review.comment %></td>
+          <td><%= review.created_at.strftime("%d-%m-%Y %H:%M") %></td>
+          <td>
+            <%= link_to 'Usuń recenzję', user_review_path(review), method: :delete, data: { confirm: 'Czy na pewno chcesz usunąć tę recenzję?' }, class: 'btn btn-danger btn-sm' %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   <% end %>
-  <% else %>
+<% else %>
   <span class="badge text-bg-danger" style="font-size:20px; margin-left:50px">Nie wystawiłeś jeszcze żadnej recenzji ☹️</span>
-  <% end %>
+<% end %>
 
 
 </div>
