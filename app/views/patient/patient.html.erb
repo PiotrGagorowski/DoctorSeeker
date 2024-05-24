@@ -103,6 +103,7 @@
 
 <%= image_tag "Logo.jpg", height: 450, style:"margin-top:60px; border-radius:80px" %>
 
+<!--
 <% if @free_appointments.any? %>
   <h2>Wolne terminy</h2>
   <table>
@@ -145,7 +146,7 @@
     </tbody>
   </table>
 <% end %>
-
+-->
 
 <!--
 <% if @reserved_appointments.any? %>
@@ -179,50 +180,19 @@
 <h1><span class="badge text-bg-primary" style=" ">Wolne terminy - nie zwlekaj i zarezerwuj wizytę już teraz!</span></h1></center>
 <div style="width:98%; margin-bottom:100px">
 <div class="container mt-5">
-<% if @free_appointments.any? %>
-<table class="table table-bordered table-striped bg-primary text-white">
-<thead>
-  <tr>
-    <th>Data</th>
-    <th>Doktor</th>
-    <th>Akcja</th>
-  </tr>
-</thead>
-<tbody>
-  <% @free_appointments.each do |appointment| %>
-    <% user_appointment = UserAppointment.new %>
-
-    <tr>
-      <td><%= appointment.appointment_date %></td>
-      <td><%= appointment.doctor.first_name %> <%= appointment.doctor.last_name %></td>
-      <td>
-        <% if user_appointment.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(user_appointment.errors.count, "błąd") %> uniemożliwiło zapisanie tego terminu:</h2>
-
-            <ul>
-              <% user_appointment.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
+ <% if @doctors_with_free_appointments.any? %>
+      <h2>Lekarze dysponujący wolnymi terminami</h2>
+      <ul>
+        <% @doctors_with_free_appointments.each do |doctor| %>
+          <li>
+            <%= link_to "#{doctor.last_name} #{doctor.first_name}", patient_doctor_appointments_path(doctor.id) %>
+          </li>
         <% end %>
-
-        <%= form_with model: user_appointment do |form| %>
-          <%= form.hidden_field :appointment_id, value: appointment.id %>
-          <%= form.hidden_field :patient_user_id, value: current_user.id %>
-          <%= form.submit "Zarezerwuj termin", class: "btn btn-primary" %>
-        <% end %>
-
-      </td>
-    </tr>
-  <% end %>
-</tbody>
-  </table>
-<% end %>
-<% if !@free_appointments.any? && !@reserved_appointments.any? %>
-<center><span class="badge text-bg-danger" style="font-size:20px; margin-left:50px">Brak dostępnych terminów ☹️</span></center>
-<% end %>
+      </ul>
+    <% else %>
+      <p>Brak dostępnych terminów.</p>
+    <% end %>
+  </div>
 </div>
 
 </div>
