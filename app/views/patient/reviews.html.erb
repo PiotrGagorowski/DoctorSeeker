@@ -133,7 +133,7 @@ Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
 
   <div class="field">
     <%= form.label :doctor_user_id %>
-    <%= form.collection_select :doctor_user_id, User.where(role: 'doctor').map { |u| ["#{u.first_name} #{u.last_name}", u.id] }, :second, :first, prompt: "Select a doctor" %>
+    <%= form.collection_select :doctor_user_id, @doctors, :id, lambda { |doctor| "#{doctor.first_name} #{doctor.last_name}" }, prompt: "Wybierz lekarza" %>
   </div>
 
   <div class="field">

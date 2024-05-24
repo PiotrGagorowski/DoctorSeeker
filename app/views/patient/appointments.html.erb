@@ -144,7 +144,7 @@ Tutaj znajdziesz wszystkie informacje dotyczące Twoich planowanych i zrealizowa
   <% if @user_appointments.any? %>
   <% has_past_appointments = false %>
   <% @user_appointments.each do |appointment| %>
-  <% if appointment.appointment.appointment_date.present? && appointment.appointment.appointment_date >= Date.today %>
+  <% if appointment.appointment.appointment_date.present? && appointment.appointment.appointment_date < Date.today %>
   <% has_past_appointments = true %>
   <table class="table table-bordered table-striped bg-primary text-white">
     <thead>
