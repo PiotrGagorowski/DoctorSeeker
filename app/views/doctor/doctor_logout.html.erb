@@ -49,81 +49,21 @@
   </div>
 </nav>
 
+<center>
+<%= image_tag "Logo.jpg", class:"d-block", height: 300, style:"margin:30px" %>
+<h3 class="fw-lighter"><strong>Czy na pewno chcesz się wylogować?</strong></h3>
 
-
-
-<div id="cont">
-
-<center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
-<div class="left" style="width:50%; float:left; height:300px; margin-bottom:300px">
-
-<h2 class="fw-lighter" style="margin-bottom:20px"><span style="font-weight:500"><center>Witaj w DoctorSeeker <%= current_user.first_name %>!</center></span></h2>
-
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
-<p>Witaj na naszej stronie internetowej! Jesteśmy dumni, że do nas trafiłeś. Nasza i Twoja misja to dbać o zdrowie. </p>
-
-Nasza platforma została stworzona z myślą o Tobie. Umożliwia Ci łatwe i wygodne zarządzanie swoją pracą. Możesz dodawać terminy konsulatcji medycznych, wystawiać recepty oraz oceniać wyniki badań, gdziekolwiek jesteś i kiedy tylko chcesz. </p>
-
-Jesteśmy tutaj dla Ciebie. Dziękujemy za zaufanie.
-</h5>
-<div class="alert alert-primary" role="alert" style="margin-top:10px">
-<p class="fw-lighter"> ℹ️ Zjedź niżej, aby przejrzeć swoje nadchodzące spotkania z pacjentami</b>.</p>
-</div>
-<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title">Dziękujemy za zaufanie i zapraszamy do korzystania z naszych usług!</h5>
-    <p class="card-text"><p><i>Zespół Przychodni Medycznej DoctorSeeker </i>😊</p></p>
-  </div>
-</div>
-
-</div>
-
-<div class="right" style="width:40%; float:right; height:300px; margin-bottom:300px">
-
-
-
-  <% if current_user.email == 'aleksandra.nowak@example.com' %>
-   <%= image_tag "doctor1.png", height: 450, style:"border-radius:80px" %>
-  <% elsif current_user.email == 'tomasz.kowalczyk@example.com' %>
-   <%= image_tag "doctor2.png", height: 450, style:"border-radius:80px" %> 
-  <% elsif current_user.email == 'marta.lewandowska@example.com' %>
-   <%= image_tag "doctor3.png", height: 450, style:"border-radius:80px" %> 
+<div style="margin-top:30px">
+  <%= form_tag(destroy_user_session_path, method: :delete) do %>
+    <%= submit_tag "Wyloguj", class: "btn btn-danger btn-lg" %>
   <% end %>
-
-
-</div>
-
-
-<center><hr style="width:80%; margin-top:200px; padding:10px" />
-<h1><span class="badge text-bg-primary" style=" ">Twoje nadchodzace wizyty - sprawdź teraz!</span></h1></center>
-<div style="width:98%; margin-bottom:100px">
-<div id="calendar"></div>
-
-  <table class="table table-bordered table-striped bg-primary text-white">
-    <thead>
-      <tr>
-        <th><center>Data</center></th>
-        <th><center>Pacjent</center></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @appointments.each do |appointment| %>
-        <tr>
-          <td><center><%= appointment.appointment_date %></center></td>
-          <td><center>
-            <% if appointment.user_appointments.any? %>
-              <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
-            <% else %>
-              Wolny termin
-            <% end %></center>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+</center>
 
 </div>
-</div>
+
+
+  
+
 
 
 <footer class="footer">
