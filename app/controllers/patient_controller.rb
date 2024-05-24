@@ -35,13 +35,15 @@ class PatientController < ApplicationController
         @user_reviews = UserReview.where(patient_user_id: @patient.id)
         @reviews = @user_reviews.map(&:review)
         @doctors = User.where(role: User.roles[:doctor])
+        @user_review = UserReview.new
+        @user_review.build_review
     end
 
     def doctor_appointments
         @doctor = User.find(params[:doctor_id])
         #@doctor_free_appointments = @doctor.appointments_as_doctor.free
         @doctor_free_appointments = @doctor.appointments_as_doctor.free.order(appointment_date: :asc)
-      end
+    end
 
 end
 

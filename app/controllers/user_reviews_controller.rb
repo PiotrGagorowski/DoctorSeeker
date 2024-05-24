@@ -13,6 +13,7 @@ class UserReviewsController < ApplicationController
   # GET /user_reviews/new
   def new
     @user_review = UserReview.new
+    @user_review.build_review
   end
 
   # GET /user_reviews/1/edit
@@ -22,6 +23,7 @@ class UserReviewsController < ApplicationController
   # POST /user_reviews or /user_reviews.json
   def create
     @user_review = UserReview.new(user_review_params)
+    @user_review.patient_user_id = current_user.id
 
     respond_to do |format|
       if @user_review.save
@@ -65,6 +67,6 @@ class UserReviewsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_review_params
-      params.require(:user_review).permit(:patient_user_id, :doctor_user_id, :review_id)
+      params.require(:user_review).permit(:patient_user_id, :doctor_user_id, review_attributes: [:score, :comment])
     end
 end
