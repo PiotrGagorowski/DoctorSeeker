@@ -16,3 +16,4 @@ User.create!(email: 'marta.lewandowska@example.com', password: 'password', role:
 User.create!(email: 'patient3@example.com', password: 'password', role: :patient, first_name: 'Bogdan', last_name: 'Raj', pesel_number: '47614928901')
 User.create!(email: 'patient4@example.com', password: 'password', role: :patient, first_name: 'Paulina', last_name: 'Nowak', pesel_number: '61928902522')
 User.create!(email: 'patient5@example.com', password: 'password', role: :patient, first_name: 'Jan', last_name: 'Kowalski', pesel_number: '54761928903')
+User.create!(email: 'patient6@example.com', password: 'password', role: :patient, first_name: 'Joanna', last_name: 'Kot', pesel_number: '75261928900')

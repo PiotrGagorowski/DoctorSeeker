@@ -88,9 +88,15 @@ Rails.application.routes.draw do
   resources :medical_files do
     collection do
       get 'prescription'
+      get 'lab_result'
     end
   end
-
+  resources :labworker, only: [:labworker] do
+    collection do
+      post :create
+    end
+  end
+  
   get 'admin/new_user', to: 'admin#new_user'
   post 'admin/create_user', to: 'admin#create_user'
   get 'admin/edit_user/:id', to: 'admin#edit_user', as: 'edit_user'
