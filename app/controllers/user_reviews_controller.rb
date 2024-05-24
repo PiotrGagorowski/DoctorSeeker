@@ -22,16 +22,26 @@ class UserReviewsController < ApplicationController
 
   # POST /user_reviews or /user_reviews.json
   def create
-    @user_review = UserReview.new(user_review_params)
-    @user_review.patient_user_id = current_user.id
+    doctor_id = user_review_params[:doctor_user_id]
+    existing_review = UserReview.find_by(patient_user_id: current_user.id, doctor_user_id: doctor_id)
 
-    respond_to do |format|
-      if @user_review.save
-        format.html { redirect_to user_review_url(@user_review), notice: "User review was successfully created." }
-        format.json { render :show, status: :created, location: @user_review }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user_review.errors, status: :unprocessable_entity }
+    if existing_review
+      respond_to do |format|
+        format.html { redirect_to new_user_review_path, alert: "You have already reviewed this doctor." }
+        format.json { render json: { error: "You have already reviewed this doctor." }, status: :unprocessable_entity }
+      end
+    else
+      @user_review = UserReview.new(user_review_params)
+      @user_review.patient_user_id = current_user.id
+
+      respond_to do |format|
+        if @user_review.save
+          format.html { redirect_to user_review_url(@user_review), notice: "User review was successfully created." }
+          format.json { render :show, status: :created, location: @user_review }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @user_review.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
