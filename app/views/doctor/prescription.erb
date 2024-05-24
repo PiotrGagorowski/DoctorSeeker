@@ -13,9 +13,6 @@
           <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= doctor_login_path(@login) %>">Logowanie</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
         </li>
         <li class="nav-item">
@@ -40,6 +37,9 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -49,10 +49,36 @@
   </div>
 </nav>
 
-<div class="cont_prescription">
+<div id="cont">
+
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Wydaj receptę</span></h1></center>
+<div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:200px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+W tym miejscu masz możliowść wystwić receptę po spotakaniu z pacjentem. Po prawej stronie jest zakładka do wystawienia recept dla osób, które jej jeszcze nie otzrymały, po lewej stronie jest spis recept, które już wystawiłeś.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Jeśli potrzebujesz zmienić plik lub masz pytania dotyczące wystawiania recept, zachęcamy do kontaktu z naszym działem administracji.
+</h5>
+</div>
+
+<div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:200px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Pamiętaj, aby podczas wystawiania recepty wypisać PESEL odpowidniego pacjenta, kod recepty wygeneruje się automatycznie. 
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Dziękujemy, że jesteś częścią naszej przychodni.
+</h5>
+<h5 class="fw-lighter" style="text-align:center; margin-bottom:10px"><i>
+<span style="color: #000080;">Zespół Przychodni Lekarskiej <b>DoctorSeeker</b></span></i>
+</h5>
+</div>
+
+<center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
+
+
 <div class="left_prescription">
 
-<center><h1>Odbyte wizyty </h1></center>
+<center><h2 class="mb-4" style="margin-top:20px">Odbyte wizyty ⬇️</h2></center>
 <div class="cont_prescription">
 <table class="table table-hover">
   <thead>
@@ -95,45 +121,13 @@
 </div>
 
 
-<center><h1>Formularz recept </h1></center>
-<!--<center><%= image_tag "recepta.jpg", height: 450 %></center> -->
-
-<!-- Tutaj będzie trzeba zmmienić ja tylko dodałam żeby wyglądało  -->
-<%= form_with(model: @user, url: admin_create_user_path, html: { class: 'user-form' }) do |form| %>
-
-      <div class="form-floating mb-3">
-        <!-- Pole dla imienia -->
-        <%= form.text_field :first_name, placeholder: ' ', class: 'form-control' %>
-        <%= form.label :first_name, 'Imię', class: 'floatingFirstName' %>
-      </div>
-      
-      <div class="form-floating mb-3">
-        <!-- Pole dla nazwiska -->
-        <%= form.text_field :last_name, placeholder: ' ', class: 'form-control' %>
-        <%= form.label :last_name, 'Nazwisko', class: 'floatingLastName' %>
-      </div>
-      
-      <div class="form-floating mb-3">
-        <!-- Pole dla numeru PESEL -->
-        <%= form.text_field :pesel_number, placeholder: ' ', class: 'form-control' %>
-        <%= form.label :pesel_number, 'Numer PESEL', class: 'floatingPeselNumber' %>
-      </div>
-
-      <div class="form-floating mb-3">
-      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-      <label for="floatingTextarea2">Recepta</label>
-      </div>
-      
-      <!-- Przycisk zatwierdzający formularz -->
-      <%= form.submit 'Dodaj recpetę', class: 'btn btn-primary' %>
-    <% end %>
 
 </div>
 
 
 
 <div class="right_prescription">
-  <center><h1>Wystawione recepty </h1></center>
+  <center><h2 class="mb-4" style="margin-top:20px">Wystawione recepty ⬇️</h2></center>
 
 <table class="table table-hover">
   <thead>
@@ -143,7 +137,7 @@
       <th><center>Nazwisko</center></th>
       <th><center>Pesel</center></th>
       <!-- <th>Adres email</th> -->
-      <th><center>Akcje</center></th>
+      <!-- <th><center>Akcje</center></th> -->
     </tr>
   </thead>
   <tbody>
@@ -155,14 +149,14 @@
           <td><center><%= user.last_name %></center></td>
           <td><center><%= user.pesel_number %></center></td>
           <!-- <td><%= user.email %></td> -->
-          <td><center>
+          <!-- <td><center>
             <%= form_with(model: @medical_file, url: medical_files_path) do |form| %>
               <%= form.hidden_field :category, value: 'prescription' %>
               <%= form.hidden_field :user_id, value: user.id %>
               <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
               <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
             <% end %></center>
-          </td>
+          </td> -->
         </tr>
       <% end %>
     <% else %>
@@ -172,8 +166,6 @@
     <% end %>
   </tbody>
 </table>
-
-<center><%= image_tag "recepta.jpg", height: 450 %></center>
 
 </div>
 
