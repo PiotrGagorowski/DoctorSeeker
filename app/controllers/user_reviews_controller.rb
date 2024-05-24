@@ -27,7 +27,7 @@ class UserReviewsController < ApplicationController
 
     if existing_review
       respond_to do |format|
-        format.html { redirect_to new_user_review_path, alert: "You have already reviewed this doctor." }
+        format.html { redirect_to patient_reviews_path, alert: "Już wystawiłeś recenzję dla tego lekarza." }
         format.json { render json: { error: "You have already reviewed this doctor." }, status: :unprocessable_entity }
       end
     else
@@ -36,7 +36,7 @@ class UserReviewsController < ApplicationController
 
       respond_to do |format|
         if @user_review.save
-          format.html { redirect_to user_review_url(@user_review), notice: "User review was successfully created." }
+          format.html { redirect_to patient_reviews_path, alert: "Recenzja została pomyślnie dodana." }
           format.json { render :show, status: :created, location: @user_review }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -65,7 +65,7 @@ class UserReviewsController < ApplicationController
     @user_review.review.destroy if @user_review.review.present?
 
     respond_to do |format|
-      format.html { redirect_to user_reviews_url, notice: "User review was successfully destroyed." }
+      format.html { redirect_to patient_reviews_path, notice: "Recenzja została pomyślnie usunięta." }
       format.json { head :no_content }
     end
   end
