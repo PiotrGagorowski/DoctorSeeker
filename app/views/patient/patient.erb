@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
@@ -7,9 +6,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+        </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
         </li>
@@ -32,7 +31,7 @@
           <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
+          <a class="nav-link active" href="<%= contact_path(@contact) %>">Kontakt</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -43,129 +42,183 @@
   </div>
 </nav>
 
+<style>
+  #calendar {
+    width: 100%;
+  }
+
+  .simple-calendar {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .simple-calendar .day {
+    width: 14%;
+    height: 100px;
+    position: relative;
+    font-size: 14px;
+  }
+
+  .simple-calendar .today {
+    background-color: #66d3fa;
+    color: white;
+  }
+
+  .simple-calendar .past {
+    background-color: #f8f9fa;
+  }
+
+  .simple-calendar .future {
+    background-color: #ffffff;
+  }
+
+  .simple-calendar .has-events {
+    background-color: #e0f7fa;
+  }
+
+  .simple-calendar .day div {
+    text-align: center;
+  }
+
+  .appointments-info {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .appointments-info ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .appointments-info ul li {
+    margin: 5px 0;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const days = document.querySelectorAll(".day");
+    let currentOpenedDay = null;
+
+    days.forEach(day => {
+      day.addEventListener("click", function() {
+        const appointmentsInfo = this.querySelector(".appointments-info");
+        const currentDayHeight = this.offsetHeight;
+
+        if (currentOpenedDay === this) {
+          appointmentsInfo.style.display = "none";
+          currentOpenedDay = null;
+        } else {
+          if (currentOpenedDay) {
+            currentOpenedDay.querySelector(".appointments-info").style.display = "none";
+          }
+          appointmentsInfo.style.top = `-${currentDayHeight}px`;
+          appointmentsInfo.style.display = "block";
+          currentOpenedDay = this;
+        }
+      });
+
+      document.body.addEventListener("click", function(event) {
+        if (!event.target.closest(".day")) {
+          const appointmentsInfo = document.querySelector(".appointments-info");
+          if (appointmentsInfo) appointmentsInfo.style.display = "none";
+          currentOpenedDay = null;
+        }
+      });
+    });
+  });
+</script>
+
 <div id="cont">
-<div class="left">
-<p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
+  <div class="left">
+    <h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
 
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
+    <div class="card text-bg-primary mb-3" style="max-width: 50rem;">
+      <div class="card-body">
+        <h5 class="card-title">Znajdź lekarza</h5>
+        <p class="card-text">Przeglądaj profile lekarzy, czytaj opinie innych pacjentów i wybierz najlepszego specjalistę dla siebie.</p>
+      </div>
+    </div>
 
-<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title">Znajdź lekarza</h5>
-    <p class="card-text"><p>Przeglądaj profile lekarzy, czytaj opinie innych pacjentów i wybierz najlepszego specjalistę dla siebie.</p></p>
+    <div class="card text-bg-primary mb-3" style="max-width: 50rem;">
+      <div class="card-body">
+        <h5 class="card-title">Rezerwuj Wizyty</h5>
+        <p class="card-text">Wybierz dogodny termin i umów się na wizytę bezpośrednio przez naszą aplikację. Zarządzaj swoimi wizytami i przypomnieniami w jednym miejscu.</p>
+      </div>
+    </div>
+
+    <div class="card text-bg-primary mb-3" style="max-width: 50rem;">
+      <div class="card-body">
+        <h5 class="card-title">Zarządzaj Swoim Zdrowiem</h5>
+        <p class="card-text">Śledź swoje wizyty, badania i historię leczenia, aby mieć pełną kontrolę nad swoim zdrowiem.</p>
+      </div>
+    </div>
+
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
+
+    <div class="card">
+      <h5 class="card-header">FAQ</h5>
+      <div class="card-body">
+        <h5 class="card-title">Najczęściej zadawane pytania</h5>
+        <p class="card-text">Sprawdź zakładkę najczęściej zadawane pytania.</p>
+        <a href="<%= help_path(@help) %>" class="btn btn-primary">Kliknij tutaj</a>
+      </div>
+    </div>
+
+    <% if current_user %>
+      <p>Hello <%= current_user.first_name %></p>
+      <p>You are a [<%= current_user.role %>]</p>
+    <% end %>
+    <%= form_tag(destroy_user_session_path, method: :delete) do %>
+      <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
+    <% end %>
   </div>
-</div>
 
-<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title">Rezerwuj Wizyty</h5>
-    <p class="card-text"><p>Wybierz dogodny termin i umów się na wizytę bezpośrednio przez naszą aplikację. Zarządzaj swoimi wizytami i przypomnieniami w jednym miejscu.</p>
-  </div>
-</div>
-
-<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title">Zarządzaj Swoim Zdrowiem</h5>
-    <p class="card-text"><p>Śledź swoje wizyty, badania i historię leczenia, aby mieć pełną kontrolę nad swoim zdrowiem.</p>
-  </div>
-</div>
-
-
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
-
-  <div class="card">
-  <h5 class="card-header">FAQ</h5>
-  <div class="card-body">
-    <h5 class="card-title">Najczęściej zadawane pytania</h5>
-    <p class="card-text">Sprawdź zakładkę najczęściej zadawane pytania.</p>
-    <a href="<%= help_path(@help) %>" class="btn btn-primary">Kliknij tutaj</a>
-  </div>
-</div>
-
-<% if current_user %>
-    <p>Hello <%= current_user.first_name %></p>
-    <p>You are a [<%= current_user.role %>]</p> <%end%>
-  <%= form_tag(destroy_user_session_path, method: :delete) do %>
-    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
-  <% end %>
-
-</div>
 <div class="right">
-<h1>Wszystkie terminy wizyt</h1>
-<% if @free_appointments.any? %>
-  <h2>Wolne terminy</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Data</th>
-        <th>Doktor</th>
-        <th>Akcja</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @free_appointments.each do |appointment| %>
-        <% user_appointment = UserAppointment.new %>
-
-        <tr>
-          <td><%= appointment.start_time %></td>
-          <td><%= appointment.doctor.first_name %> <%= appointment.doctor.last_name %></td>
-          <td>
-            <% if user_appointment.errors.any? %>
-              <div id="error_explanation">
-                <h2><%= pluralize(user_appointment.errors.count, "błąd") %> uniemożliwiło zapisanie tego terminu:</h2>
-
-                <ul>
-                  <% user_appointment.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
-
-            <%= form_with model: user_appointment do |form| %>
-              <%= form.hidden_field :appointment_id, value: appointment.id %>
-              <%= form.hidden_field :patient_user_id, value: current_user.id %>
-              <%= form.submit "Zarezerwuj termin", class: "btn btn-primary" %>
-            <% end %>
-
-          </td>
-        </tr>
+  <h3>Kalendarz terminów</h3>
+  <div id="calendar">
+    <div class="container mt-5 text-center">
+      <%= month_calendar(events: @appointments_by_date) do |date, appointments| %>
+        <div class="day <%= 'today' if date == Date.today %> <%= 'has-events' if appointments.any? %>" data-day="<%= date %>">
+          <%= date.day %>
+          <div class="appointments-info">
+            <h4>Wizyty na <%= date.strftime("%d/%m/%Y") %>:</h4>
+            <ul class="list-group">
+              <% appointments.each do |appointment| %>
+                <% if appointment.start_time.present? && appointment.end_time.present? %>
+                  <li class="list-group-item">
+                    <strong><%= appointment.start_time.strftime("%H:%M") %> - <%= appointment.end_time.strftime("%H:%M") %></strong> <br>
+                    <%= "#{appointment.doctor.first_name} #{appointment.doctor.last_name}" %> <br>
+                    <% if appointment.user_appointments.any? %>
+                      <%= link_to "Pokaż wizytę", user_appointment_path(appointment.user_appointments.first), class: "btn btn-primary" %>
+                    <% else %>
+                      <%= form_with model: @user_appointment, local: true do |form| %>
+                        <%= form.hidden_field :appointment_id, value: appointment.id %>
+                        <%= form.hidden_field :patient_user_id, value: current_user.id %>
+                        <%= form.submit "Zarezerwuj termin", class: "btn btn-primary" %>
+                      <% end %>
+                    <% end %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
       <% end %>
-    </tbody>
-  </table>
-<% end %>
-
-<% if @reserved_appointments.any? %>
-  <h2>Zarezerwowane terminy</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Data</th>
-        <th>Doktor</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @reserved_appointments.each do |appointment| %>
-        <tr>
-          <td><%= appointment.start_time %></td>
-          <td><%= appointment.doctor.first_name %> <%= appointment.doctor.last_name %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
-
-<% if !@free_appointments.any? && !@reserved_appointments.any? %>
-  <p>Brak dostępnych terminów.</p>
-<% end %>
-
-
-
-</div>
-</div>
+    </div>
+  </div>
 </div>
 
+</div>
+
+  </div>
+</div>
 
 <footer class="footer">
-<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+  <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
