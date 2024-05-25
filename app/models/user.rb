@@ -34,7 +34,7 @@ class User < ApplicationRecord
 
   def password_complexity
     if password.present? && !password.match(/\A(?=.*[A-Z])(?=.*\d)/)
-      errors.add :password, "Hasło musi zawierać co najmniej jedną dużą literę i jedną cyfrę"
+      errors.add :password, "musi zawierać co najmniej jedną dużą literę i jedną cyfrę"
     end
   end
 
