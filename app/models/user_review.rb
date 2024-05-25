@@ -3,4 +3,5 @@ class UserReview < ApplicationRecord
     belongs_to :doctor, class_name: 'User', foreign_key: 'doctor_user_id'
     belongs_to :review
     accepts_nested_attributes_for :review
+
 end

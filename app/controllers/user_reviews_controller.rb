@@ -39,7 +39,7 @@ class UserReviewsController < ApplicationController
           format.html { redirect_to patient_reviews_path, alert: "Recenzja została pomyślnie dodana." }
           format.json { render :show, status: :created, location: @user_review }
         else
-          format.html { redirect_to patient_reviews_path, alert: "Musisz wprowadzic wartości we wszytskie pola formularza w celu dodania recenzji."  }
+          format.html { redirect_to patient_reviews_path, alert: "Musisz wprowadzic wartości we wszystkie pola formularza w celu dodania recenzji."  }
           format.json { render json: @user_review.errors, status: :unprocessable_entity }
         end
       end
