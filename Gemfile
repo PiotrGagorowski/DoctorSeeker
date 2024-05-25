@@ -76,3 +76,7 @@ gem "rake", "~> 13.2"
 
 
 gem 'bootstrap', '~> 5.0.0'
+
+
+gem 'turbolinks', '~> 5.2'
+
