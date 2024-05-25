@@ -46,37 +46,23 @@
   </div>
 </nav>
 
-<div id="cont">
-<center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
-<div class="left" style="width:50%; float:left; height:50px; margin-bottom:30px">
 
-<h2 class="fw-lighter" style="margin-bottom:20px"><span style="font-weight:500"><center>Witaj <%= current_user.first_name %>!</center></span></h2>
+<center>
+<%= image_tag "Logo.jpg", class:"d-block", height: 300, style:"margin:30px" %>
+<h3 class="fw-lighter"><strong>Czy na pewno chcesz się wylogować?</strong></h3>
 
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
-<p>Jesteś zalogowany jako administrator, możesz zarządzć wszystkimi użytkownikami. Pamiętaj aby rozważnie dononywać wszystkich zmian, w razie wątpliwości skontaktuj się z innym administratorem. </p>
-
-W zakładce List użytkowników możesz dodać pacjentów, lekarzy lub pracowników laboratorium. Możesz również edytować dane zarejestrowanych już osób.
-
-</h5>
-<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title">Dziękujemy za pomoc!</h5>
-    <p class="card-text"><p><i>Zespół Przychodni Medycznej DoctorSeeker </i>😊</p></p>
-  </div>
-</div>
-
-
+<div style="margin-top:30px">
+  <%= form_tag(destroy_user_session_path, method: :delete) do %>
+    <%= submit_tag "Wyloguj", class: "btn btn-danger btn-lg" %>
+  <% end %>
+</center>
 
 </div>
 
-<div class="right" style="width:40%; float:right; height:20px; margin-bottom:20px">
 
-<%= image_tag "admin_page.jpg", height: 450, style:" border-radius:80px" %>
+  
 
-</div>
-</div>
 
-<center><hr style="width:80%; margin-top:550px; padding:0px" /></center>
 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>

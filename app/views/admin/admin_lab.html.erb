@@ -13,9 +13,6 @@
           <a class="nav-link active" aria-current="page" href="<%= admin_path(@admin) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= admin_login_path(@admin_login) %>">Logowanie</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
         </li>
         <li class="nav-item dropdown">
@@ -37,6 +34,9 @@
        <li class="nav-item">
           <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= admin_logout_path(@admin_logout) %>">Wyloguj</a>
+      </li>
         </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :user_reviews
-  resources :reviews
+  resources :reviews, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :user_appointments
   resources :appointments
   resources :comments
@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   get 'doctor_price', to: 'doctor#doctor_price', as: 'doctor_price'
   get 'doctor_help', to: 'doctor#doctor_help', as: 'doctor_help'
   get 'doctor_profile', to: 'doctor#doctor_profile', as: 'doctor_profile'
+  get 'doctor_logout', to: 'doctor#doctor_logout', as: 'doctor_logout'
 
 
 
@@ -51,6 +52,7 @@ Rails.application.routes.draw do
 
   #Patient
   get 'patient', to: 'patient#patient', as: 'patient'
+  get 'patient/doctor_appointments/:doctor_id', to: 'patient#doctor_appointments', as: 'patient_doctor_appointments'
 
   get 'patient/appointments', to: 'patient#appointments', as: 'patient_appointments'
   get 'patient/lab_results', to: 'patient#lab_results', as: 'patient_lab_results'
@@ -83,6 +85,7 @@ Rails.application.routes.draw do
   get 'admin_price', to: 'admin#admin_price', as: 'admin_price'
   get 'admin_help', to: 'admin#admin_help', as: 'admin_help'
   get 'admin_profile', to: 'admin#admin_profile', as: 'admin_profile'
+  get 'admin_logout', to: 'admin#admin_logout', as: 'admin_logout'
 
 
   resources :medical_files do
