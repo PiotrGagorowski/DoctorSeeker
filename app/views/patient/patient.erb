@@ -107,7 +107,7 @@
         <% user_appointment = UserAppointment.new %>
 
         <tr>
-          <td><%= appointment.appointment_date %></td>
+          <td><%= appointment.start_time %></td>
           <td><%= appointment.doctor.first_name %> <%= appointment.doctor.last_name %></td>
           <td>
             <% if user_appointment.errors.any? %>
@@ -147,7 +147,7 @@
     <tbody>
       <% @reserved_appointments.each do |appointment| %>
         <tr>
-          <td><%= appointment.appointment_date %></td>
+          <td><%= appointment.start_time %></td>
           <td><%= appointment.doctor.first_name %> <%= appointment.doctor.last_name %></td>
         </tr>
       <% end %>

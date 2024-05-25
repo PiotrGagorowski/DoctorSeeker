@@ -2,16 +2,24 @@ class DoctorController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:file]
     before_action :authenticate_user!
     def doctor
-        @appointments = current_user.appointments_as_doctor
-                                .joins(:user_appointments)
-                                .where('user_appointments.appointment_id = appointments.id')
-                                .order('appointments.appointment_date ASC')
-        @patients = @appointments.map { |appointment| appointment.user_appointments.first.patient }
+      @appointments = current_user.appointments_as_doctor
+                                  .joins(:user_appointments)
+                                  .order('appointments.start_time ASC')
+                                  
+      @days = Appointment.where(
+        start_time: Time.now.beginning_of_month.beginning_of_week..Time.now.end_of_month.end_of_week
+      )
+      
+      # Pobieramy pacjentów powiązanych z wizytami
+      @patients = @appointments.map { |appointment| appointment.user_appointments.map(&:patient) }.flatten.uniq
+      
+      @users = User.all
     end
+
     def prescription
         @appointments = Appointment.joins(user_appointments: :patient)
                                 .where(doctor_user_id: current_user.id)
-                                .order('appointments.appointment_date ASC')
+                                .order('appointments.start_time ASC')
                                 .distinct
                                 .to_a
                                 
@@ -32,8 +40,24 @@ class DoctorController < ApplicationController
        
       
     def appointments
-        @appointments = current_user.appointments_as_doctor.where(doctor_user_id: current_user.id)
+      # Pobierz wszystkie wizyty zalogowanego lekarza, w tym te bez przypisanych pacjentów
+      @appointments = current_user.appointments_as_doctor
+                       .left_joins(:user_appointments)
+                       .distinct
+                       .order('appointments.start_time ASC')
+    
+      # Pobierz wszystkich unikalnych pacjentów powiązanych z tymi wizytami
+      @patients = @appointments.flat_map { |appointment| appointment.user_appointments.map(&:patient) }.uniq
+    
+      # Pobierz wszystkie wizyty w aktualnym miesiącu wraz z pacjentami
+      @days = Appointment.where(
+        start_time: Time.now.beginning_of_month.beginning_of_week..Time.now.end_of_month.end_of_week
+      )
+    
+      # Pobierz wszystkich użytkowników (jeśli to potrzebne, np. dla jakiegoś dropdown menu)
+      @users = User.all
     end
+    
     
     def appointments_json
         @appointments = current_user.appointments_as_doctor.all
@@ -54,10 +78,10 @@ class DoctorController < ApplicationController
     private
     
     def appointment_params
-    params.permit(:appointment_date)
+    params.permit(:start_time, :end_time)
     end
     def medical_file_params
         params.require(:medical_file).permit(:file, :category, :utility_date, :user_id)
-      end
+    end
       
 end
