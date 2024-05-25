@@ -4,7 +4,7 @@ class PatientController < ApplicationController
         @appointments = Appointment.all
         @user_appointment = UserAppointment.new
         @reserved_appointments = Appointment.reserved.includes(:user_appointments)
-        @free_appointments = Appointment.free
+        @free_appointments = Appointment.free.where('appointment_date > ?', DateTime.now)
         @doctors_with_free_appointments = @free_appointments.map(&:doctor).uniq.sort_by { |doctor| [doctor.last_name, doctor.first_name] }
 
     end
