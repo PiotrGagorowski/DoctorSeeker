@@ -29,8 +29,7 @@ class LabworkerController < ApplicationController
     
     def patient
       @patients = User.where(role: 'patient')
-      @lab_results = MedicalFile.where(user_id:  user.id, category: MedicalFile.categories[:lab_results])
-      
+      @lab_results = MedicalFile.where(user_id:  user.id, category: MedicalFile.categories[:lab_results]) 
     end
     
     def lab_result

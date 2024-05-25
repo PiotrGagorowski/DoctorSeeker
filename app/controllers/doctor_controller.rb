@@ -45,6 +45,28 @@ class DoctorController < ApplicationController
         render json: @appointments.to_json
     end
 
+    def patient
+      @patients = User.where(role: 'patient')
+      @lab_results = MedicalFile.where(user_id:  user.id, category: MedicalFile.categories[:lab_results]) 
+    end
+
+    def lab_results
+      @patients = User.where(role: 'patient')
+      patient_id = @patients.pluck(:id)
+      @lab_results = MedicalFile.where(user_id: patient_id, category: MedicalFile.categories[:lab_results])
+      @comments = Comment.where(file_id: @lab_results.pluck(:id))
+    end
+
+    def comment
+      @lab_results = MedicalFile.where(user_id: patient_ids, category: MedicalFile.categories[:lab_results])
+      lab_result_ids = @lab_results.pluck(:id)
+      @comment = Comment.new(comment_params)
+      if @comment.save
+        redirect_to lab_results_path, notice: 'Komentarz dodany pomyślnie.'
+      else
+        redirect_to lab_results_path, alert: 'Nie udało się dodać komentarza.'
+      end
+    end
 
     def file
         path = Rails.root.join('app', 'javascript', params[:filename])
@@ -54,6 +76,9 @@ class DoctorController < ApplicationController
           render plain: 'Not Found', status: 404
         end
       end
+
+
+
       # PATCH/PUT /appointments/1 or /appointments/1.json
 
     private
@@ -65,9 +90,10 @@ class DoctorController < ApplicationController
         params.require(:medical_file).permit(:file, :category, :utility_date, :user_id)
     end
 
+    def comment_params
+      params.require(:comment).permit(:doctor_user_id, :file_id, :comment)
+    end
 
-
-  
       
 end
 

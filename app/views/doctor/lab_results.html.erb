@@ -1,0 +1,185 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= lab_results_path %>">Wyniki badań</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">O przychodni</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<div id="cont">
+  <center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Wyniki badań</span></h1></center>
+  <div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:200px">
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+      W tym miejscu masz możliowść dodania kometarza do wyników badań po spotakaniu z pacjentem. Po prawej stronie jest zakładka do wystawienia recept dla osób, które jej jeszcze nie otzrymały, po lewej stronie jest spis recept, które już wystawiłeś.
+    </h5>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+      Jeśli potrzebujesz zmienić plik lub masz pytania dotyczące wystawiania recept, zachęcamy do kontaktu z naszym działem administracji.
+    </h5>
+  </div>
+  <div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:200px">
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+      Pamiętaj, aby podczas wystawiania recepty wypisać PESEL odpowidniego pacjenta, kod recepty wygeneruje się automatycznie.
+    </h5>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+      Dziękujemy, że jesteś częścią naszej przychodni.
+    </h5>
+    <h5 class="fw-lighter" style="text-align:center; margin-bottom:10px"><i>
+      <span style="color: #000080;">Zespół Przychodni Lekarskiej <b>DoctorSeeker</b></span></i>
+    </h5>
+  </div>
+  <center><hr style="width:100%; margin-top:20px; padding:0px" /></center>
+  <div class="left_prescription">
+  <center><h2 class="mb-4" style="margin-top:20px">Wyniki badań pacjentów ⬇️</h2></center>
+  <div class="cont_prescription">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th><center>Imię</center></th>
+          <th><center>Nazwisko</center></th>
+          <th><center>PESEL</center></th>
+          <th><center>Wyniki badań</center></th>
+          <th><center>Dodany Komentarz</center></th>
+          <th><center>Komentarz</center></th>
+          <th><center>Akcja</center></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @patients.present? %>
+      <% @patients.each do |user| %>
+        <tr>
+          <td><center><%= user.first_name %></center></td>
+          <td><center><%= user.last_name %></center></td>
+          <td><center><%= user.pesel_number %></center></td>
+          <td><center>
+            <% medical_file = MedicalFile.find_by(user_id: user.id, category: 'lab_results') %>
+            <% if medical_file %>
+              <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+            <% else %>
+              <span class="badge text-bg-danger">Brak pliku</span>
+            <% end %>
+          </center></td>
+          <td><center>
+          <% if medical_file %>
+              <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
+              <% if comment %>
+                <span class="badge rounded-pill text-bg-success"><%= comment.comment  %></span>
+              <% else %>
+                <span class="badge text-bg-danger">Brak komentarza</span>
+              <% end %>
+          <% end %>
+          </center></td>
+          <td><center>
+          <% if medical_file %>
+            <%= form_with(model: Comment.new, url: comments_path, local: true, multipart: true) do |form| %>
+              <%= form.hidden_field :doctor_user_id, value: current_user.id %>
+              <%= form.hidden_field :file_id, value: medical_file.id %>
+              <div>
+                <%= form.text_area :comment %>
+              <%= form.submit "Dodaj komentarz", class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          <% end %>
+          </center></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="7">Brak danych do wyświetlenia</td>
+      </tr>
+    <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="right_prescription">
+  <center><h2 class="mb-4" style="margin-top:20px">Dodane komentarze ⬇️</h2></center>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th><center>Nr ID Pacjenta</center></th>
+        <th><center>Imię</center></th>
+        <th><center>Nazwisko</center></th>
+        <th><center>PESEL</center></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @comments.present? %>
+        <% @comments.each do |comment| %>
+          <% medical_file = MedicalFile.find(comment.file_id) %>
+          <% user = User.find(medical_file.user_id) %>
+          <tr>
+            <td><center><%= user.first_name %></center></td>
+            <td><center><%= user.last_name %></center></td>
+            <td><center><%= user.pesel_number %></center></td>
+            <td><center>
+          <% if medical_file %>
+              <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
+              <% if comment %>
+                <span class="badge rounded-pill text-bg-success"><%= comment.comment  %></span>
+              <% else %>
+                <span class="badge text-bg-danger">Brak komentarza</span>
+              <% end %>
+          <% end %>
+          </center></td>
+            <% if user.medical_files.where(category: 'lab_results').present? %>
+              <td><%= link_to "Wynik badań", rails_blob_url(user.medical_files.where(category: 'lab_results').first.file) %></td>
+            <% else %>
+              <td>Brak pliku do pobrania</td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6">Brak danych do wyświetlenia</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>
