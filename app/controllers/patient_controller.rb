@@ -11,11 +11,21 @@ class PatientController < ApplicationController
     end
 
     before_action :authenticate_user!
-
+    
     def lab_results
         @patient = current_user
         @lab_results = MedicalFile.where(user_id: @patient.id, category: MedicalFile.categories[:lab_results])
-    end
+        @comments = Comment.where(file_id: @lab_results.pluck(:id))
+      end
+
+      def comment
+        @patient = current_user
+        @doctor = User.where(role: 'doctor')
+        @lab_results = MedicalFile.where(user_id: @patient.id, category: MedicalFile.categories[:lab_results])
+        medical_file_id = @lab_results.pluck(:id) 
+        doctor_id = @lab_results.pluck(:additional_user_id)
+        @comment = Comment.where(doctor_user_id: @doctor.id)
+      end
 
     def prescriptions
         @patient = current_user

@@ -43,8 +43,7 @@ class LabworkerController < ApplicationController
     end
     def patients
       @patients = User.where(role: 'patient')
-      @lab_result = MedicalFile.where(category: 'lab_results', user_id: @patients.pluck(:id))
-      .group_by(&:user_id)
+      @lab_result = MedicalFile.where(category: 'lab_results', user_id: @patients.pluck(:id)).group_by(&:user_id)
     end
 
     private
