@@ -9,21 +9,21 @@
       </tr>
     </thead>
     <tbody>
-      <% @doctor_free_appointments.each do |appointment| %>
-        <% if appointment.appointment_date.future? %>
-          <tr>
-            <td><%= appointment.appointment_date %></td>
-            <td>
-              <%= form_with model: UserAppointment.new, url: user_appointments_path, local: true do |form| %>
-                <%= form.hidden_field :appointment_id, value: appointment.id %>
-                <%= form.hidden_field :patient_user_id, value: current_user.id %>
-                <%= form.submit "Zarezerwuj termin", class: "btn btn-primary" %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
+    <% @doctor_free_appointments.each do |appointment| %>
+      <% if appointment && appointment.appointment_date && appointment.appointment_date.future? %>
+        <tr>
+          <td><%= appointment.appointment_date %></td>
+          <td>
+            <%= form_with model: UserAppointment.new, url: user_appointments_path, local: true do |form| %>
+              <%= form.hidden_field :appointment_id, value: appointment.id %>
+              <%= form.hidden_field :patient_user_id, value: current_user.id %>
+              <%= form.submit "Zarezerwuj termin", class: "btn btn-primary" %>
+            <% end %>
+          </td>
+        </tr>
       <% end %>
-    </tbody>
+    <% end %>
+  </tbody>
   </table>
 <% else %>
   <p>Brak dostępnych terminów dla tego lekarza.</p>
