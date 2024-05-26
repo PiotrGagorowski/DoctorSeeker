@@ -183,7 +183,7 @@
   <h3>Kalendarz terminów</h3>
   <div id="calendar">
     <div class="container mt-5 text-center">
-      <%= month_calendar(events: @appointments_by_date) do |date, appointments| %>
+      <%= month_calendar(events: @free_appointments_calendar) do |date, appointments| %>
         <div class="day <%= 'today' if date == Date.today %> <%= 'has-events' if appointments.any? %>" data-day="<%= date %>">
           <%= date.day %>
           <div class="appointments-info">

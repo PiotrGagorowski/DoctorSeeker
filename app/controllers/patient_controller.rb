@@ -9,7 +9,7 @@ class PatientController < ApplicationController
   
       # Separate reserved and free appointments
       @reserved_appointments = Appointment.reserved.includes(:user_appointments)
-      #@free_appointments = Appointment.free
+      @free_appointments_calendar = Appointment.free
   
     end
   
