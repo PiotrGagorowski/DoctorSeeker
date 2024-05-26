@@ -29,7 +29,7 @@ class ReviewsController < ApplicationController
         format.html { redirect_to review_url(@review), notice: "Review was successfully created." }
         format.json { render :show, status: :created, location: @review }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to patient_reviews_path, alert: "Musisz wprowadzic wartości we wszytskie pola formularza w celu dodania recenzji." }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
     end
