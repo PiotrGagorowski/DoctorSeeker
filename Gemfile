@@ -80,3 +80,4 @@ gem 'bootstrap', '~> 5.0.0'
 
 gem 'turbolinks', '~> 5.2'
 
+gem "simple_calendar", "~> 3.0"

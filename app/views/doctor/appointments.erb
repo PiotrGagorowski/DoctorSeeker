@@ -15,6 +15,16 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
         </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= lab_results_path %>">Wyniki badań</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
         </li>
@@ -48,107 +58,269 @@
     </div>
   </div>
 </nav>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const days = document.querySelectorAll(".day");
+    let currentOpenedDay = null;
 
+    days.forEach(day => {
+      day.addEventListener("click", function() {
+        const appointmentsInfo = this.querySelector(".appointments-info");
+        const currentDayHeight = this.offsetHeight;
 
-<div id="cont">
+        if (currentOpenedDay === this) {
+          appointmentsInfo.style.display = "none";
+          currentOpenedDay = null;
+        } else {
+          if (currentOpenedDay) {
+            currentOpenedDay.querySelector(".appointments-info").style.display = "none";
+          }
+          appointmentsInfo.style.top = `-${currentDayHeight}px`;
+          appointmentsInfo.style.display = "block";
+          currentOpenedDay = this;
+        }
+      });
 
-<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Dostępne terminy wizyt</span></h1></center>
-<div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:200px">
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
-W tym miejscu masz możliowść dodać termin, podczas którego możesz spotkać się z pacjentem. Po prawej stronie znajduje się formularz do dodawania terminów natomiast po lewej stronie jest spis termniów, które dodałeś.
-</h5>
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
-Jeśli potrzebujesz zmienić termin lub masz pytania dotyczące dodawania nowych terminów, zachęcamy do kontaktu z naszym działem administracji.
-</h5>
-</div>
+      // Dodajemy obsługę zdarzenia kliknięcia na body, aby ukryć okienko z terminami
+      // jeśli użytkownik kliknie gdziekolwiek poza okienkiem
+      document.body.addEventListener("click", function(event) {
+        if (!event.target.closest(".day")) {
+          const appointmentsInfo = document.querySelector(".appointments-info");
+          appointmentsInfo.style.display = "none";
+          currentOpenedDay = null;
+        }
+      });
+    });
+  });
 
-<div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:200px">
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
-Pamiętaj, aby podczas dodawania terminów wybrać konkrenty dzień oraz godzinę spotkania. 
-</h5>
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
-Dziękujemy, że jesteś częścią naszej przychodni.
-</h5>
-<h5 class="fw-lighter" style="text-align:center; margin-bottom:10px"><i>
-<span style="color: #000080;">Zespół Przychodni Lekarskiej <b>DoctorSeeker</b></span></i>
-</h5>
-</div>
+document.addEventListener("DOMContentLoaded", function() {
+  const startTimeInput = document.getElementById("appointment_start_time");
+  const endTimeInput = document.getElementById("appointment_end_time");
+  const form = document.querySelector('form');
 
-<center><hr style="width:80%; margin-top:10px; padding:0px" /></center>
+  // Ustawienie minimalnej daty i czasu w polu końcowym
+  startTimeInput.addEventListener("change", function() {
+    if (startTimeInput.value) {
+      let [date, time] = startTimeInput.value.split("T");
+      let [hours, minutes] = time.split(":");
+      minutes = parseInt(minutes) + 30;
+      if (minutes >= 60) {
+        hours = parseInt(hours) + 1;
+        minutes = minutes - 60;
+      }
+      let endTime = `${date}T${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      endTimeInput.value = endTime;
+      endTimeInput.min = startTimeInput.value;
+    }
+  });
 
-<div class="left">
+  // Ustawienie początkowej minimalnej wartości dla czasu końcowego
+  if (startTimeInput.value) {
+    let [date, time] = startTimeInput.value.split("T");
+    let [hours, minutes] = time.split(":");
+    minutes = parseInt(minutes) + 30;
+    if (minutes >= 60) {
+      hours = parseInt(hours) + 1;
+      minutes = minutes - 60;
+    }
+    let endTime = `${date}T${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    endTimeInput.value = endTime;
+    endTimeInput.min = startTimeInput.value;
+  }
 
-   <!-- Formularz do tworzenia nowego terminu -->
-    <center><h3 class="mb-4" style="margin-top:5px">Dodaj nowy termin ⬇️</h3></center>
-    <%= form_with model: @appointment, url: appointments_path do |form| %>
-      <div class="mb-3">
-        <%= form.label :appointment_date, "Data i godzina" %>
-        <%= form.datetime_local_field :appointment_date, class: "form-control" %>
-      </div>
-      <center><%= form.submit "Dodaj termin", class: "btn btn-primary" %></center>
-    <% end %>
+  // Walidacja przed wysłaniem formularza
+  form.addEventListener('submit', function(event) {
+    if (!startTimeInput.value) {
+      event.preventDefault();
+      alert('Proszę wprowadzić datę i godzinę rozpoczęcia.');
+    } else if (!endTimeInput.value) {
+      event.preventDefault();
+      alert('Proszę wprowadzić datę i godzinę zakończenia.');
+    }
+  });
+});
+</script>
 
-<div id="carouselExampleDark" class="carousel carousel-dark slide">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-       <%= image_tag "kwiecień.png", class:"d-block w-100" %>
-    </div>
-    <div class="carousel-item">
-    <%= image_tag "maj.png", class:"d-block w-100" %>
-    </div>
-    <div class="carousel-item">
-     <%= image_tag "maj.png", class:"d-block w-100" %>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+<style>
+  .appointments-info {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 999;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.list-group-item {
+  background-color: #66d3fa;
+  color: black;
+}
+.link {
+  color: black;
+  font-weight: bold;
+}
 
-</div>
+  #cont {
+    display: flex;
+  }
+ .right {
+  width: 80%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.left{
+  width: 20%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+  #calendar {
+    width: 100%;
+  }
 
-  
-</div>
-</div>
+  .simple-calendar {
+    flex-wrap: wrap;
+  }
 
-<div class="right">
-  <center><h3 class="mb-4" style="margin-top:5px">Kalendarz terminów ⬇️</h3></center>
-  <div id="calendar"></div>
+  .simple-calendar .day {
+    width: 14%; /* Szerokość 1/7 dla każdego dnia w tygodniu */
+    height: 100px; /* Stała wysokość dla każdego dnia */
+    position: relative;
+    font-size: 14px;
+  }
 
-  <table class="table table-bordered table-striped bg-primary text-white">
-    <thead>
-      <tr>
-        <th><center>Data</center></th>
-        <th><center>Pacjent</center></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @appointments.each do |appointment| %>
-        <tr>
-          <td><center><%= appointment.appointment_date %></center></td>
-          <td><center>
-            <% if appointment.user_appointments.any? %>
-              <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
-            <% else %>
-              Wolny termin
-            <% end %></center>
-          </td>
-        </tr>
+  .simple-calendar .wday-0, /* Sunday */
+  .simple-calendar .wday-1, /* Monday */
+  .simple-calendar .wday-2, /* Tuesday */
+  .simple-calendar .wday-3, /* Wednesday */
+  .simple-calendar .wday-4, /* Thursday */
+  .simple-calendar .wday-5, /* Friday */
+  .simple-calendar .wday-6 { /* Saturday */
+    width: 14%;
+  }
+
+  .simple-calendar .today {
+    background-color: #66d3fa;
+    color: white;
+  }
+
+  .simple-calendar .past {
+    background-color: #f8f9fa;
+  }
+
+  .simple-calendar .future {
+    background-color: #ffffff;
+  }
+
+  .simple-calendar .start-date {
+    font-weight: bold;
+  }
+
+  .simple-calendar .prev-month, 
+  .simple-calendar .next-month {
+    color: #ccc;
+  }
+
+  .simple-calendar .current-month {
+    color: #000;
+  }
+
+  .simple-calendar .has-events {
+    background-color: #e0f7fa;
+  }
+
+  .simple-calendar .day div {
+    text-align: center;
+  }
+
+  .card {
+    margin: 5px 0;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    left: 5%;
+    box-sizing: border-box;
+  }
+
+  .card-header {
+    background-color: #66d3fa;
+    color: white;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-body {
+    padding: 5px;
+  }
+
+  .form-control {
+    width: 200px; /* Ustaw szerokość inputów na 200px */
+  }
+</style>
+  <div id="cont">
+    <div class="left">
+      <!-- Formularz do tworzenia nowego terminu -->
+      <h3>Dodaj nowy termin</h3>
+      <%= form_with model: @appointment, url: appointments_path, local: true, data: { turbo: false } do |form| %>
+        <div class="mb-3">
+          <%= form.label :start_time, "Data i godzina rozpoczęcia" %>
+          <%= form.datetime_local_field :start_time, class: "form-control", style: "width: 200px;", id: "appointment_start_time" %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :end_time, "Data i godzina zakończenia" %>
+          <%= form.datetime_local_field :end_time, class: "form-control", style: "width: 200px;", id: "appointment_end_time" %>
+        </div>
+        <%= form.submit "Dodaj termin", class: "btn btn-primary" %>
       <% end %>
-    </tbody>
-  </table>
-</div>
+    </div>
 
-</div>
+
+    <div class="right">
+              <h3>Kalendarz terminów</h3>
+      <div id="calendar">
+        <div class="container mt-5 text-center">
+          <%= month_calendar(events: @appointments) do |date, appointments| %>
+            <div class="day" data-day="<%= date %>">
+              <%= date.day %>
+            </div>
+            <div class="appointments-info" style="display: none;">
+              <h4>Wizyty na <%= date.day %>/<%= date.month %>/<%= date.year %>:</h4>
+              <ul class="list-group">
+              <% appointments.each do |appointment| %>
+                <li class="list-group-item">
+                  <% if appointment.start_time && appointment.end_time %>
+                    <strong><%= link_to "#{appointment.start_time.strftime("%k:%M")} - #{appointment.end_time.strftime("%k:%M")}", appointment_path(appointment), class: "link" %></strong> </br>
+                    <% if appointment.user_appointments.present? %>
+                      <% appointment.user_appointments.each do |user_appointment| %>
+                        <% patient = @users.find { |user| user.id == user_appointment.patient_user_id } %>
+                        <%= link_to "#{patient.first_name} #{patient.last_name}", appointment_path(appointment), class: "link"%>
+                      <% end %>
+                    <% else %>
+                      Brak przypisanego pacjenta
+                    <% end %>
+                  <% else %>
+                    <strong>Brak informacji o czasie rozpoczęcia lub zakończenia</strong>
+                  <% end %>
+                </li>
+              <% end %>
+
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      </div>
+  </div>
+
 
 <footer class="footer">
 <p><b>Prawa autorskie © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>

@@ -100,6 +100,7 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
         <th>Data wystawienia wyników</th>
         <th>Data wykonania badania</th>
         <th>Wynik badań</th>
+        <th>Komentarz</th>
       </tr>
     </thead>
     <tbody>
@@ -111,6 +112,16 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
       <% else %>
       Brak pliku do pobrania</td>
       <% end %>
+      <td><center>
+      <% if lab_result.file.attached? %>
+            <% comment = @comments.find_by(file_id: lab_result.id) %>
+            <% if comment %>
+              <span class="badge rounded-pill text-bg-success"><%= comment.comment %></span>
+            <% else %>
+              <span class="badge text-bg-danger">Brak komentarza</span>
+            <% end %>
+          <% end %>
+          </center></td>
     </tr>
     </tbody>
   </table>
