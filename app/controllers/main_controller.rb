@@ -14,4 +14,7 @@ class MainController < ApplicationController
     @average_score = @reviews.present? ? @user_reviews.joins(:review).average(:score).to_f : 0.0
   end
 
+  
 end
+
+
