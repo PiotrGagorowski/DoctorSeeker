@@ -3,8 +3,10 @@
 <%= render @medical_file %>
 
 <div>
-  <%= link_to "Edit this medical file", edit_medical_file_path(@medical_file) %> |
   <%= link_to "Back to medical files", medical_files_path %>
 
-  <%= button_to "Destroy this medical file", @medical_file, method: :delete %>
+  <% if @medical_file.user_id == current_user.id %>
+    <%= link_to "Edit this medical file", edit_medical_file_path(@medical_file) %> |
+    <%= button_to "Destroy this medical file", @medical_file, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
 </div>

@@ -53,5 +53,9 @@ Rails.application.routes.draw do
 
   #Admin
   get 'admin', to: 'admin#admin'
-
+  resources :medical_files do
+    collection do
+      get 'prescription'
+    end
+  end
 end
