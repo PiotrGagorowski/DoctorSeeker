@@ -88,46 +88,69 @@ Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
 </h5>
 
 
-<div class="card border-primary mb-3" style="max-width: 540px; margin-top: 30px; margin-left: 100px; height:370px; ">
-<div class="card-body">
-<form style="width:500px">
-<div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label"><span class="badge text-bg-warning">Imię i nazwisko lekarza</span></label>
-  <select class="form-select" aria-label="Default select example">
-  <option selected>Kliknij, aby wybrać lekarza</option>
-  <option value="1">Dr. Aleksandra Nowak</option>
-  <option value="2">Dr. Tomasz Kowalczyk</option>
-  <option value="3">Dr. Marta Lewandowska</option>
-  <option value="4">Dr. Katarzyna Nowakowska</option>
-  <option value="5">Dr. Marcin Wojciechowski</option>
-  <option value="6">Dr. Joanna Kowalska</option>
-  <option value="7">Dr. Magdalena Szymańska</option>
-  <option value="8">Dr. Zbigniew Adamczyk</option>
-  <option value="9">Dr. Tomasz Kaczmarek</option>
-  <option value="10">Dr. Paweł Nowicki</option>
-</select>
+
+
+<!-- Formularz do dodawania nowej recenzji -->
+<!--
+<div class="container">
+  <h2>Dodaj nową recenzję</h2>
+  <%= form_with(model: @review, local: true) do |form| %>
+    
+    <div class="field">
+      <%= form.label :doctor_id, class: "form-label" %>
+      <%= form.select :doctor_id, options_for_select(@doctors.map{ |doctor| ["#{doctor.first_name} #{doctor.last_name}", doctor.id] }), {}, class: "form-select" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :score, class: "form-label" %>
+      <%= form.select :score, options_for_select([1, 2, 3, 4, 5]), {}, class: "form-select" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :comment, class: "form-label" %>
+      <%= form.text_area :comment, class: "form-control" %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Dodaj recenzję", class: "btn btn-primary" %>
+    </div>
+  <% end %>
 </div>
-<div class="mb-3">
-  <label for="exampleFormControlTextarea1" class="form-label"><span class="badge text-bg-warning">Ocena</span></label>
-  <select class="form-select" aria-label="Default select example">
-  <option selected>Wybierz ocenę</option>
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-</select>
-</div>
-<div class="mb-3">
-  <label for="exampleFormControlTextarea1" class="form-label"><span class="badge text-bg-warning">Komentarz</span></label>
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Tutaj wpisz tekst..."></textarea>
-</div>
-<button type="button" class="btn btn-primary">Wyślij</button>
-</div>
-</div>
-</form>
-</div>
-</div>
+-->
+
+<%= form_with(model: @user_review, local: true) do |form| %>
+  <% if @user_review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_review.errors.count, "error") %> prohibited this user_review from being saved:</h2>
+
+      <ul>
+        <% @user_review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :doctor_user_id %>
+    <%= form.collection_select :doctor_user_id, @doctors, :id, lambda { |doctor| "#{doctor.first_name} #{doctor.last_name}" }, prompt: "Wybierz lekarza" %>
+  </div>
+
+  <div class="field">
+    <%= form.fields_for :review do |review_fields| %>
+      <%= review_fields.label :score %>
+      <%= review_fields.number_field :score %>
+
+      <%= review_fields.label :comment %>
+      <%= review_fields.text_area :comment %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
 <center><hr style="width:80%; margin-top:800px" /></center>
 <div style="width:40%; margin-top:20px; margin-left:50px; float:left; margin-bottom:20px">
 
@@ -137,28 +160,32 @@ Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
 
   <% if @reviews.any? %>
   <% @reviews.each do |review| %>
-  <table class="table table-bordered table-striped bg-primary text-white">
-    <thead>
-      <tr>
-        <th>Imię i nazwisko lekarza</th>
-        <th>Wystatwiona ocena</th>
-        <th>Recenzja</th>
-        <th>Opublikowano</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><%= review.doctor.first_name %> <%= review.doctor.last_name %></td>
-        <td><%= review.score %></td>
-        <td><%= review.comment %></td>
-        <td><%= review.created_at.strftime("%d-%m-%Y %H:%M") %></td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table table-bordered table-striped bg-primary text-white">
+      <thead>
+        <tr>
+          <th>Imię i nazwisko lekarza</th>
+          <th>Wystawiona ocena</th>
+          <th>Recenzja</th>
+          <th>Opublikowano</th>
+          <th>Akcje</th> <!-- Dodany nagłówek dla przycisku usuwania -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= review.doctor.first_name %> <%= review.doctor.last_name %></td>
+          <td><%= review.score %></td>
+          <td><%= review.comment %></td>
+          <td><%= review.created_at.strftime("%d-%m-%Y %H:%M") %></td>
+          <td>
+            <%= link_to 'Usuń recenzję', user_review_path(review), method: :delete, data: { confirm: 'Czy na pewno chcesz usunąć tę recenzję?' }, class: 'btn btn-danger btn-sm' %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   <% end %>
-  <% else %>
+<% else %>
   <span class="badge text-bg-danger" style="font-size:20px; margin-left:50px">Nie wystawiłeś jeszcze żadnej recenzji ☹️</span>
-  <% end %>
+<% end %>
 
 
 </div>

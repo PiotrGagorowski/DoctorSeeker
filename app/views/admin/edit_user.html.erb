@@ -2,6 +2,8 @@
   <%= stylesheet_link_tag 'forms', media: 'all' %>
 </head>
 
+
+
 <body class="form-body">
   <div class="form-container">
     <%= form_with(model: @user, url: update_user_path(@user), method: :patch, html: { class: 'user-form' }) do |form| %>
@@ -50,5 +52,6 @@
       <!-- Przycisk zatwierdzający formularz -->
       <%= form.submit 'Zapisz zmiany', class: 'btn btn-primary' %>
     <% end %>
+
   </div>
 </body>
