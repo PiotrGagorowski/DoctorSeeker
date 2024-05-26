@@ -1,7 +1,7 @@
 class PatientController < ApplicationController
     def patient
         @appointments = Appointment.all
-        @free_appointments = Appointment.free.where('appointment_date > ?', DateTime.now)
+        @free_appointments = Appointment.free.where('start_time > ?', DateTime.now)
         @doctors_with_free_appointments = @free_appointments.map(&:doctor).uniq.sort_by { |doctor| [doctor.last_name, doctor.first_name] }
 
       @user_appointment = UserAppointment.new
@@ -42,7 +42,7 @@ class PatientController < ApplicationController
         @patient = current_user
         @user_appointments = UserAppointment.joins(:appointment)
         .where(patient_user_id: @patient.id)
-        .order('appointments.appointment_date DESC')
+        .order('appointments.start_time DESC')
         @appointments = UserAppointment.where(patient_user_id: @patient.id).map(&:appointment)
     end
 
@@ -52,7 +52,7 @@ class PatientController < ApplicationController
         @reviews = @user_reviews.map(&:review)
         @doctors = User.joins(appointments_as_doctor: :user_appointments)
                  .where(user_appointments: { patient_user_id: @patient.id })
-                 .where('appointments.appointment_date < ?', DateTime.now)
+                 .where('appointments.start_time < ?', DateTime.now)
                  .distinct
         @user_review = UserReview.new
         @user_review.build_review
@@ -60,7 +60,7 @@ class PatientController < ApplicationController
 
     def doctor_appointments
         @doctor = User.find(params[:doctor_id])
-        @doctor_free_appointments = @doctor.appointments_as_doctor.free.order(appointment_date: :asc)
+        @doctor_free_appointments = @doctor.appointments_as_doctor.free.order(start_time: :asc)
     end
 end
 
