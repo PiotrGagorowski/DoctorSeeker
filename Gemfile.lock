@@ -118,7 +118,6 @@ GEM
     execjs (2.9.1)
     ffi (1.16.3)
     ffi (1.16.3-x64-mingw-ucrt)
-    gem (0.0.1.alpha)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.5)
@@ -294,7 +293,6 @@ DEPENDENCIES
   certified
   debug
   devise (~> 4.9)
-  gem (~> 0.0.1.alpha)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
