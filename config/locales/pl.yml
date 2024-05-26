@@ -12,6 +12,12 @@ pl:
         reset_password_token: "Hasło"
     errors:
       models:
+        user_review:
+          attributes:
+            doctor:
+              required: "Wybór lekarza jest wymagany"
+            review:
+              user_review_doctor_required: "Recenzja dla lekarza jest wymagana"
         user:
           attributes:
             password:
