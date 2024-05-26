@@ -8,6 +8,7 @@
         <th>Akcja</th>
       </tr>
     </thead>
+
     <tbody>
     <% @doctor_free_appointments.each do |appointment| %>
       <% if appointment && appointment.appointment_date && appointment.appointment_date.future? %>
@@ -24,6 +25,7 @@
       <% end %>
     <% end %>
   </tbody>
+
   </table>
 <% else %>
   <p>Brak dostępnych terminów dla tego lekarza.</p>
