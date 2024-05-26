@@ -101,3 +101,5 @@ Rails.application.routes.draw do
   delete 'admin/destroy_user/:id', to: 'admin#destroy_user', as: 'destroy_user'
 
 end
+
+
