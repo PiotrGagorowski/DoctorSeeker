@@ -7,6 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
 User.create!(email: 'patient2@example.com', password: 'Password1', role: :patient, first_name: 'Anna', last_name: 'Bąk', pesel_number: '35476192890')
 User.create!(email: 'admin@example.com', password: 'Password1', role: :admin, first_name: 'Zenon', last_name: 'Kowalski', pesel_number: '54890912890')
 User.create!(email: 'labworker@example.com', password: 'Password1', role: :labworker, first_name: 'Renata', last_name: 'Klucz', pesel_number: '48901292890')
@@ -16,3 +17,5 @@ User.create!(email: 'marta.lewandowska@example.com', password: 'Password1', role
 User.create!(email: 'patient3@example.com', password: 'Password1', role: :patient, first_name: 'Bogdan', last_name: 'Raj', pesel_number: '47614928901')
 User.create!(email: 'patient4@example.com', password: 'Password1', role: :patient, first_name: 'Paulina', last_name: 'Nowak', pesel_number: '61928902522')
 User.create!(email: 'patient5@example.com', password: 'Password1', role: :patient, first_name: 'Jan', last_name: 'Kowalski', pesel_number: '54761928903')
+User.create!(email: 'patient6@example.com', password: 'Password1', role: :patient, first_name: 'Joanna', last_name: 'Kot', pesel_number: '75261928900')
+

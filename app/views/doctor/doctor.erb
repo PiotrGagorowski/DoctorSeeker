@@ -1,26 +1,128 @@
+<style>
+  #cont {
+    display: flex;
+  }
+ .left, .right {
+  width: 50%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+  #calendar {
+    width: 100%;
+  }
+
+  .simple-calendar {
+    flex-wrap: wrap;
+  }
+
+  .simple-calendar .day {
+    width: 14%; /* Szerokość 1/7 dla każdego dnia w tygodniu */
+    height: 100px; /* Stała wysokość dla każdego dnia */
+    position: relative;
+    font-size: 14px;
+  }
+
+  .simple-calendar .wday-0, /* Sunday */
+  .simple-calendar .wday-1, /* Monday */
+  .simple-calendar .wday-2, /* Tuesday */
+  .simple-calendar .wday-3, /* Wednesday */
+  .simple-calendar .wday-4, /* Thursday */
+  .simple-calendar .wday-5, /* Friday */
+  .simple-calendar .wday-6 { /* Saturday */
+    width: 14%;
+  }
+
+  .simple-calendar .today {
+    background-color: #66d3fa;
+    color: white;
+  }
+
+  .simple-calendar .past {
+    background-color: #f8f9fa;
+  }
+
+  .simple-calendar .future {
+    background-color: #ffffff;
+  }
+
+  .simple-calendar .start-date {
+    font-weight: bold;
+  }
+
+  .simple-calendar .prev-month, 
+  .simple-calendar .next-month {
+    color: #ccc;
+  }
+
+  .simple-calendar .current-month {
+    color: #000;
+  }
+
+  .simple-calendar .has-events {
+    background-color: #e0f7fa;
+  }
+
+  .simple-calendar .day div {
+    text-align: center;
+  }
+
+  .card {
+    margin: 5px 0;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    left: 5%;
+    box-sizing: border-box;
+  }
+
+  .card-header {
+    background-color: #66d3fa;
+    color: white;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-body {
+    padding: 5px;
+  }
+
+  .form-control {
+    width: 200px; /* Ustaw szerokość inputów na 200px */
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+        </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
         </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= lab_results_path %>">Wyniki badań</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            O przychodni 
+            O przychodni
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
@@ -38,8 +140,8 @@
           <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
-      </li>
+          <a class="nav-link active" href="<%= contact_path(@contact) %>">Kontakt</a>
+        </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -53,79 +155,50 @@
 
 
 <div id="cont">
+  <div class="left">
+    <h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</center></strong></h2>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
+    <% if current_user %>
+      <p>Witaj <%= current_user.first_name %></p>
+      <p>Jesteś [<%= current_user.role %>]</p>
+    <% end %>
+    <%= form_tag(destroy_user_session_path, method: :delete) do %>
+      <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
+    <% end %>
+  </div>
 
-<center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
-<div class="left" style="width:50%; float:left; height:300px; margin-bottom:300px">
-
-<h2 class="fw-lighter" style="margin-bottom:20px"><span style="font-weight:500"><center>Witaj w DoctorSeeker <%= current_user.first_name %>!</center></span></h2>
-
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
-<p>Witaj na naszej stronie internetowej! Jesteśmy dumni, że do nas trafiłeś. Nasza i Twoja misja to dbać o zdrowie. </p>
-
-Nasza platforma została stworzona z myślą o Tobie. Umożliwia Ci łatwe i wygodne zarządzanie swoją pracą. Możesz dodawać terminy konsulatcji medycznych, wystawiać recepty oraz oceniać wyniki badań, gdziekolwiek jesteś i kiedy tylko chcesz. </p>
-
-Jesteśmy tutaj dla Ciebie. Dziękujemy za zaufanie.
-</h5>
-<div class="alert alert-primary" role="alert" style="margin-top:10px">
-<p class="fw-lighter"> ℹ️ Zjedź niżej, aby przejrzeć swoje nadchodzące spotkania z pacjentami</b>.</p>
-</div>
-<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title">Dziękujemy za zaufanie i zapraszamy do korzystania z naszych usług!</h5>
-    <p class="card-text"><p><i>Zespół Przychodni Medycznej DoctorSeeker </i>😊</p></p>
+  <div class="right">
+    <div id="calendar">
+      <h3>Kalendarz terminów</h3>
+      <div class="container mt-5 text-center">
+        <%= month_calendar(events: @appointments) do |date, appointments| %>
+          <div class="day">
+            <%= date.day %>
+          </div>
+          <% appointments.each do |appointment| %>
+            <%= link_to appointment_path(appointment), class: "card", style: "display: block; text-decoration: none; color: inherit;" do %>
+              <div class="card-header">
+                <%= appointment.start_time.strftime("%k:%M") %> - <%= appointment.end_time.strftime("%k:%M") %>
+              </div>
+              <div class="card-body">
+                <% if appointment.user_appointments.present? %>
+                  <% appointment.user_appointments.each do |user_appointment| %>
+                    <% patient = @users.find { |user| user.id == user_appointment.patient_user_id } %>
+                    <%= patient.first_name %> <%= patient.last_name %>
+                  <% end %>
+                <% else %>
+                  Brak przypisanego pacjenta
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
-</div>
-
-<div class="right" style="width:40%; float:right; height:300px; margin-bottom:300px">
-
-
-
-  <% if current_user.email == 'aleksandra.nowak@example.com' %>
-   <%= image_tag "doctor1.png", height: 450, style:"border-radius:80px" %>
-  <% elsif current_user.email == 'tomasz.kowalczyk@example.com' %>
-   <%= image_tag "doctor2.png", height: 450, style:"border-radius:80px" %> 
-  <% elsif current_user.email == 'marta.lewandowska@example.com' %>
-   <%= image_tag "doctor3.png", height: 450, style:"border-radius:80px" %> 
-  <% end %>
-
-
-</div>
-
-
-<center><hr style="width:80%; margin-top:200px; padding:10px" />
-<h1><span class="badge text-bg-primary" style=" ">Twoje nadchodzace wizyty - sprawdź teraz!</span></h1></center>
-<div style="width:98%; margin-bottom:100px">
-<div id="calendar"></div>
-
-  <table class="table table-bordered table-striped bg-primary text-white">
-    <thead>
-      <tr>
-        <th><center>Data</center></th>
-        <th><center>Pacjent</center></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @appointments.each do |appointment| %>
-        <tr>
-          <td><center><%= appointment.appointment_date %></center></td>
-          <td><center>
-            <% if appointment.user_appointments.any? %>
-              <%= appointment.user_appointments.first.patient.first_name %> <%= appointment.user_appointments.first.patient.last_name %>
-            <% else %>
-              Wolny termin
-            <% end %></center>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-</div>
-</div>
-
-
 <footer class="footer">
-<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+  <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>

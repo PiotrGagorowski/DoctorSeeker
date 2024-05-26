@@ -1,6 +1,6 @@
 class Appointment < ApplicationRecord
     belongs_to :doctor, class_name: 'User', foreign_key: 'doctor_user_id'
-    has_many :user_appointments
+    has_many :user_appointments, dependent: :destroy
     has_many :patients, through: :user_appointments, source: :patient
 
     scope :reserved, -> { joins(:user_appointments).distinct }

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :reviews, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :user_appointments
   resources :appointments
-  resources :comments
+  resources :comments, only: [:create]
   resources :medical_files
 
   devise_for :users, controllers: { sessions: 'users/sessions' }
@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   # Doctor
   get 'doctor', to: 'doctor#doctor'
   get 'issue_prescription', to: 'doctor#prescription'
+  get 'lab_results', to: 'doctor#lab_results', as: 'lab_results'
+  #get 'lab_results', to: 'comments#new', as: 'lab_results'
   get 'set_appointment', to: 'doctor#appointments'    
   get 'doctor/appointments.json', to: 'appointments#index_json'
   get 'doctor_contact', to: 'doctor#doctor_contact', as: 'doctor_contact'
@@ -43,9 +45,6 @@ Rails.application.routes.draw do
   get 'doctor_help', to: 'doctor#doctor_help', as: 'doctor_help'
   get 'doctor_profile', to: 'doctor#doctor_profile', as: 'doctor_profile'
   get 'doctor_logout', to: 'doctor#doctor_logout', as: 'doctor_logout'
-
-
-
 
   
   post 'doctor/appointments', to: 'doctor#create_appointment'
@@ -91,9 +90,15 @@ Rails.application.routes.draw do
   resources :medical_files do
     collection do
       get 'prescription'
+      get 'lab_result'
     end
   end
-
+  resources :labworker, only: [:labworker] do
+    collection do
+      post :create
+    end
+  end
+  
   get 'admin/new_user', to: 'admin#new_user'
   post 'admin/create_user', to: 'admin#create_user'
   get 'admin/edit_user/:id', to: 'admin#edit_user', as: 'edit_user'
