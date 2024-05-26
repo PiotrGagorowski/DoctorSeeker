@@ -1,3 +1,6 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+
 <nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
@@ -34,13 +37,18 @@
         <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
       </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
-      </form>
+      <form id="searchForm" class="d-flex" role="search">
+      <input id="searchInput" class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+    </form>
+    
+
+    
     </div>
   </div>
 </nav>
+
+
+
 
 <style>
 .centered-form {
@@ -49,15 +57,18 @@
   align-items: center;
   height: 80vh; 
 }
+
+.highlight {
+  background-color: rgba(34, 139, 34, 0.5); /* Zielony kolor z przezroczystością */
+}
+
+
+
 </style>
 
 <div class="centered-form">
   <div>
-<% if flash[:alert] %>
-  <div class="alert alert-danger" role="alert">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
+
 
 <center><h1>Zaloguj się</h1></center>
 
@@ -72,12 +83,6 @@
     <%= f.label :password, "Hasło", for: "floatingPassword" %>
   </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="form-check">
-      <%= f.check_box :remember_me, class: "form-check-input" %>
-      <%= f.label :remember_me, "Zapamiętaj mnie", class: "form-check-label" %>
-    </div>
-  <% end %>
 
   <center>
     <div class="actions" style="margin-top: 30px; margin-bottom: 20px;">
@@ -95,3 +100,66 @@
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+
+
+
+  document.getElementById('searchInput').addEventListener('input', function() {
+    var searchText = this.value.trim().toLowerCase();
+    removeHighlights();
+    if (searchText) {
+      highlightText(searchText);
+    }
+  });
+
+  function highlightText(searchText) {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = [];
+    var node;
+    while (node = walker.nextNode()) {
+      nodes.push(node);
+    }
+
+    nodes.forEach(function(textNode) {
+      var text = textNode.nodeValue;
+      var parent = textNode.parentNode;
+
+      // Pomiń węzły tekstowe, które są bezpośrednimi dziećmi elementów HTML, które mogą zawierać wyszukiwany tekst w swoich nazwach tagów
+      if (['SCRIPT', 'STYLE', 'BUTTON', 'FORM', 'INPUT', 'TEXTAREA'].includes(parent.tagName.toUpperCase())) {
+        return;
+      }
+
+      if (text.toLowerCase().includes(searchText)) {
+        var tempDiv = document.createElement('div');
+        var parts = text.split(new RegExp(`(${searchText})`, 'gi'));
+
+        parts.forEach(function(part) {
+          if (part.toLowerCase() === searchText) {
+            var span = document.createElement('span');
+            span.className = 'highlight';
+            span.textContent = part;
+            tempDiv.appendChild(span);
+          } else {
+            tempDiv.appendChild(document.createTextNode(part));
+          }
+        });
+
+        while (tempDiv.firstChild) {
+          parent.insertBefore(tempDiv.firstChild, textNode);
+        }
+        parent.removeChild(textNode);
+      }
+    });
+  }
+
+  function removeHighlights() {
+    var highlights = document.querySelectorAll('.highlight');
+    highlights.forEach(function(span) {
+      var parent = span.parentNode;
+      parent.replaceChild(document.createTextNode(span.textContent), span);
+      parent.normalize();
+    });
+  }
+</script>
+

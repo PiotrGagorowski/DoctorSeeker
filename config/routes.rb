@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   resources :user_reviews
-  resources :reviews
+  resources :reviews, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :user_appointments
   resources :appointments
   resources :comments, only: [:create]
   resources :medical_files
 
   devise_for :users, controllers: { sessions: 'users/sessions' }
-  
+
  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   #root "medical_files#index"
@@ -51,6 +51,7 @@ Rails.application.routes.draw do
 
   #Patient
   get 'patient', to: 'patient#patient', as: 'patient'
+  get 'patient/doctor_appointments/:doctor_id', to: 'patient#doctor_appointments', as: 'patient_doctor_appointments'
 
   get 'patient/appointments', to: 'patient#appointments', as: 'patient_appointments'
   get 'patient/lab_results', to: 'patient#lab_results', as: 'patient_lab_results'
@@ -105,3 +106,5 @@ Rails.application.routes.draw do
   delete 'admin/destroy_user/:id', to: 'admin#destroy_user', as: 'destroy_user'
 
 end
+
+
