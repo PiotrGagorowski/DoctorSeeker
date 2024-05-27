@@ -1,4 +1,5 @@
 class PatientController < ApplicationController
+
     def patient
         @appointments = Appointment.all
         @free_appointments = Appointment.free.where('start_time > ?', DateTime.now)
@@ -8,7 +9,7 @@ class PatientController < ApplicationController
   
       # Separate reserved and free appointments
       @reserved_appointments = Appointment.reserved.includes(:user_appointments)
-      #@free_appointments = Appointment.free
+      @free_appointments_calendar = Appointment.free
   
     end
   
@@ -62,5 +63,6 @@ class PatientController < ApplicationController
         @doctor = User.find(params[:doctor_id])
         @doctor_free_appointments = @doctor.appointments_as_doctor.free.order(start_time: :asc)
     end
-end
 
+ 
+end
