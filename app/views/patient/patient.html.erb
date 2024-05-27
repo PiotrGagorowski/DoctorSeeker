@@ -6,33 +6,56 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
         </li>
         <li class="nav-item">
+          <% unless current_user %>
           <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <%end%>
         </li>
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Moje
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+          </ul>
+        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
+          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_path(@contact) %>">Kontakt</a>
+          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+      </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -41,7 +64,6 @@
     </div>
   </div>
 </nav>
-
 <style>
   #calendar {
     width: 100%;
