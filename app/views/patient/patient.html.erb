@@ -83,7 +83,6 @@
 
   .simple-calendar .today {
     background-color: #66d3fa;
-    color: white;
   }
 
   .simple-calendar .past {
@@ -206,31 +205,34 @@
   <div id="calendar">
     <div class="container mt-5 text-center">
       <%= month_calendar(events: @free_appointments_calendar) do |date, appointments| %>
-        <div class="day <%= 'today' if date == Date.today %> <%= 'has-events' if appointments.any? %>" data-day="<%= date %>">
+        <div class="day" >
           <%= date.day %>
-          <div class="appointments-info">
+        </div>
+          <div class="appointments-info" <%= 'has-events' if appointments.any? %>>
             <h4>Wizyty na <%= date.strftime("%d/%m/%Y") %>:</h4>
-            <ul class="list-group">
+            <ul class="list-group"
               <% appointments.each do |appointment| %>
                 <% if appointment.start_time.present? && appointment.end_time.present? %>
-                  <li class="list-group-item">
-                    <strong><%= appointment.start_time.strftime("%H:%M") %> - <%= appointment.end_time.strftime("%H:%M") %></strong> <br>
-                    <%= "#{appointment.doctor.first_name} #{appointment.doctor.last_name}" %> <br>
-                    <% if appointment.user_appointments.any? %>
-                      <%= link_to "Pokaż wizytę", user_appointment_path(appointment.user_appointments.first), class: "btn btn-primary" %>
-                    <% else %>
-                      <%= form_with model: @user_appointment, local: true do |form| %>
-                        <%= form.hidden_field :appointment_id, value: appointment.id %>
-                        <%= form.hidden_field :patient_user_id, value: current_user.id %>
-                        <%= form.submit "Zarezerwuj termin", class: "btn btn-primary" %>
+                    <% if appointment.start_time >= Date.today %>
+                    <li class="list-group-item">
+                      <strong><%= appointment.start_time.strftime("%H:%M") %> - <%= appointment.end_time.strftime("%H:%M") %></strong> <br>
+                      <%= "#{appointment.doctor.first_name} #{appointment.doctor.last_name}" %> <br>
+                      <% if appointment.user_appointments.any? %>
+                        <%= link_to "Pokaż wizytę", user_appointment_path(appointment.user_appointments.first), class: "btn btn-primary" %>
+                      <% else %>
+                        <%= form_with model: @user_appointment, local: true do |form| %>
+                          <%= form.hidden_field :appointment_id, value: appointment.id %>
+                          <%= form.hidden_field :patient_user_id, value: current_user.id %>
+                          <%= form.submit "Zarezerwuj termin", class: "btn btn-primary" %>
+                        <% end %>
                       <% end %>
-                    <% end %>
-                  </li>
+                    </li>
+                  <% end %>
                 <% end %>
               <% end %>
             </ul>
           </div>
-        </div>
+
       <% end %>
     </div>
   </div>

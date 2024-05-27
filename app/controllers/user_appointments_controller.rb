@@ -85,17 +85,21 @@ class UserAppointmentsController < ApplicationController
       new_appointment_start_time = new_appointment.appointment.start_time
       new_appointment_end_time = new_appointment.appointment.end_time
       existing_appointments = UserAppointment.where(patient_user_id: current_user.id)
-    
+      
+
       existing_appointments.each do |existing_user_appointment|
         existing_appointment_start_time = existing_user_appointment.appointment.start_time
-        existing_appointment_end_time = new_appointment.appointment.end_time
-    
+        existing_appointment_end_time = existing_user_appointment.appointment.end_time
+        
+
         if (new_appointment_start_time..new_appointment_end_time).overlaps?(existing_appointment_start_time..existing_appointment_end_time)
           return true
         end
       end
-    
+      
+      puts "No overlapping appointments found."
       false
     end
+    
     
 end
