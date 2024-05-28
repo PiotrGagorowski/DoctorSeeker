@@ -53,7 +53,7 @@ class PatientController < ApplicationController
         @reviews = @user_reviews.map(&:review)
         @doctors = User.joins(appointments_as_doctor: :user_appointments)
                  .where(user_appointments: { patient_user_id: @patient.id })
-                 .where('appointments.start_time < ?', DateTime.now)
+                 .where('appointments.end_time < ?', DateTime.now + 2.hour)
                  .distinct
         @user_review = UserReview.new
         @user_review.build_review
