@@ -64,5 +64,12 @@ class PatientController < ApplicationController
         @doctor_free_appointments = @doctor.appointments_as_doctor.free.order(start_time: :asc)
     end
 
+    def doctors_patient
+      @doctors = User.where(role: 'doctor')
+      @user_reviews = UserReview.where(doctor_user_id: @doctors.ids)
+      @reviews = @user_reviews.map(&:review)
+      @average_score = @reviews.present? ? @user_reviews.joins(:review).average(:score).to_f : 0.0
+    end
+
  
 end
