@@ -77,26 +77,25 @@ Zadbaj o poufność tych informacji i pamiętaj o przestrzeganiu wszystkich proc
     </tr>
   </thead>
   <tbody>
-    <% User.all.each do |user| %>
-      <% if user.role == "patient" %>
-      <tr>
-      <td class="id"><%= user.id %></td>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
-        <td><%= user.pesel_number %></td>
-        <td><%= user.email %></td>
-        <td><%= user.role %></td>
-        <td>
-        <% medical_file = MedicalFile.find_by(user_id: user.id) %>
+  <% @patients.each do |patient| %>
+    <tr>
+      <td class="id"><%= patient.id %></td>
+      <td><%= patient.first_name %></td>
+      <td><%= patient.last_name %></td>
+      <td><%= patient.pesel_number %></td>
+      <td><%= patient.email %></td>
+      <td><%= patient.role %></td>
+      <td>
+        <% medical_file = MedicalFile.find_by(user_id: patient.id, category: 'lab_results') %>
         <% if medical_file %>
-        <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+          <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
         <% else %>
-        <span class="badge text-bg-danger">Brak pliku</span>
+          <span class="badge text-bg-danger">Brak pliku</span>
         <% end %>
-        </td>
-      </tr>
-      <% end %>
-    <% end %>
+      </td>
+    </tr>
+  <% end %>
+ 
   </tbody>
 </table>
 

@@ -62,20 +62,29 @@
     </tr>
   </thead>
   <tbody>
-    <% User.all.each do |user| %>
-      <% if user.role == "patient" %>
-      <tr>
-      <td class="id"><%= user.id %></td>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
-        <td><%= user.pesel_number %></td>
-        <td><%= user.email %></td>
-        <td><%= user.role %></td>
-        <td><button onclick="window.location.href = 'medical_files'" class="btn btn-outline-success">Dodaj wynik badań</td>
-        </td>
-      </tr>
-      <% end %>
-    <% end %>
+  <% if @patients.present? %>
+  <% @patients.each do |patient| %>
+    <tr>
+      <td class="id"><%= patient.id %></td>
+      <td><%= patient.first_name %></td>
+      <td><%= patient.last_name %></td>
+      <td><%= patient.pesel_number %></td>
+      <td><%= patient.email %></td>
+      <td><%= patient.role %></td>
+      <td>
+        <%= form_with(model: @medical_file, url: labworker_path, local: true, multipart: true) do |form| %>
+          <%= form.file_field :file %>
+          <%= form.hidden_field :category, value: 'lab_results' %>
+          <%= form.hidden_field :user_id, value: patient.id %>
+          <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
+          <div class="btn-group mt-2" role="group" aria-label="Akcje">
+            <%= form.submit "Dodaj wynik badań", class: "btn btn-outline-success" %>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  <% end %>
   </tbody>
 </table>
 
