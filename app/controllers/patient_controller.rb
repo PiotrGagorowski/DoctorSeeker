@@ -2,14 +2,14 @@ class PatientController < ApplicationController
 
     def patient
         @appointments = Appointment.all
-        @free_appointments = Appointment.free.where('start_time > ?', DateTime.now)
-        @doctors_with_free_appointments = @free_appointments.map(&:doctor).uniq.sort_by { |doctor| [doctor.last_name, doctor.first_name] }
+        #@free_appointments = Appointment.free.where('start_time > ?', DateTime.now + 2.hour)
+        #@doctors_with_free_appointments = @free_appointments.map(&:doctor).uniq.sort_by { |doctor| [doctor.last_name, doctor.first_name] }
 
       @user_appointment = UserAppointment.new
   
       # Separate reserved and free appointments
       @reserved_appointments = Appointment.reserved.includes(:user_appointments)
-      @free_appointments_calendar = Appointment.free
+      @free_appointments_calendar = Appointment.free.where('start_time > ?', DateTime.now + 2.hour)
   
     end
   
