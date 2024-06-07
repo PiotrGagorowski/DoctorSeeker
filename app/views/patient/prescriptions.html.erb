@@ -96,34 +96,34 @@ Dziękujemy, że jesteś częścią naszej przychodni i zaufałeś nam opiekę n
 <div style="width:98%; margin-bottom:100px">
 
 <% if @prescriptions.any? %>
-<% @prescriptions.each do |prescription| %>
-<table class="table table-bordered table-striped bg-primary text-white" style="margin:20px">
-<thead>
-  <tr>
-    <th>Data wystawienia recepty</th>
-    <th>Data ważności recepty</th>
-    <th>Lekarz wystawiający</th>
-    <th>Pobierz receptę</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td><%= prescription.created_at.strftime("%d.%m.%Y") %></td>
-    <td><%=prescription.utility_date%></td>
-    <td><%= User.find(prescription.additional_user_id).first_name %> <%= User.find(prescription.additional_user_id).last_name %></td>
-    <td>
-    <% if prescription.file.attached? %>
-    <%= link_to "Recepta", rails_blob_url(prescription.file) %>
-    <% else %>
-    <p>Brak pliku do pobrania</p>
-    <% end %>
-    </td>
-  </tr>
-</tbody>
-</table>
+  <% @prescriptions.each do |prescription| %>
+  <table class="table table-bordered table-striped bg-primary text-white" style="margin:20px">
+  <thead>
+    <tr>
+      <th>Data wystawienia recepty</th>
+      <th>Data ważności recepty</th>
+      <th>Lekarz wystawiający</th>
+      <th>Pobierz receptę</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= prescription.created_at.strftime("%d.%m.%Y") %></td>
+      <td><%=prescription.utility_date%></td>
+      <td><%= User.find(prescription.additional_user_id).first_name %> <%= User.find(prescription.additional_user_id).last_name %></td>
+      <td>
+      <% if prescription.file.attached? %>
+      <%= link_to "Recepta", rails_blob_url(prescription.file) %>
+      <% else %>
+      <p>Brak pliku do pobrania</p>
+      <% end %>
+      </td>
+    </tr>
+  </tbody>
+  </table>
 <% end %>
 <% else %>
-<center><span class="badge text-bg-danger" style="font-size:20px; margin-left:50px">Nie posiadasz jeszcze żadnych recept ☹️</span></center>
+  <center><span class="badge text-bg-danger" style="font-size:20px; margin-left:50px">Nie posiadasz jeszcze żadnych recept ☹️</span></center>
 <% end %>
 </div>
 </div>

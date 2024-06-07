@@ -23,9 +23,15 @@ class UserAppointmentsController < ApplicationController
   def create
     @user_appointment = UserAppointment.new(user_appointment_params)
 
+    if overlapping_appointments?(@user_appointment)
+      flash[:alert] = "Twoje nowe wizyty się pokrywają z istniejącymi. Nie możesz mieć dwóch wizyt jednocześnie."
+      redirect_to patient_path
+      return
+    end
+
     respond_to do |format|
       if @user_appointment.save
-        format.html { redirect_to user_appointment_url(@user_appointment), notice: "User appointment was successfully created." }
+        format.html { redirect_to patient_appointments_path, alert: "Zostałeś pomyślnie zapisany na wizytę." }
         format.json { render :show, status: :created, location: @user_appointment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -59,7 +65,7 @@ class UserAppointmentsController < ApplicationController
   end
 
     respond_to do |format|
-      format.html { redirect_to patient_appointments_path, notice: "User appointment was successfully destroyed." }
+      format.html { redirect_to patient_appointments_path, alert: "Twoja wizyta została pomyślnie usunięta." }
       format.json { head :no_content }
     end
   end
@@ -74,5 +80,25 @@ class UserAppointmentsController < ApplicationController
     def user_appointment_params
       params.require(:user_appointment).permit(:patient_user_id, :appointment_id)
     end
+
+    def overlapping_appointments?(new_appointment)
+      new_appointment_start_time = new_appointment.appointment.start_time
+      new_appointment_end_time = new_appointment.appointment.end_time
+      existing_appointments = UserAppointment.where(patient_user_id: current_user.id)
+      
+
+      existing_appointments.each do |existing_user_appointment|
+        existing_appointment_start_time = existing_user_appointment.appointment.start_time
+        existing_appointment_end_time = existing_user_appointment.appointment.end_time
+
+        if (new_appointment_start_time..new_appointment_end_time).overlaps?(existing_appointment_start_time..existing_appointment_end_time)
+          return true
+        end
+      end
+      
+      puts "No overlapping appointments found."
+      false
+    end
+    
     
 end
