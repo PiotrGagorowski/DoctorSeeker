@@ -1,5 +1,4 @@
-
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,30 +10,34 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+          <a class="nav-link active" aria-current="page" href="<%= admin_path(@admin) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= admin_doctors_path(@admin_doctors) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= admin_price_path(@admin_price) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= admin_lab_path(@admin_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_help_path(@admin_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_contact_path(@admin_contact) %>">Kontakt</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
+       <li class="nav-item">
+          <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
-        </li>
-      </ul>
+        <a class="nav-link active" href="<%= admin_logout_path(@admin_logout) %>">Wyloguj</a>
+      </li>
+        </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
         <button class="btn btn-primary" type="submit">Szukaj</button>
@@ -43,121 +46,41 @@
   </div>
 </nav>
 
-<div id="cont">
-<div class="left">
+<div id="cont" style="margin-top: 80px;">
 
-<h2>Lista użytkowników</h2>
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= user.email %> | <%= user.role %> |
-      <%= link_to 'Edytuj', edit_user_path(user) %> |
-      <% unless current_user.admin? && current_user == user %>
-      <%= button_to 'Usuń', destroy_user_path(user), method: :delete, onclick: 'return confirmDelete()' %>
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Witaj w Panelu Administratora</span></h1>
+<hr style="width:80%; margin-bottom:0" />
+</center>
 
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<div class="left" style="width:50%; float:left; height:50px; margin-bottom:30px">
 
-<!-- Przycisk dodawania nowego użytkownika -->
-<%= link_to 'Dodaj nowego użytkownika', admin_new_user_path %>
+<h2 class="fw-lighter" style="margin-bottom:20px"><span style="font-weight:500"><center>Witaj <%= current_user.first_name %>!</center></span></h2>
 
-<script>
- 
-  function confirmDelete() {
-    return confirm("Czy na pewno chcesz usunąć tego użytkownika?");
-  }
-</script>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
+<p>Jesteś zalogowany jako administrator, możesz zarządzć wszystkimi użytkownikami. Pamiętaj aby rozważnie dononywać wszystkich zmian, w razie wątpliwości skontaktuj się z innym administratorem. </p>
 
+W zakładce Lista użytkowników możesz dodać pacjentów, lekarzy lub pracowników laboratorium. Możesz również edytować dane zarejestrowanych już osób.
 
-<p><h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</strong></center></h2></p>
-
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
-
+</h5>
 <div class="card text-bg-primary mb-3" style="max-width: 50rem;">
   <div class="card-body">
-    <h5 class="card-title">Znajdź lekarza</h5>
-    <p class="card-text"><p>Przeglądaj profile lekarzy, czytaj opinie innych pacjentów i wybierz najlepszego specjalistę dla siebie.</p></p>
-  </div>
-</div>
-
-<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title">Rezerwuj Wizyty</h5>
-    <p class="card-text"><p>Wybierz dogodny termin i umów się na wizytę bezpośrednio przez naszą aplikację. Zarządzaj swoimi wizytami i przypomnieniami w jednym miejscu.</p>
-  </div>
-</div>
-
-<div class="card text-bg-primary mb-3" style="max-width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title">Zarządzaj Swoim Zdrowiem</h5>
-    <p class="card-text"><p>Śledź swoje wizyty, badania i historię leczenia, aby mieć pełną kontrolę nad swoim zdrowiem.</p>
+    <h5 class="card-title">Dziękujemy za pomoc!</h5>
+    <p class="card-text"><p><i>Zespół Przychodni Medycznej DoctorSeeker </i>😊</p></p>
   </div>
 </div>
 
 
-<h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
-
-  <div class="card">
-  <h5 class="card-header">FAQ</h5>
-  <div class="card-body">
-    <h5 class="card-title">Najczęściej zadawane pytania</h5>
-    <p class="card-text">Sprawdź zakładkę najczęściej zadawane pytania.</p>
-    <a href="<%= help_path(@help) %>" class="btn btn-primary">Kliknij tutaj</a>
-  </div>
-</div>
-
-<% if current_user %>
-    <p>Hello <%= current_user.first_name %></p>
-    <p>You are a [<%= current_user.role %>]</p> <%end%>
-  <%= form_tag(destroy_user_session_path, method: :delete) do %>
-    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
-  <% end %>
 
 </div>
-<div class="right">
 
-<%= image_tag "Logo.jpg", height: 450 %>
+<div class="right" style="width:40%; float:right; height:20px; margin-bottom:20px">
 
-<div id="carouselExampleCaptions" class="carousel slide" style="margin-top: 30px; width: 450px;">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-    <%= image_tag "doctor2.png", class:"d-block", height: 450 %>
-      <div class="carousel-caption d-none d-md-block" style="color:black; font-size:30px; text-shadow: 0 0 2px #333; border: 2px solid black; padding: 2px; background-color: white;">
-        <p><i><b>Nasi specjaliści zajmą się Tobą</i></b></p>
-      </div>
-    </div>
-    <div class="carousel-item">
-    <%= image_tag "doctor3.png", class:"d-block", height: 450 %>
-      <div class="carousel-caption d-none d-md-block">
-      </div>
-    </div>
-    <div class="carousel-item">
-    <%= image_tag "doctor1.png", class:"d-block", height: 450 %>
-      <div class="carousel-caption d-none d-md-block" style="color:black; font-size:22px; text-shadow: 0 0 2px #333; border: 2px solid black; padding: 0; background-color: white;">
-        <p><i><b>Jesteśmy jedną z najlepszych przychodni w Polsce</i></b></p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+<%= image_tag "admin_page.jpg", height: 450, style:" border-radius:80px" %>
 
 </div>
 </div>
-</div>
 
+<center><hr style="width:80%; margin-top:550px; padding:50px" /></center>
 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>

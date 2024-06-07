@@ -1,0 +1,87 @@
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= lab_results_path %>">Wyniki badań</a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="cont" style="margin-top: 120px;">
+<div style="height:900px;">
+<center>
+<div class="card" style="width: 20rem; margin:50px;">
+ <% if current_user.email == 'aleksandra.nowak@example.com' %>
+    <center><%= image_tag "doctor1.png", height: 317 %></center>
+  <% elsif current_user.email == 'tomasz.kowalczyk@example.com' %>
+    <center><%= image_tag "doctor2.png", height: 317 %> </center>
+  <% elsif current_user.email == 'marta.lewandowska@example.com' %>
+    <center><%= image_tag "doctor3.png", height: 317 %> </center>
+  <% end %>
+  <div class="card-body">
+    <h5 class="card-title fw-lighter"><b><span class="badge text-bg-primary" style="font-size:20px">Twój profil</span></b></h5>
+    <p class="card-text fw-lighter" style="text-align:left;">Tutaj możesz zobaczyć informacje o swoim profilu. Zapewniamy, że Twoje dane są bezpieczne i poufne.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item fw-lighter" style="text-align:left;"><span style="font-weight:500">E-mail:</span> <%= current_user.email %></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Imię:</span> <%= current_user.first_name %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Nazwisko:</span> <%= current_user.last_name %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">PESEL:</span> <%= current_user.pesel_number %></b></li>
+    <li class="list-group-item fw-lighter" style="text-align:left"><span style="font-weight:500">Rola:</span> <%= current_user.role %></b></li>
+  </ul>
+</div>
+</center>
+</div>
+
+</div>
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

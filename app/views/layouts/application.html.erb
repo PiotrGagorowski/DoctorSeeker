@@ -5,24 +5,39 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+ 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  </head>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_path 'apple-touch-icon.png' %>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path 'favicon-32x32.png' %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path 'favicon-16x16.png' %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path 'favicon.ico' %>">
+    <link rel="manifest" href="<%= asset_path 'site.webmanifest' %>">
+</head>
+
 
   <body>
   <style> 
 
-  .flash-messages {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    width: 300px;
-    padding: 20px;
-    text-align: center;
-  }
+.flash-messages {
+  position: fixed;
+  top: 3px;
+  right: 300px;
+  z-index: 1000;
+  width: 300px;
+  padding: 20px;
+  text-align: center;
+  visibility: visible; /* Ustawienie widoczności na początku */
+  opacity: 1; /* Ustawienie pełnej przejrzystości na początku */
+  animation: fadeOut 3s forwards; /* Dodaj animację fadeOut z czasem trwania 3 sekund */
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; } /* Początkowa wartość przezroczystości */
+  90% { opacity: 1; } /* Utrzymaj pełną przejrzystość do 90% animacji */
+  100% { opacity: 0; visibility: hidden; } /* Końcowa wartość przezroczystości i ukrycie elementu */
+}
 
   .flash-message {
     margin-bottom: 10px;
@@ -55,7 +70,7 @@
           }
   .cont {
     position: fixed;
-    height: 600px;
+    height: 1000px;
     overflow: auto;
   }
   .left {
@@ -70,7 +85,7 @@
   .right {
     float: right;
     width: 50%;
-    height: 550px;
+    height: 900px;
     margin-top: 20px;
     margin-left: 100px;
     padding: 30px;
@@ -93,13 +108,57 @@
     padding-left: 60px;
   }
    .cont_sing_up {
-
     margin-top: 20px;
     position: center;
-    height: 1000px;
+    height: 900px;
     overflow: auto;
-    padding-top: 70px;
+    padding-top: 35px;
   }
+  .cont_contact {
+    position: center;
+    height: 600px;
+    overflow: auto;
+  }
+  .cont_users_list {
+    position: center;
+    height: 600px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 100px;
+    overflow: auto;
+  }
+  .table-hover tbody tr:hover {
+    background-color: #e6f3ff; /* Kolor podświetlenia */
+    cursor: pointer;
+  }
+  .cont_prescription {
+    position: center;
+    width: 100%;
+    height: 600px;
+    overflow: auto;
+  }
+  .left_prescription {
+    margin-top: 20px;
+    text-align: justify;
+    padding: 0px;
+    height: 1100px;
+    padding-left: 0px;
+    float: left;
+    width: 50%;
+    margin-bottom: 100px;
+  }
+ 
+  .right_prescription {
+    float: right;
+    width: 43%;
+    margin-top: 20px;
+    margin-left: 100px;
+    padding: 0px;
+    padding-left: 0px;
+    overflow: auto;
+  }
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
@@ -126,6 +185,5 @@
   
     <%= yield %>
 
-    
   </body>
 </html>

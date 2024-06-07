@@ -1,5 +1,4 @@
-
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,29 +10,40 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= lab_results_path %>">Wyniki badań</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
+          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
-        </li>
+        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -43,82 +53,128 @@
   </div>
 </nav>
 
-<div id="cont">
-<div class="left">
+<div id="cont" style="margin-top: 80px;">
 
-  <% if current_user %>
-      <p>Hello <%= current_user.first_name %></p>
-      <p>You are a [<%= current_user.role %>]</p> <%end%>
-  <%= form_tag(destroy_user_session_path, method: :delete) do %>
-    <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
-  <% end %>
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Wydaj receptę</span></h1></center>
+<div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:200px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+W tym miejscu masz możliowść wystwić receptę po spotakaniu z pacjentem. Po prawej stronie jest zakładka do wystawienia recept dla osób, które jej jeszcze nie otzrymały, po lewej stronie jest spis recept, które już wystawiłeś.
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Jeśli potrzebujesz zmienić plik lub masz pytania dotyczące wystawiania recept, zachęcamy do kontaktu z naszym działem administracji.
+</h5>
+</div>
 
-<table>
+<div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:200px">
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Pamiętaj, aby podczas wystawiania recepty wypisać PESEL odpowidniego pacjenta, kod recepty wygeneruje się automatycznie. 
+</h5>
+<h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
+Dziękujemy, że jesteś częścią naszej przychodni.
+</h5>
+<h5 class="fw-lighter" style="text-align:center; margin-bottom:10px"><i>
+<span style="color: #000080;">Zespół Przychodni Lekarskiej <b>DoctorSeeker</b></span></i>
+</h5>
+</div>
+
+<center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
+
+
+<div class="left_prescription">
+
+<center><h2 class="mb-4" style="margin-top:20px">Odbyte wizyty ⬇️</h2></center>
+<div class="cont_prescription">
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Nr ID Pacjenta</th>
-      <th>Imie</th>
-      <th>Nazwisko</th>
-      <th>Pesel</th>
-      <th>Adres email</th>
-      <th>Akcje</th>
+      <th><center>Nr ID Pacjenta</center></th>
+      <th><center>Imie</center></th>
+      <th><center>Nazwisko</center></th>
+      <th><center>Pesel</center></th>
+      <th><center>Akcje</center></th>
     </tr>
   </thead>
   <tbody>
     <% if @patients.present? %>
       <% @patients.each do |user| %>
         <tr>
-          <td class="id"><%= user.id %></td>
-          <td><%= user.first_name %></td>
-          <td><%= user.last_name %></td>
-          <td><%= user.pesel_number %></td>
-          <td><%= user.email %></td>
-          <td>
+          <td><center><%= user.id %></center></td>
+          <td><center><%= user.first_name %></center></td>
+          <td><center><%= user.last_name %></center></td>
+          <td><center><%= user.pesel_number %></center></td>
+          <td><center>
             <%= form_with(model: @medical_file, url: medical_files_path) do |form| %>
-              <%= form.file_field :file, class: "btn btn-primary"%>
+              <%= form.file_field :file, class: "form-control-file btn btn-secondary" %>
               <%= form.hidden_field :category, value: 'prescription' %>
               <%= form.hidden_field :user_id, value: user.id %>
               <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
-              <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
-            <% end %>
+              <div class="btn-group mt-2" role="group" aria-label="Akcje">
+                <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
+              </div>
+            <% end %></center>
           </td>
         </tr>
       <% end %>
+    <% else %>
+      <tr>
+        <td colspan="6">Brak danych do wyświetlenia</td>
+      </tr>
     <% end %>
   </tbody>
 </table>
+</div>
+
 
 
 </div>
-<div class="right">
-<table>
+
+
+
+<div class="right_prescription">
+  <center><h2 class="mb-4" style="margin-top:20px">Wystawione recepty ⬇️</h2></center>
+
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Nr ID Pacjenta</th>
-      <th>Imie</th>
-      <th>Nazwisko</th>
-      <th>Pesel</th>
-      <th>Adres email</th>
-      <th>Akcje</th>
+      <th><center>Nr ID Pacjenta</center></th>
+      <th><center>Imie</center></th>
+      <th><center>Nazwisko</center></th>
+      <th><center>Pesel</center></th>
+      <!-- <th>Adres email</th> -->
+      <!-- <th><center>Akcje</center></th> -->
     </tr>
   </thead>
   <tbody>
     <% if @patients_with_prescription.present? %>
       <% @patients_with_prescription.each do |user| %>
         <tr>
-          <td class="id"><%= user.id %></td>
-          <td><%= user.first_name %></td>
-          <td><%= user.last_name %></td>
-          <td><%= user.pesel_number %></td>
-          <td><%= user.email %></td>
+          <td><center><%= user.id %></center></td>
+          <td><center><%= user.first_name %></center></td>
+          <td><center><%= user.last_name %></center></td>
+          <td><center><%= user.pesel_number %></center></td>
+          <!-- <td><%= user.email %></td> -->
+          <!-- <td><center>
+            <%= form_with(model: @medical_file, url: medical_files_path) do |form| %>
+              <%= form.hidden_field :category, value: 'prescription' %>
+              <%= form.hidden_field :user_id, value: user.id %>
+              <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
+              <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
+            <% end %></center>
+          </td> -->
         </tr>
       <% end %>
+    <% else %>
+      <tr>
+        <td colspan="6">Brak danych do wyświetlenia</td>
+      </tr>
     <% end %>
   </tbody>
 </table>
 
-
 </div>
+
+
+
 </div>
 
 

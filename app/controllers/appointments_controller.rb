@@ -41,6 +41,8 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  
+
   # PATCH/PUT /appointments/1 or /appointments/1.json
   def update
     respond_to do |format|
@@ -56,6 +58,7 @@ class AppointmentsController < ApplicationController
 
   # DELETE /appointments/1 or /appointments/1.json
   def destroy
+    AppointmentMailer.with(appointment: @appointment).appointment_deleted.deliver_later
     @appointment.destroy!
 
     respond_to do |format|
@@ -72,6 +75,6 @@ class AppointmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def appointment_params
-      params.permit(:appointment_date)
+      params.permit(:start_time, :end_time)
     end
 end

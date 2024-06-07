@@ -15,20 +15,33 @@
         
         <li class="nav-item dropdown">
         <li class="nav-item">
-        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Menu</a>
+
+        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Strona główna</a>
+
         </li>
+        </li>
+        <li class="nav-item dropdown">
+        <li class="nav-item">
+        <a class="nav-link active" aria-disabled="true" href="<%= profile_path(@profile) %>">Mój profil</a>
+        </li>
+
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-disabled="true" href="<%= patients_path(@patients) %>">Pacjenci</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Badania
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
+          </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Wykonane Badania</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= logout_path(@logout) %>">Wyloguj</a>
+          <a class="nav-link active" href="<%= logout_labworker_path(@logout_labworker) %>">Wyloguj</a>
         </li>
       </ul>
       <form class="d-flex" role="search">

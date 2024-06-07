@@ -1,0 +1,201 @@
+<style>
+  #cont {
+    display: flex;
+  }
+ .left, .right {
+  width: 50%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+  #calendar {
+    width: 100%;
+  }
+
+  .simple-calendar {
+    flex-wrap: wrap;
+  }
+
+  .simple-calendar .day {
+    width: 14%; /* Szerokość 1/7 dla każdego dnia w tygodniu */
+    height: 100px; /* Stała wysokość dla każdego dnia */
+    position: relative;
+    font-size: 14px;
+  }
+
+  .simple-calendar .wday-0, /* Sunday */
+  .simple-calendar .wday-1, /* Monday */
+  .simple-calendar .wday-2, /* Tuesday */
+  .simple-calendar .wday-3, /* Wednesday */
+  .simple-calendar .wday-4, /* Thursday */
+  .simple-calendar .wday-5, /* Friday */
+  .simple-calendar .wday-6 { /* Saturday */
+    width: 14%;
+  }
+
+  .simple-calendar .today {
+    background-color: #66d3fa;
+    color: white;
+  }
+
+  .simple-calendar .past {
+    background-color: #f8f9fa;
+  }
+
+  .simple-calendar .future {
+    background-color: #ffffff;
+  }
+
+  .simple-calendar .start-date {
+    font-weight: bold;
+  }
+
+  .simple-calendar .prev-month, 
+  .simple-calendar .next-month {
+    color: #ccc;
+  }
+
+  .simple-calendar .current-month {
+    color: #000;
+  }
+
+  .simple-calendar .has-events {
+    background-color: #e0f7fa;
+  }
+
+  .simple-calendar .day div {
+    text-align: center;
+  }
+
+  .card {
+    margin: 5px 0;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    left: 5%;
+    box-sizing: border-box;
+  }
+
+  .card-header {
+    background-color: #66d3fa;
+    color: white;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-body {
+    padding: 5px;
+  }
+
+  .form-control {
+    width: 200px; /* Ustaw szerokość inputów na 200px */
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= lab_results_path %>">Wyniki badań</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
+        </li>
+         <li class="nav-item">
+        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<center><h1><span class="badge text-bg-primary" style="margin-top: 110px; margin-bottom:0">Witaj w Panelu Lekarza</span></h1>
+  <hr style="width:80%; margin-bottom:0" />
+</center>
+
+<div id="cont" style="margin-top: 0px;">
+
+  <div class="left">
+    <h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker <%= current_user.first_name %>!</center></strong></h2>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
+  </h5> 
+  </div>
+
+  <div class="right">
+    <div id="calendar">
+      <h2 class="fw-lighter"><strong><center>Kalendarz terminów</strong></h2>
+      <div class="container mt-5 text-center">
+        <%= month_calendar(events: @appointments) do |date, appointments| %>
+          <div class="day">
+            <%= date.day %>
+          </div>
+          <% appointments.each do |appointment| %>
+            <%= link_to appointment_path(appointment), class: "card", style: "display: block; text-decoration: none; color: inherit;" do %>
+              <div class="card-header">
+                <%= appointment.start_time.strftime("%k:%M") %> - <%= appointment.end_time.strftime("%k:%M") %>
+              </div>
+              <div class="card-body">
+                <% if appointment.user_appointments.present? %>
+                  <% appointment.user_appointments.each do |user_appointment| %>
+                    <% patient = @users.find { |user| user.id == user_appointment.patient_user_id } %>
+                    <%= patient.first_name %> <%= patient.last_name %>
+                  <% end %>
+                <% else %>
+                  Brak przypisanego pacjenta
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

@@ -51,6 +51,8 @@
 }
 </style>
 
+
+
 <div class="cont_sing_up">
 <div class="centered-form">
   <div>
@@ -87,17 +89,13 @@
       <% end %><br />
     </div>
 
+    
     <div class="form-floating mb-3" style="margin-top: 10px; margin-bottom: 10px;">
       <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, class: "form-control", id: "floatingInput" %>
       <%= f.label :password_confirmation, "Powtórz hasło", for: "floatingInput" %>
     </div>
 
-      <% if devise_mapping.rememberable? %>
-        <div class="form-check">
-        <%= f.check_box :remember_me, class: "form-check-input" %>
-        <%= f.label :remember_me, "Zapamiętaj mnie", class: "form-check-label" %>
-        </div>
-      <% end %>
+    
 
       <center><div class="actions" style="margin-top: 30px; margin-bottom: 20px;">
       <%= f.submit "Zarejestruj się", class: "btn btn-primary btn-lg", data: {turbo: false}, style:"color:white; text-decoration: none;" %>

@@ -1,0 +1,124 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<%= admin_path(@admin) %>">Strona główna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O przychodni 
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= admin_doctors_path(@admin_doctors) %>">Lekarze</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_price_path(@admin_price) %>">Cennik</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_lab_path(@admin_lab) %>">Spis wykonywanych badań</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_help_path(@admin_help) %>">Pomoc</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= admin_contact_path(@admin_contact) %>">Kontakt</a></li>
+          </ul>
+        </li>
+       <li class="nav-item">
+          <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= admin_logout_path(@admin_logout) %>">Wyloguj</a>
+      </li>
+        </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="cont_contact">
+<section id="contact-info">
+
+    <center><hr style="width:80%; margin-top:10px; padding:0px" /></center>
+
+    <center><h1>Kontakt</h1></center>
+    
+    <div class="alert alert-secondary" role="alert">
+    <center><strong>Adres: ul. Zdrowia 112, 00-999 Uzdrowisko</strong></center>
+    </div>
+    <center><hr style="width:80%; margin-top:0px; padding:0px" /></center>
+
+    <div class="right_image">
+    <%= image_tag "mapa.jpg", height: 420 %>
+    </div>
+
+<div class="left_table">
+  
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Poradnia</th>
+      <th scope="col">Numer telefonu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Poradnia Ogólna</td>
+      <td>+48 112 999 112</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Poradnia Dziecięca</td>
+      <td>+48 644 864 294</td>
+    </tr>
+    <th scope="row">3</th>
+      <td>Poradnia Ginekologiczna</td>
+      <td>+48 874 975 468</td>
+    </tr>
+    <th scope="row">4</th>
+      <td>Poradnia Medycyny Pracy</td>
+      <td>+48 345 670 987</td>
+    </tr>
+    <th scope="row">5</th>
+      <td>Poradnia Rehabilitacyjna</td>
+      <td>+48 457 865 456</td>
+    </tr>
+    <th scope="row">6</th>
+      <td>Poradnia Laryngologiczna</td>
+      <td>+48 675 456 665</td>
+    </tr>
+    <th scope="row">7</th>
+      <td>Poradnia Stomatologiczna</td>
+      <td>+48 544 445 643</td>
+    </tr>
+    <th scope="row">8</th>
+      <td>Poradnia Kardiologiczna</td>
+      <td>+48 654 456 654</td>
+    </tr>
+    <th scope="row">9</th>
+      <td>E-mail</td>
+      <td>kontakt@doctorseeker.pl</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+
+<footer class="footer">
+<p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
+</footer>

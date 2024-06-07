@@ -1,17 +1,30 @@
 class DoctorController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:file]
     before_action :authenticate_user!
-    def doctor
-        @appointments = current_user.appointments_as_doctor
-                                .joins(:user_appointments)
-                                .where('user_appointments.appointment_id = appointments.id')
-                                .order('appointments.appointment_date ASC')
-        @patients = @appointments.map { |appointment| appointment.user_appointments.first.patient }
+
+    def doctor_doctors
+      @doctors = User.where(role: :doctor)
     end
+
+    def doctor
+      @appointments = current_user.appointments_as_doctor
+                                  .joins(:user_appointments)
+                                  .order('appointments.start_time ASC')
+                                  
+      @days = Appointment.where(
+        start_time: Time.now.beginning_of_month.beginning_of_week..Time.now.end_of_month.end_of_week
+      )
+      
+      # Pobieramy pacjentów powiązanych z wizytami
+      @patients = @appointments.map { |appointment| appointment.user_appointments.map(&:patient) }.flatten.uniq
+      
+      @users = User.all
+    end
+
     def prescription
         @appointments = Appointment.joins(user_appointments: :patient)
                                 .where(doctor_user_id: current_user.id)
-                                .order('appointments.appointment_date ASC')
+                                .order('appointments.start_time ASC')
                                 .distinct
                                 .to_a
                                 
@@ -32,14 +45,52 @@ class DoctorController < ApplicationController
        
       
     def appointments
-        @appointments = current_user.appointments_as_doctor.where(doctor_user_id: current_user.id)
+      # Pobierz wszystkie wizyty zalogowanego lekarza, w tym te bez przypisanych pacjentów
+      @appointments = current_user.appointments_as_doctor
+                       .left_joins(:user_appointments)
+                       .distinct
+                       .order('appointments.start_time ASC')
+    
+      # Pobierz wszystkich unikalnych pacjentów powiązanych z tymi wizytami
+      @patients = @appointments.flat_map { |appointment| appointment.user_appointments.map(&:patient) }.uniq
+    
+      # Pobierz wszystkie wizyty w aktualnym miesiącu wraz z pacjentami
+      @days = Appointment.where(
+        start_time: Time.now.beginning_of_month.beginning_of_week..Time.now.end_of_month.end_of_week
+      )
+    
+      # Pobierz wszystkich użytkowników (jeśli to potrzebne, np. dla jakiegoś dropdown menu)
+      @users = User.all
     end
+    
     
     def appointments_json
         @appointments = current_user.appointments_as_doctor.all
         render json: @appointments.to_json
     end
 
+    def patient
+      @patients = User.where(role: 'patient')
+      @lab_results = MedicalFile.where(user_id:  user.id, category: MedicalFile.categories[:lab_results]) 
+    end
+
+    def lab_results
+      @patients = User.where(role: 'patient')
+      patient_id = @patients.pluck(:id)
+      @lab_results = MedicalFile.where(user_id: patient_id, category: MedicalFile.categories[:lab_results])
+      @comments = Comment.where(file_id: @lab_results.pluck(:id))
+    end
+
+    def comment
+      @lab_results = MedicalFile.where(user_id: patient_ids, category: MedicalFile.categories[:lab_results])
+      lab_result_ids = @lab_results.pluck(:id)
+      @comment = Comment.new(comment_params)
+      if @comment.save
+        redirect_to lab_results_path, notice: 'Komentarz dodany pomyślnie.'
+      else
+        redirect_to lab_results_path, alert: 'Nie udało się dodać komentarza.'
+      end
+    end
 
     def file
         path = Rails.root.join('app', 'javascript', params[:filename])
@@ -49,15 +100,24 @@ class DoctorController < ApplicationController
           render plain: 'Not Found', status: 404
         end
       end
+
+
+
       # PATCH/PUT /appointments/1 or /appointments/1.json
 
     private
     
     def appointment_params
-    params.permit(:appointment_date)
+    params.permit(:start_time, :end_time)
     end
     def medical_file_params
         params.require(:medical_file).permit(:file, :category, :utility_date, :user_id)
-      end
+    end
+
+    def comment_params
+      params.require(:comment).permit(:doctor_user_id, :file_id, :comment)
+    end
+
       
 end
+
