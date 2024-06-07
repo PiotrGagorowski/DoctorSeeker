@@ -96,7 +96,7 @@
   }
 </style>
 
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,9 +139,9 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_path(@contact) %>">Kontakt</a>
-        </li>
+         <li class="nav-item">
+        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      </li>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
@@ -152,25 +152,22 @@
 </nav>
 
 
+<center><h1><span class="badge text-bg-primary" style="margin-top: 110px; margin-bottom:0">Witaj w Panelu Lekarza</span></h1>
+  <hr style="width:80%; margin-bottom:0" />
+</center>
 
+<div id="cont" style="margin-top: 0px;">
 
-<div id="cont">
   <div class="left">
-    <h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker!</center></strong></h2>
+    <h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker <%= current_user.first_name %>!</center></strong></h2>
     <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
     <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Dołącz do społeczności DoctorSeeker już dziś i odkryj nowy wymiar opieki zdrowotnej!</h5>
-    <% if current_user %>
-      <p>Witaj <%= current_user.first_name %></p>
-      <p>Jesteś [<%= current_user.role %>]</p>
-    <% end %>
-    <%= form_tag(destroy_user_session_path, method: :delete) do %>
-      <%= submit_tag "Wyloguj", class: "btn btn-danger" %>
-    <% end %>
+  </h5> 
   </div>
 
   <div class="right">
     <div id="calendar">
-      <h3>Kalendarz terminów</h3>
+      <h2 class="fw-lighter"><strong><center>Kalendarz terminów</strong></h2>
       <div class="container mt-5 text-center">
         <%= month_calendar(events: @appointments) do |date, appointments| %>
           <div class="day">
