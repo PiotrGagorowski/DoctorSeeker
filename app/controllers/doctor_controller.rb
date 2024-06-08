@@ -69,20 +69,34 @@ class DoctorController < ApplicationController
         render json: @appointments.to_json
     end
 
-    def patient
-      @patients = User.where(role: 'patient')
-      @lab_results = MedicalFile.where(user_id:  user.id, category: MedicalFile.categories[:lab_results]) 
+    def patients
+      @patients = User.joins(:medical_files).where(medical_files: { category: 'lab_results' }).distinct
+      @lab_result = MedicalFile.where(category: 'lab_results', user_id: @patients.pluck(:id)).group_by(&:user_id)
     end
 
     def lab_results
-      @patients = User.where(role: 'patient')
-      patient_id = @patients.pluck(:id)
-      @lab_results = MedicalFile.where(user_id: patient_id, category: MedicalFile.categories[:lab_results])
+      @appointments = Appointment.joins(user_appointments: :patient)
+                                 .where(doctor_user_id: current_user.id)
+                                 .order('appointments.start_time ASC')
+                                 .distinct
+                                 .to_a
+  
+      @patients = @appointments.map { |appointment| appointment.user_appointments.first.patient }.compact
+  
+      @lab_results = MedicalFile.where(user_id: @patients.pluck(:id), category: MedicalFile.categories[:lab_results])
       @comments = Comment.where(file_id: @lab_results.pluck(:id))
     end
 
     def comment
-      @lab_results = MedicalFile.where(user_id: patient_ids, category: MedicalFile.categories[:lab_results])
+      @appointments = Appointment.joins(user_appointments: :patient)
+                                 .where(doctor_user_id: current_user.id)
+                                 .order('appointments.start_time ASC')
+                                 .distinct
+                                 .to_a
+                                 
+      @patients = @appointments.map { |appointment| appointment.user_appointments.first.patient }
+    
+      @lab_results = MedicalFile.where(user_id: @patients.map(&:id), category: MedicalFile.categories[:lab_results])
       lab_result_ids = @lab_results.pluck(:id)
       @comment = Comment.new(comment_params)
       if @comment.save

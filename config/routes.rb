@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :reviews, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :user_appointments
   resources :appointments
-  resources :comments, only: [:create]
+  resources :comments
   resources :medical_files
 
   devise_for :users, controllers: { sessions: 'users/sessions' }
@@ -69,7 +69,7 @@ Rails.application.routes.draw do
   #Labworker
   get 'labworker', to: 'labworker#labworker', as: 'labworker'
   get 'patients', to: 'labworker#patients', as: 'patients'
-  get 'comresearch', to: 'labworker#comresearch', as: 'comresearch'
+  #get 'comresearch', to: 'labworker#comresearch', as: 'comresearch'
   get 'exeresearch', to: 'labworker#exeresearch', as: 'exeresearch'
   get 'logout_labworker', to: 'labworker#logout_labworker', as: 'logout_labworker'
   get 'profile', to: 'labworker#profile_labworker', as:'profile'

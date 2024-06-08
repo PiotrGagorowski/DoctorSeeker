@@ -83,53 +83,61 @@
           <th><center>Wyniki badań</center></th>
           <th><center>Dodany Komentarz</center></th>
           <th><center>Komentarz</center></th>
-          <th><center>Akcja</center></th>
         </tr>
       </thead>
       <tbody>
-      <% if @patients.present? %>
-      <% @patients.each do |user| %>
-        <tr>
-          <td><center><%= user.first_name %></center></td>
-          <td><center><%= user.last_name %></center></td>
-          <td><center><%= user.pesel_number %></center></td>
-          <td><center>
-            <% medical_file = MedicalFile.find_by(user_id: user.id, category: 'lab_results') %>
-            <% if medical_file %>
+     <% if @patients.present? %>
+  <% @patients.each do |patient| %>
+    <% medical_files = MedicalFile.where(user_id: patient.id, category: 'lab_results') %>
+    <% if medical_files.present? %>
+      <tr>
+        <td><center><%= patient.first_name %></center></td>
+        <td><center><%= patient.last_name %></center></td>
+        <td><center><%= patient.pesel_number %></center></td>
+        <td><center>
+          <% medical_files.each do |medical_file| %>
+            <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
+            <% unless comment %>
               <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
-            <% else %>
-              <span class="badge text-bg-danger">Brak pliku</span>
             <% end %>
-          </center></td>
-          <td><center>
-          <% if medical_file %>
-              <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
-              <% if comment %>
-                <span class="badge rounded-pill text-bg-success"><%= comment.comment  %></span>
-              <% else %>
-                <span class="badge text-bg-danger">Brak komentarza</span>
+          <% end %>
+        </center></td>
+        <td><center>
+          <% medical_files.each do |medical_file| %>
+            <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
+            <% unless comment %>
+              <span class="badge text-bg-danger">Brak komentarza</span>
+            <% end %>
+          <% end %>
+        </center></td>
+        <td><center>
+          <% medical_files.each do |medical_file| %>
+            <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
+            <% unless comment %>
+              <%= form_with(model: Comment.new, url: comments_path, method: :post) do |form| %>
+                <%= form.hidden_field :doctor_user_id, value: current_user.id %>
+                <%= form.hidden_field :file_id, value: medical_file.id %>
+                <div>
+                  <%= form.text_area :comment, placeholder: "Dodaj komentarz" %>
+                  <%= form.submit "Dodaj komentarz", class: "btn btn-primary" %>
+                </div>
               <% end %>
-          <% end %>
-          </center></td>
-          <td><center>
-          <% if medical_file %>
-            <%= form_with(model: Comment.new, url: comments_path, local: true, multipart: true) do |form| %>
-              <%= form.hidden_field :doctor_user_id, value: current_user.id %>
-              <%= form.hidden_field :file_id, value: medical_file.id %>
-              <div>
-                <%= form.text_area :comment %>
-              <%= form.submit "Dodaj komentarz", class: "btn btn-primary" %>
-              </div>
             <% end %>
           <% end %>
-          </center></td>
-        </tr>
-      <% end %>
+        </center></td>
+      </tr>
     <% else %>
       <tr>
-        <td colspan="7">Brak danych do wyświetlenia</td>
+        <td colspan="6">Brak danych do wyświetlenia</td>
       </tr>
     <% end %>
+  <% end %>
+<% else %>
+  <tr>
+    <td colspan="6">Brak danych do wyświetlenia</td>
+  </tr>
+<% end %>
+
       </tbody>
     </table>
   </div>
@@ -139,43 +147,39 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th><center>Nr ID Pacjenta</center></th>
         <th><center>Imię</center></th>
         <th><center>Nazwisko</center></th>
         <th><center>PESEL</center></th>
+        <th><center>Wyniki badań</center></th>
+        <th><center>Dodany Komentarz</center></th>
       </tr>
     </thead>
     <tbody>
-      <% if @comments.present? %>
-        <% @comments.each do |comment| %>
-          <% medical_file = MedicalFile.find(comment.file_id) %>
-          <% user = User.find(medical_file.user_id) %>
+    <% if @patients.present? %>
+    <% @patients.each do |patient| %>
+      <% medical_files = MedicalFile.where(user_id: patient.id, category: 'lab_results') %>
+      <% medical_files.each do |medical_file| %>
+        <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
+        <% if comment %>
           <tr>
-            <td><center><%= user.first_name %></center></td>
-            <td><center><%= user.last_name %></center></td>
-            <td><center><%= user.pesel_number %></center></td>
+            <td><center><%= patient.first_name %></center></td>
+            <td><center><%= patient.last_name %></center></td>
+            <td><center><%= patient.pesel_number %></center></td>
             <td><center>
-          <% if medical_file %>
-              <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
-              <% if comment %>
-                <span class="badge rounded-pill text-bg-success"><%= comment.comment  %></span>
-              <% else %>
-                <span class="badge text-bg-danger">Brak komentarza</span>
-              <% end %>
-          <% end %>
-          </center></td>
-            <% if user.medical_files.where(category: 'lab_results').present? %>
-              <td><%= link_to "Wynik badań", rails_blob_url(user.medical_files.where(category: 'lab_results').first.file) %></td>
-            <% else %>
-              <td>Brak pliku do pobrania</td>
-            <% end %>
+              <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+            </center></td>
+            <td><center>
+              <span class="badge rounded-pill text-bg-success"><%= comment.comment %></span>
+            </center></td>
           </tr>
         <% end %>
-      <% else %>
-        <tr>
-          <td colspan="6">Brak danych do wyświetlenia</td>
-        </tr>
       <% end %>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="6">Brak danych do wyświetlenia</td>
+    </tr>
+  <% end %>
     </tbody>
   </table>
 </div>
