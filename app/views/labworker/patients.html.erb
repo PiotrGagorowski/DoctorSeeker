@@ -30,8 +30,6 @@
            Badania
           </a>
           <ul class="dropdown-menu">
-            <li><a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a></li>
-            <li><hr class="dropdown-divider"></li>
             <li><a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
           </ul>
         </li>
@@ -86,11 +84,13 @@ Zadbaj o poufność tych informacji i pamiętaj o przestrzeganiu wszystkich proc
       <td><%= patient.email %></td>
       <td><%= patient.role %></td>
       <td>
-        <% medical_file = MedicalFile.find_by(user_id: patient.id, category: 'lab_results') %>
-        <% if medical_file %>
-          <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+        <% medical_files = MedicalFile.where(user_id: patient.id, category: 'lab_results') %>
+        <% if medical_files.present? %>
+          <% medical_files.each do |medical_file| %>
+            <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+          <% end %>
         <% else %>
-          <span class="badge text-bg-danger">Brak pliku</span>
+          <span class="badge text-bg-danger">Brak wyniku badań</span>
         <% end %>
       </td>
     </tr>
