@@ -120,22 +120,6 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            O przychodni
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
-          </ul>
-        </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>

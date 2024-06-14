@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,9 +65,10 @@
   </div>
 </nav>
 
-<div id="cont">
-<center><hr style="width:50%; margin-bottom:0" /></center>
-<div style="width:40%; height:100px; float: left; padding:30px; margin-top:10px; margin-left:70px">
+<div id="cont" style="margin-top:140px">
+<center><hr style="width:50%;" /></center>
+
+<div style="width:40%; height:100px; float: left; padding:30px; margin-top:0px; margin-left:70px">
 <center>
 <%= image_tag "review.jpg", class:"d-block", height: 400, style:"border-radius:20px"%>
 </center>
@@ -80,11 +81,14 @@ Witaj w sekcji recenzji! Tutaj możesz podzielić się swoimi opiniami na temat 
 Jeśli chcesz przeglądać recenzje innych użytkowników przejdź do sekcji <span class="badge text-bg-primary">O przychodni</span> ➡️ <span class="badge text-bg-primary">Lekarze</span>.</h5>
 </div>
 
-<div style="width:55%; height:100px; float:right; margin-left:40px">
+<div style="width:55%; height:100px; float:right; margin-left:40px; margin-right:40px">
 
-<span class="btn btn-outline-primary" style="font-size:20px; margin-left:100px">Dodaj recenzję</span>
+<span class="btn btn-outline-primary" style="font-size:20px; margin-left:100px; cursor: default">Dodaj recenzję</span>
+<div class="alert alert-primary fs-5 fw-lighter" role="alert" style="margin-top:20px;width:90%; margin-left:100px;width:80%">
+<p> ℹ️ Pamiętaj, że możesz wystawiać recenzje tylko dla lekarzy, u których miałeś odbytą wizytę.</p>
+</div>
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:20px; margin-left:100px">
-Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
+Jeśli chcesz dodać nową recenzję wypełnij poniższy formularz:
 </h5>
 
 
@@ -117,12 +121,20 @@ Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
   <% end %>
 </div>
 -->
+<style>
+  .custom-bg-gradient {
+    width:500px;
+    background: linear-gradient(to right, #87cefa, #dda0dd);
+    margin-left:140px;
+    color: #333;
+    font-weight:500;
+  }
+</style>
 
-<%= form_with(model: @user_review, local: true) do |form| %>
+<%= form_with(model: @user_review, local: true, class: "custom-bg-gradient p-3 border rounded fw-lighter-bold") do |form| %>
   <% if @user_review.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(@user_review.errors.count, "error") %> prohibited this user_review from being saved:</h2>
-
       <ul>
         <% @user_review.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -131,31 +143,34 @@ Jeśli chcesz dodać nową recenzję, proszę wypełnij poniższy formularz:
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :doctor_user_id %>
-    <%= form.collection_select :doctor_user_id, @doctors, :id, lambda { |doctor| "#{doctor.first_name} #{doctor.last_name}" }, prompt: "Wybierz lekarza" %>
+  <div class="mb-3">
+    <%= form.label "Doktor", class: "form-label badge rounded-pill fs-6", style:"background-color: #e6e6ff; color: #333" %>
+    <%= form.collection_select :doctor_user_id, @doctors, :id, lambda { |doctor| "#{doctor.first_name} #{doctor.last_name}" }, { prompt: "Wybierz lekarza" }, { class: "form-select fw-lighter-bold" } %>
   </div>
 
-  <div class="field">
+  <div class="mb-3">
     <%= form.fields_for :review do |review_fields| %>
-      <%= review_fields.label :score %>
-      <%= review_fields.number_field :score %>
+      <%= review_fields.label "Ocena", class: "form-label badge rounded-pill fs-6", style:"background-color: #e6e6ff; color: #333" %>
+      <%= review_fields.number_field :score, class: "form-control" %>
 
-      <%= review_fields.label :comment %>
-      <%= review_fields.text_area :comment %>
+      <%= review_fields.label "Komentarz", class: "form-label badge rounded-pill fs-6 mt-3", style:"background-color: #e6e6ff; color: #333" %>
+      <%= review_fields.text_area :comment, class: "form-control" %>
     <% end %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.submit "Wystaw recenzję 🖊️", class: "btn btn-light btn-lg fw-lighter-bold"%>
   </div>
 <% end %>
+
+</div>
+
 
 <center><hr style="width:80%; margin-top:800px" /></center>
 <div style="width:40%; margin-top:20px; margin-left:50px; float:left; margin-bottom:20px">
 
 <p>
-<span class="btn btn-outline-primary" style="font-size:20px; margin-top:30px; margin-left:50px">Twoje recenzje</span>
+<span class="btn btn-outline-primary" style="font-size:20px; margin-top:30px; margin-left:50px; cursor:default">Twoje recenzje</span>
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:20px; margin-left:50px">Poniżej znajdziesz swoje wcześniejsze recenzje:</h5>
 
   <% if @reviews.any? %>
