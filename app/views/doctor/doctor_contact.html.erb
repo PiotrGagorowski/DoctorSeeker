@@ -1,45 +1,41 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
+<div class="container-fluid">
+  <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+    </li>
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+        <a class="nav-link active bookmark" id="bookmark1" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
       </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= doctor_login_path(@login) %>">Logowanie</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
-        </li>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= lab_results_path %>">Wyniki badań</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark2" href="<%= issue_prescription_path %>">Wydaj receptę</a>
       </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
-      </form>
-    </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark3" href="<%= lab_results_path %>">Wyniki badań</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark4" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark5" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link active bookmark" id="bookmark6" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+    </li>
+    </ul>
+    <form class="d-flex" role="search">
+    <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+    <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
+    </form>
   </div>
+</div>
 </nav>
-
 
 
 <div class="cont_contact">
@@ -114,3 +110,43 @@
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>
