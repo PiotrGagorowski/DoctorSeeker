@@ -48,7 +48,6 @@ class DoctorController < ApplicationController
     # Tworzenie nowego obiektu MedicalFile
     @medical_file = MedicalFile.new
   end
-  
 
      
     
@@ -71,7 +70,7 @@ class DoctorController < ApplicationController
     @users = User.all
   end
   
-  
+ 
   def appointments_json
       @appointments = current_user.appointments_as_doctor.all
       render json: @appointments.to_json
@@ -132,9 +131,8 @@ class DoctorController < ApplicationController
     end
   end
   
-
-
     # PATCH/PUT /appointments/1 or /appointments/1.json
+
 
   private
   
@@ -144,11 +142,9 @@ class DoctorController < ApplicationController
   def medical_file_params
       params.require(:medical_file).permit(:file, :category, :utility_date, :user_id)
   end
-
   def comment_params
     params.require(:comment).permit(:doctor_user_id, :file_id, :comment)
   end
-
     
 end
 
