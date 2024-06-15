@@ -91,36 +91,6 @@ Jeśli chcesz przeglądać recenzje innych użytkowników przejdź do sekcji <sp
 Jeśli chcesz dodać nową recenzję wypełnij poniższy formularz:
 </h5>
 
-
-
-
-<!-- Formularz do dodawania nowej recenzji -->
-<!--
-<div class="container">
-  <h2>Dodaj nową recenzję</h2>
-  <%= form_with(model: @review, local: true) do |form| %>
-    
-    <div class="field">
-      <%= form.label :doctor_id, class: "form-label" %>
-      <%= form.select :doctor_id, options_for_select(@doctors.map{ |doctor| ["#{doctor.first_name} #{doctor.last_name}", doctor.id] }), {}, class: "form-select" %>
-    </div>
-
-    <div class="field">
-      <%= form.label :score, class: "form-label" %>
-      <%= form.select :score, options_for_select([1, 2, 3, 4, 5]), {}, class: "form-select" %>
-    </div>
-
-    <div class="field">
-      <%= form.label :comment, class: "form-label" %>
-      <%= form.text_area :comment, class: "form-control" %>
-    </div>
-
-    <div class="actions">
-      <%= form.submit "Dodaj recenzję", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-</div>
--->
 <style>
   .custom-bg-gradient {
     width:500px;
@@ -174,34 +144,33 @@ Jeśli chcesz dodać nową recenzję wypełnij poniższy formularz:
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:20px; margin-left:50px">Poniżej znajdziesz swoje wcześniejsze recenzje:</h5>
 
   <% if @reviews.any? %>
-  <% @reviews.each do |review| %>
-    <table class="table table-bordered table-striped bg-primary text-white">
+      <table class="table table-bordered table-striped bg-primary text-white" style="box-shadow: 0 4px 6px #333; margin-bottom:200px">
       <thead>
         <tr>
-          <th>Imię i nazwisko lekarza</th>
-          <th>Wystawiona ocena</th>
-          <th>Recenzja</th>
+          <th>Lekarz</th>
+          <th>Ocena</th>
+          <th>Komentarz</th>
           <th>Opublikowano</th>
           <th>Akcje</th> <!-- Dodany nagłówek dla przycisku usuwania -->
         </tr>
       </thead>
       <tbody>
+  <% @reviews.each do |review| %>
         <tr>
           <td><%= review.doctor.first_name %> <%= review.doctor.last_name %></td>
           <td><%= review.score %></td>
           <td><%= review.comment %></td>
           <td><%= review.created_at.strftime("%d-%m-%Y %H:%M") %></td>
           <td>
-            <%= link_to 'Usuń recenzję', user_review_path(review), method: :delete, data: { confirm: 'Czy na pewno chcesz usunąć tę recenzję?' }, class: 'btn btn-danger btn-sm' %>
+            <%= link_to 'Usuń recenzję', user_review_path(review), method: :delete, data: { confirm: 'Czy na pewno chcesz usunąć tę recenzję?' }, class:"btn btn-outline-danger" %>
           </td>
         </tr>
-      </tbody>
-    </table>
   <% end %>
 <% else %>
   <span class="badge text-bg-danger" style="font-size:20px; margin-left:50px">Nie wystawiłeś jeszcze żadnej recenzji ☹️</span>
 <% end %>
-
+</tbody>
+</table>
 
 </div>
 
