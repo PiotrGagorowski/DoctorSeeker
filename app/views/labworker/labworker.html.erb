@@ -63,14 +63,24 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <label for="exampleFormControlInput1" class="form-label">Adres e-mail</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1">
-      <label for="exampleFormControlTextarea1" class="form-label">Pytanie</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Tutaj wpisz swoje pytanie..."></textarea>
+        <div class="card border-primary mb-3" style="max-width: 550px; margin-left: 10px; height:370px;">
+        <div class="card-body">
+          <h5 class="card-title" style="margin-top:30px"><b>Napisz do nas</b></h5>
+            <p class="card-text">Jesteśmy zawsze gotowi, aby pomóc Ci z wszelkimi pytaniami lub potrzebami jakie możesz mieć. Nasz zespół wsparcia jest dostępny 24/7, aby zapewnić jak najlepszą obsługę. Możesz skontaktować się z nami bezpośrednio na nasz adres e-mail.</p>
+        <div class="mb-3 mt-5">
+        <center>
+        <p class="fs-4"><span class="badge text-bg-warning" style="margin:5px">kontakt@doctorseeker.pl</span>
+        </center>
+        </div>
+      <center>
+        <%= link_to "Kliknij tutaj, aby przejść do poczty 📧", "https://mail.google.com", class: "btn btn-dark fw-lighter-bold" %>
+        </center>
+      </div>
+      </div>
+      
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-        <button type="button" class="btn btn-primary">Wyślij</button>
       </div>
     </div>
   </div>
