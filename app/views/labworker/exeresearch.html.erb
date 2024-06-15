@@ -30,8 +30,6 @@
            Badania
           </a>
           <ul class="dropdown-menu">
-            <li><a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a></li>
-            <li><hr class="dropdown-divider"></li>
             <li><a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
           </ul>
         </li>
@@ -48,7 +46,7 @@
 </nav>
 
 <div id="cont">
-<div style="width:50%; height:100px; float: left; padding:20px; margin-top:20px; margin-left:40px">
+<div style="width:50%; height:100px; float: left; padding:20px; margin-top:20px; margin-left:40px; margin-bottom:600px">
 <table class="table" style="margin-top:0px; width:700px">
   <thead>
     <tr>
@@ -73,7 +71,12 @@
       <td><%= patient.role %></td>
       <td>
         <%= form_with(model: @medical_file, url: labworker_path, local: true, multipart: true) do |form| %>
-          <%= form.file_field :file %>
+          <div class="custom-file">
+    <%= form.file_field :file, id: "file_input", style: "display: none;" %>
+    <button type="button" class="btn btn-secondary" onclick="document.getElementById('file_input').click();">Wybierz plik</button>
+    <br>
+    <span id="file-chosen"></span>
+  </div>
           <%= form.hidden_field :category, value: 'lab_results' %>
           <%= form.hidden_field :user_id, value: patient.id %>
           <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
@@ -110,3 +113,18 @@ Pamiętaj o terminowości i profesjonalizmie w wykonywaniu swoich obowiązków, 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const fileInput = document.getElementById('file_input');
+  const fileChosen = document.getElementById('file-chosen');
+
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files.length > 0) {
+      fileChosen.textContent = fileInput.files[0].name;
+    } else {
+      fileChosen.textContent = 'Nie wybrano pliku';
+    }
+  });
+});
+</script>

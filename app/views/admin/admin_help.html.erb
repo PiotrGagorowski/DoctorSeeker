@@ -15,22 +15,6 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            O przychodni 
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= admin_doctors_path(@admin_doctors) %>">Lekarze</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_price_path(@admin_price) %>">Cennik</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_lab_path(@admin_lab) %>">Spis wykonywanych badań</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_help_path(@admin_help) %>">Pomoc</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_contact_path(@admin_contact) %>">Kontakt</a></li>
-          </ul>
-        </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
         </li>
