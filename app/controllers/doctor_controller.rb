@@ -1,5 +1,6 @@
 class DoctorController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:file]
+  skip_before_action :verify_authenticity_token, only: [:mark_as_completed_user_appointment]
   before_action :authenticate_user!
 
   def doctor_doctors
@@ -22,24 +23,30 @@ class DoctorController < ApplicationController
   end
 
   def prescription
-      @appointments = Appointment.joins(user_appointments: :patient)
-                              .where(doctor_user_id: current_user.id)
-                              .order('appointments.start_time ASC')
-                              .distinct
-                              .to_a
-                              
-      @patients = @appointments.map { |appointment| appointment.user_appointments.first.patient }
-
-      @patients_without_prescription = @appointments.map do |appointment|
-          appointment.user_appointments.first.patient unless appointment.user_appointments.first.patient.medical_files.where(category: :prescription).exists?
-        end.compact.uniq
-        
-
-        @patients_with_prescription = User.where(
-          id: MedicalFile.where(category: MedicalFile.categories[:prescription]).select(:user_id)
-        ).distinct
-
-      @medical_file = MedicalFile.new
+    # Pobieranie wszystkich wizyt, które są powiązane z obecnym użytkownikiem (lekarzem) oraz mają status 'visit_completed = true'
+    @appointments = Appointment.joins(:user_appointments)
+                               .where(user_appointments: { visit_completed: true })
+                               .where(doctor_user_id: current_user.id)
+                               .order('appointments.start_time ASC')
+                               .distinct
+                               .to_a
+    
+    # Pobieranie pacjentów tylko z zakończonych wizyt
+    @patients = @appointments.map { |appointment| appointment.user_appointments.first.patient }.uniq
+    
+    # Filtracja pacjentów bez recepty
+    @patients_without_prescription = @appointments.map do |appointment|
+      patient = appointment.user_appointments.first.patient
+      patient unless patient.medical_files.where(category: :prescription).exists?
+    end.compact.uniq
+    
+    # Pobieranie pacjentów z istniejącymi receptami
+    @patients_with_prescription = User.where(
+      id: MedicalFile.where(category: MedicalFile.categories[:prescription]).select(:user_id)
+    ).distinct
+    
+    # Tworzenie nowego obiektu MedicalFile
+    @medical_file = MedicalFile.new
   end
 
      
@@ -63,7 +70,7 @@ class DoctorController < ApplicationController
     @users = User.all
   end
   
-  
+ 
   def appointments_json
       @appointments = current_user.appointments_as_doctor.all
       render json: @appointments.to_json
@@ -114,10 +121,18 @@ class DoctorController < ApplicationController
         render plain: 'Not Found', status: 404
       end
     end
-
-
-
+  def mark_as_completed_user_appointment
+    @user_appointment = UserAppointment.find(params[:id])
+    
+    if @user_appointment.update(visit_completed: true)
+      render json: { status: 'success' }
+    else
+      render json: { status: 'error', message: 'Nie udało się zaktualizować wizyty.' }
+    end
+  end
+  
     # PATCH/PUT /appointments/1 or /appointments/1.json
+
 
   private
   
@@ -127,11 +142,9 @@ class DoctorController < ApplicationController
   def medical_file_params
       params.require(:medical_file).permit(:file, :category, :utility_date, :user_id)
   end
-
   def comment_params
     params.require(:comment).permit(:doctor_user_id, :file_id, :comment)
   end
-
     
 end
 
