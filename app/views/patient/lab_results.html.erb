@@ -93,8 +93,7 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
 <div style="width:98%; margin-bottom:100px">
 
   <% if @lab_results.any? %>
-  <% @lab_results.each do |lab_result| %> 
-  <table class="table table-bordered table-striped" style="margin:20px">
+    <table class="table table-bordered table-striped" style="margin:20px; box-shadow: 0 4px 6px #333; margin-bottom:200px">
     <thead class="thead-dark">
       <tr>
         <th>Data wystawienia wyników</th>
@@ -104,6 +103,7 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
       </tr>
     </thead>
     <tbody>
+  <% @lab_results.each do |lab_result| %> 
     <tr>
       <td><%= lab_result.created_at.strftime("%d.%m.%Y") %></td>
       <td><%=lab_result.utility_date%></td>
@@ -111,7 +111,7 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
       <td><center><span class="badge rounded-pill text-bg-success"><%= link_to "Kliknij aby pobrać wynik badań", rails_blob_url(lab_result.file), style: "color:white; text-decoration:none" %></span>
       </center>
       <% else %>
-      Brak pliku do pobrania</td>
+      <span class="badge rounded-pill text-bg-danger">Brak pliku do pobrania</span></td>
       <% end %>
       <td><center>
       <% if lab_result.file.attached? %>
@@ -124,13 +124,12 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
           <% end %>
           </center></td>
     </tr>
-    </tbody>
-  </table>
   <% end %>
   <% else %>
   <center><span class="badge text-bg-danger" style="font-size:20px; margin-left:50px;">Nie posiadasz jeszcze żadnych wyników badań laboratoryjnych ☹️</span></center>
   <% end %>
-
+</tbody>
+</table>
   
 </div>
 

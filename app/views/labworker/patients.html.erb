@@ -87,10 +87,10 @@ Zadbaj o poufność tych informacji i pamiętaj o przestrzeganiu wszystkich proc
         <% medical_files = MedicalFile.where(user_id: patient.id, category: 'lab_results') %>
         <% if medical_files.present? %>
           <% medical_files.each do |medical_file| %>
-            <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+            <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file, style: "color:white; text-decoration:none" %></span>
           <% end %>
         <% else %>
-          <span class="badge text-bg-danger">Brak wyniku badań</span>
+          <span class="badge rounded-pill text-bg-danger">Brak wyniku badań</span>
         <% end %>
       </td>
     </tr>
