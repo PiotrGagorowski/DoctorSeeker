@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,41 +10,48 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+          <a class="nav-link active bookmark" id="bookmark1" aria-current="page" href="<%= index_path(@index)%>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active bookmark" id="bookmark2" href="<%= login_path(@login) %>">Logowanie</a>
         </li>
+        <% if current_user %>
+          <% if current_user.doctor? %>
+            <li class="nav-item">
+              <a class="nav-link active bookmark" id="bookmark3" href="<%= doctor_path %>">Funkcjonalności</a>
+            </li>
+          <% end %>
+        <% end %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark4" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark5" href="<%= price_path(@price) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark6" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
+          <a class="nav-link active bookmark" id="bookmark7" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
-      </li>
+          <a class="nav-link active bookmark" id="bookmark8" href="<%= contact_path(@lcontact) %>">Kontakt</a>
+        </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
+        <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+        <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
       </form>
     </div>
   </div>
 </nav>
 
-<div id="cont">
-<div style="width:50%; height:300px; float:left">
-<div class="card mb-3" style="max-width: 540px; margin-left: 120px; margin-top: 30px; margin-top:110px; height: 200px;">
+<div id="cont" style="display:flex; margin-top:150px">
+<div style="width:50%; height:5px; float:left">
+<div class="card mb-3" style="max-width: 540px; margin-left: 120px; height: 200px;">
   <div class="row g-0">
     <div class="col-md-4">
     <%= image_tag "helpdesk.jpg", class:"d-block", height: 200%>
@@ -61,7 +68,7 @@
 </div>
 
 <div style="width:50%; height:5px; float:right">
-<div class="card border-primary mb-3" style="max-width: 540px; margin-left: 90px; height:370px; margin-top:30px">
+<div class="card border-primary mb-3" style="max-width: 540px; margin-left: 90px; height:370px;">
   <div class="card-body">
   <h5 class="card-title" style="margin-top:30px"><b>Napisz do nas</b></h5>
     <p class="card-text">Jesteśmy zawsze gotowi, aby pomóc Ci z wszelkimi pytaniami lub potrzebami jakie możesz mieć. Nasz zespół wsparcia jest dostępny 24/7, aby zapewnić jak najlepszą obsługę. Możesz skontaktować się z nami bezpośrednio na nasz adres e-mail.</p>
@@ -201,9 +208,7 @@
 </div>
 </div>
 
-  
 </div>
-
 
 </div>
 
@@ -211,3 +216,44 @@
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>
