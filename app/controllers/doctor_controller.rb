@@ -122,16 +122,16 @@ class DoctorController < ApplicationController
         render plain: 'Not Found', status: 404
       end
     end
-    def mark_as_completed_user_appointment
-      @user_appointment = UserAppointment.find(params[:id])
-      
-      if @user_appointment.update(visit_completed: true)
-        render json: { status: 'success' }
-      else
-        render json: { status: 'error', message: 'Nie udało się zaktualizować wizyty.' }
-      end
-    end
+  def mark_as_completed_user_appointment
+    @user_appointment = UserAppointment.find(params[:id])
     
+    if @user_appointment.update(visit_completed: true)
+      render json: { status: 'success' }
+    else
+      render json: { status: 'error', message: 'Nie udało się zaktualizować wizyty.' }
+    end
+  end
+  
 
 
     # PATCH/PUT /appointments/1 or /appointments/1.json
