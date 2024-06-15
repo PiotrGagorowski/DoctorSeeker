@@ -66,7 +66,7 @@
 </nav>
 
 
-<div id="cont">
+<div id="cont" style="margin-top:100px">
 <center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Moje Badania</span></h1></center>
 
 <div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:150px">
@@ -93,8 +93,7 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
 <div style="width:98%; margin-bottom:100px">
 
   <% if @lab_results.any? %>
-  <% @lab_results.each do |lab_result| %> 
-  <table class="table table-bordered table-striped" style="margin:20px">
+    <table class="table table-bordered table-striped" style="margin:20px; box-shadow: 0 4px 6px #333; ">
     <thead class="thead-dark">
       <tr>
         <th>Data wystawienia wyników</th>
@@ -104,11 +103,13 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
       </tr>
     </thead>
     <tbody>
+  <% @lab_results.each do |lab_result| %> 
     <tr>
       <td><%= lab_result.created_at.strftime("%d.%m.%Y") %></td>
       <td><%=lab_result.utility_date%></td>
       <% if lab_result.file.attached? %>
-      <td><%= link_to "Wynik badań", rails_blob_url(lab_result.file) %>
+      <td><center><%= link_to "Wynik badań", rails_blob_url(lab_result.file), class:"badge rounded-pill text-bg-success", style:"text-decoration:none" %>
+      </center>
       <% else %>
       Brak pliku do pobrania</td>
       <% end %>
@@ -118,18 +119,17 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
             <% if comment %>
               <span class="badge rounded-pill text-bg-success"><%= comment.comment %></span>
             <% else %>
-              <span class="badge text-bg-danger">Brak komentarza</span>
+              <span class="badge rounded-pill text-bg-danger">Brak komentarza</span>
             <% end %>
           <% end %>
           </center></td>
     </tr>
-    </tbody>
-  </table>
   <% end %>
   <% else %>
   <center><span class="badge text-bg-danger" style="font-size:20px; margin-left:50px;">Nie posiadasz jeszcze żadnych wyników badań laboratoryjnych ☹️</span></center>
   <% end %>
-
+    </tbody>
+  </table>
   
 </div>
 
