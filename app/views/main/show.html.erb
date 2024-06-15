@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,28 +10,51 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= index_path(@index) %>">Strona główna</a>
+          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
         </li>
+        <li class="nav-item">
+          <% unless current_user %>
+          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <%end%>
+        </li>
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Moje
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+          </ul>
+        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_path(@doctors) %>">Lekarze</a></li>
+            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_path(@price) %>">Cennik</a></li>
+            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_path(@lab) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-         <a class="nav-link active" aria-disabled="true" href="<%= help_path(@help) %>">Pomoc</a>
+          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link active" href="<%= contact_path(@lcontact) %>">Kontakt</a>
+          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
       </li>
       </ul>
       <form class="d-flex" role="search">
@@ -42,25 +65,62 @@
   </div>
 </nav>
 
-<h1>Doktor <%= @doctor.first_name %> <%= @doctor.last_name %></h1>
+<div style="margin-bottom:100px; width:100%; margin-top:120px">
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Opinie użytkowników ✍️</span></h1></center>
+<center><hr class="hr hr-blurry" style="width:80%; margin:50px">
 
-<p><strong>Specjalizacja:</strong> </p>
-<p><strong>Opis:</strong> </p>
-<p><strong>Średnia ocena: <%=@average_score %></strong></p>
+<div class="container">
+  <table class="table table-bordered table-striped table-hover w-50" style="box-shadow: 0 4px 6px #333; float:left; margin-bottom:50px; margin-top:50px">
+    <tbody>
+      <tr>
+        <th scope="row">Doktor</th>
+        <td><%= @doctor.first_name %> <%= @doctor.last_name %></td>
+      </tr>
+      <tr>
+        <th scope="row">Opis</th>
+        <td><%= @doctor.about %></td>
+      </tr>
+      <tr>
+        <th scope="row">Średnia ocen</th>
+        <td><%= @average_score %></td>
+      </tr>
+    </tbody>
+  </table>
 
-<h2>Recenzje:</h2>
+
+  <h5 class="fw-lighter" style="text-align:justify; margin-left:700px">
+  Witaj 😊<p> Znajdujesz się w sekcji opinie naszych pacjentów o doktorze <%= @doctor.first_name %> <%= @doctor.last_name %>. Cieszymy się, że masz możliwość podzielenia się swoim doświadczeniem z wizyt u naszych lekarza. Twoja opinia jest dla nas niezwykle cenna, pomaga nam ciągle doskonalić nasze usługi i dbać o wysoki standard opieki zdrowotnej.
+  </p><p class="fw-lighter"> Aby wystawić opinię o lekarzu przejdź do sekcji <b>Moje ➡️ Recenzje</b>. Pamiętaj, że aby wystawić opinię o wybranym lekarzu musisz najpierw <b>odbyć u niego wizytę.</b></p></h5>
+    </div>
+
+
+<hr class="hr hr-blurry" style="width:80%; margin:30px"></center>
+
+<div style="width:100%; margin-bottom:600px">
+
 <% if @reviews.any? %>
-  <ul>
     <% @reviews.each do |review| %>
-      <li>
-        <p><strong>Ocena:</strong> <%= review.score %></p>
-        <p><strong>Komentarz:</strong> <%= review.comment %></p>
-      </li>
+      <div class="card text-bg-primary mb-3 fw-lighter"  style="max-width: 18rem; margin:50px; float:left; box-shadow: 0 4px 6px #333;">
+      <div class="card-header">
+      <% review.score.to_i.times do %>
+        <%= image_tag "star.png", height: 30%>
+
+      <% end %>
+      </div>
+      <div class="card-body">
+        <p class="card-text"><strong>Ocena:</strong> <%= review.score %></p>
+        <p class="card-text"><strong>Komentarz:<p></strong> <%= review.comment %></p></p>
+        <p class="card-text"><i><b><%= review.created_at %></i></b></p>
+      </div>
+      </div>
     <% end %>
-  </ul>
+  
 <% else %>
-  <p>Brak recenzji dla tego lekarza.</p>
+  <center><span class="badge text-bg-danger" style="font-size:20px; margin-left:50px;">Wybrany lekarz nie posiada jeszcze żadnych opinii ☹️</span></center>
 <% end %>
+
+</div>
+</div>
 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>

@@ -46,13 +46,13 @@
 </nav>
 
 <center>
-<%= image_tag "Logo.jpg", class:"d-block", height: 300, style:"margin:30px" %>
+<%= image_tag "logout.png", class:"d-block", height: 350, style:"margin:30px" %>
 
-<h3 class="fw-lighter"><strong>Czy na pewno chcesz się wylogować?</strong></h3>
+<h3 class="p-3 mb-2 bg-primary text-white"><strong>Czy na pewno chcesz się wylogować?</strong></h3>
 
 <div style="margin-top:30px">
   <%= form_tag(destroy_user_session_path, method: :delete) do %>
-    <%= submit_tag "Wyloguj", class: "btn btn-danger btn-lg" %>
+    <%= submit_tag "Wyloguj", class: "btn btn-outline-danger", style: "font-size:30px" %>
   <% end %>
 </center>
 
