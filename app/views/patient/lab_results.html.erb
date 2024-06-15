@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@
 </nav>
 
 
-<div id="cont" style="margin-top:100px">
+<div id="cont">
 <center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Moje Badania</span></h1></center>
 
 <div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:150px">
@@ -93,7 +93,8 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
 <div style="width:98%; margin-bottom:100px">
 
   <% if @lab_results.any? %>
-    <table class="table table-bordered table-striped" style="margin:20px; box-shadow: 0 4px 6px #333; margin-bottom:200px">
+  <% @lab_results.each do |lab_result| %> 
+  <table class="table table-bordered table-striped" style="margin:20px">
     <thead class="thead-dark">
       <tr>
         <th>Data wystawienia wyników</th>
@@ -103,33 +104,32 @@ Nasz zespół medyczny jest tutaj, aby Ci pomóc i udzielić wszelkich niezbędn
       </tr>
     </thead>
     <tbody>
-  <% @lab_results.each do |lab_result| %> 
     <tr>
       <td><%= lab_result.created_at.strftime("%d.%m.%Y") %></td>
       <td><%=lab_result.utility_date%></td>
       <% if lab_result.file.attached? %>
-      <td><center><span class="badge rounded-pill text-bg-success"><%= link_to "Kliknij aby pobrać wynik badań", rails_blob_url(lab_result.file), style: "color:white; text-decoration:none" %></span>
-      </center>
+      <td><%= link_to "Wynik badań", rails_blob_url(lab_result.file) %>
       <% else %>
-      <span class="badge rounded-pill text-bg-danger">Brak pliku do pobrania</span></td>
+      Brak pliku do pobrania</td>
       <% end %>
       <td><center>
       <% if lab_result.file.attached? %>
             <% comment = @comments.find_by(file_id: lab_result.id) %>
             <% if comment %>
-              <span class="badge rounded-pill text-bg-primary"><%= comment.comment %></span>
+              <span class="badge rounded-pill text-bg-success"><%= comment.comment %></span>
             <% else %>
-              <span class="badge rounded-pill text-bg-danger">Brak komentarza</span>
+              <span class="badge text-bg-danger">Brak komentarza</span>
             <% end %>
           <% end %>
           </center></td>
     </tr>
+    </tbody>
+  </table>
   <% end %>
   <% else %>
   <center><span class="badge text-bg-danger" style="font-size:20px; margin-left:50px;">Nie posiadasz jeszcze żadnych wyników badań laboratoryjnych ☹️</span></center>
   <% end %>
-</tbody>
-</table>
+
   
 </div>
 
