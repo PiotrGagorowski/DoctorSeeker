@@ -18,13 +18,17 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "main#index"
+  # routes.rb
+  resources :user_appointments do
+    patch 'mark_as_completed', on: :member
+  end
+  
   
   get 'login', to: 'main#login', as: 'login'
   get 'index', to: 'main#index', as: 'index'
   get 'contact', to: 'main#contact', as: 'contact'
   get 'help', to: 'main#help', as: 'help'
   get 'doctors', to: 'main#doctors', as: 'doctors'
-  get '/doctors/:id', to: 'main#show', as: 'doctor_id'
   get 'price', to: 'main#price', as: 'price'
   get 'lab', to: 'main#lab', as: 'lab'
 
