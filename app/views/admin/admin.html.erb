@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,22 +15,6 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            O przychodni 
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= admin_doctors_path(@admin_doctors) %>">Lekarze</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_price_path(@admin_price) %>">Cennik</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_lab_path(@admin_lab) %>">Spis wykonywanych badań</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_help_path(@admin_help) %>">Pomoc</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_contact_path(@admin_contact) %>">Kontakt</a></li>
-          </ul>
-        </li>
        <li class="nav-item">
           <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
         </li>
@@ -46,8 +30,12 @@
   </div>
 </nav>
 
-<div id="cont">
-<center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
+<div id="cont" style="margin-top: 80px;">
+
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Witaj w Panelu Administratora</span></h1>
+<hr style="width:80%; margin-bottom:0" />
+</center>
+
 <div class="left" style="width:50%; float:left; height:50px; margin-bottom:30px">
 
 <h2 class="fw-lighter" style="margin-bottom:20px"><span style="font-weight:500"><center>Witaj <%= current_user.first_name %>!</center></span></h2>
@@ -55,7 +43,7 @@
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
 <p>Jesteś zalogowany jako administrator, możesz zarządzć wszystkimi użytkownikami. Pamiętaj aby rozważnie dononywać wszystkich zmian, w razie wątpliwości skontaktuj się z innym administratorem. </p>
 
-W zakładce List użytkowników możesz dodać pacjentów, lekarzy lub pracowników laboratorium. Możesz również edytować dane zarejestrowanych już osób.
+W zakładce Lista użytkowników możesz dodać pacjentów, lekarzy lub pracowników laboratorium. Możesz również edytować dane zarejestrowanych już osób.
 
 </h5>
 <div class="card text-bg-primary mb-3" style="max-width: 50rem;">
@@ -76,7 +64,7 @@ W zakładce List użytkowników możesz dodać pacjentów, lekarzy lub pracownik
 </div>
 </div>
 
-<center><hr style="width:80%; margin-top:550px; padding:0px" /></center>
+<center><hr style="width:80%; margin-top:550px; padding:50px" /></center>
 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>

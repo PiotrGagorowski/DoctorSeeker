@@ -15,22 +15,6 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= users_list_path(@users_list) %>">Lista użytkowników</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            O przychodni 
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= admin_doctors_path(@admin_doctors) %>">Lekarze</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_price_path(@admin_price) %>">Cennik</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_lab_path(@admin_lab) %>">Spis wykonywanych badań</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_help_path(@admin_help) %>">Pomoc</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= admin_contact_path(@admin_contact) %>">Kontakt</a></li>
-          </ul>
-        </li>
        <li class="nav-item">
           <a class="nav-link active" href="<%= admin_profile_path(@admin_profile) %>">Mój profil</a>
         </li>
@@ -51,12 +35,14 @@
 <div class="cont_contact">
 <section id="contact-info">
 
-  
+    <center><hr style="width:80%; margin-top:10px; padding:0px" /></center>
+
     <center><h1>Kontakt</h1></center>
     
     <div class="alert alert-secondary" role="alert">
     <center><strong>Adres: ul. Zdrowia 112, 00-999 Uzdrowisko</strong></center>
     </div>
+    <center><hr style="width:80%; margin-top:0px; padding:0px" /></center>
 
     <div class="right_image">
     <%= image_tag "mapa.jpg", height: 420 %>

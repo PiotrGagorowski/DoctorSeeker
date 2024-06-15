@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,22 +22,6 @@
         <li class="nav-item">
           <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            O przychodni 
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctor_doctors_path(@doctor_doctors) %>">Lekarze</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= doctor_price_path(@doctor_price) %>">Cennik</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= doctor_lab_path(@doctor_lab) %>">Spis wykonywanych badań</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= doctor_help_path(@doctor_help) %>">Pomoc</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= doctor_contact_path(@doctor_contact) %>">Kontakt</a></li>
-          </ul>
-        </li>
         <li class="nav-item">
           <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
         </li>
@@ -52,9 +36,8 @@
     </div>
   </div>
 </nav>
-<div class="cont_contact">
 
-<div id="cont">
+<div id="cont" style="margin-top: 120px;">
 <div style="height:900px;">
 <center>
 <div class="card" style="width: 20rem; margin:50px;">
@@ -81,7 +64,7 @@
 </div>
 
 </div>
-</div>
+
 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
