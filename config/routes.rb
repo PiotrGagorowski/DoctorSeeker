@@ -19,11 +19,10 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "main#index"
   # routes.rb
-  resources :user_appointments do
-    patch 'mark_as_completed', on: :member
-  end
+
   
-  
+  patch '/mark_as_completed_user_appointment/:id', to: 'doctor#mark_as_completed_user_appointment', as: :mark_as_completed_user_appointment
+
   get 'login', to: 'main#login', as: 'login'
   get 'index', to: 'main#index', as: 'index'
   get 'contact', to: 'main#contact', as: 'contact'
