@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,38 +14,39 @@
         
         <li class="nav-item dropdown">
         <li class="nav-item">
-        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Strona główna</a>
+        <a class="nav-link active bookmark" id="bookmark1" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Strona główna</a>
         </li>
         </li>
         <li class="nav-item dropdown">
         <li class="nav-item">
-        <a class="nav-link active" aria-disabled="true" href="<%= profile_path(@profile) %>">Mój profil</a>
+        <a class="nav-link active bookmark" id="bookmark2" aria-disabled="true" href="<%= profile_path(@profile) %>">Mój profil</a>
         </li>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= patients_path(@patients) %>">Pacjenci</a>
+          <a class="nav-link active bookmark" id="bookmark3" aria-disabled="true" href="<%= patients_path(@patients) %>">Pacjenci</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
            Badania
           </a>
           <ul class="dropdown-menu">
-            <li><a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
+            <li><a class="nav-link active bookmark" id="bookmark4" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= logout_labworker_path(@logout_labworker) %>">Wyloguj</a>
+          <a class="nav-link active bookmark" id="bookmark5" href="<%= logout_labworker_path(@logout_labworker) %>">Wyloguj</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
+      <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+      <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
       </form>
     </div>
   </div>
 </nav>
 
-<div id="cont">
+
+<div id="cont" style="margin-top:100px">
 
 <div style="width:40%; height:100px; float: left; padding:30px; margin-top:10px; margin-left:70px">
 <center><h1><span class="badge text-bg-primary" style="margin-bottom:10px">Sekcja Pacjenci</span></h1>
@@ -87,10 +88,10 @@ Zadbaj o poufność tych informacji i pamiętaj o przestrzeganiu wszystkich proc
         <% medical_files = MedicalFile.where(user_id: patient.id, category: 'lab_results') %>
         <% if medical_files.present? %>
           <% medical_files.each do |medical_file| %>
-            <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+            <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file, style: "color:white; text-decoration:none" %></span>
           <% end %>
         <% else %>
-          <span class="badge text-bg-danger">Brak wyniku badań</span>
+          <span class="badge rounded-pill text-bg-danger">Brak wyniku badań</span>
         <% end %>
       </td>
     </tr>
@@ -108,3 +109,43 @@ Zadbaj o poufność tych informacji i pamiętaj o przestrzeganiu wszystkich proc
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>

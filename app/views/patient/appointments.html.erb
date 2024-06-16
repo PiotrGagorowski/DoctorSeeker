@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,14 +10,14 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
+          <a class="nav-link active bookmark" id="bookmark1" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
+          <a class="nav-link active bookmark" id="bookmark2" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
         </li>
         <li class="nav-item">
           <% unless current_user %>
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active bookmark" id="bookmark3" href="<%= login_path(@login) %>">Logowanie</a>
           <%end%>
         </li>
                 <li class="nav-item dropdown">
@@ -25,13 +25,13 @@
             Moje
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark4" href="<%= patient_appointments_path %>">Wizyty</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark5" href="<%= patient_lab_results_path %>">Badania</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark6" href="<%= patient_prescriptions_path %>">Recepty</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark7" href="<%= patient_reviews_path %>">Recenzje</a></li>
           </ul>
         </li>
 
@@ -40,32 +40,32 @@
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark8" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark9" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark10" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
+          <a class="nav-link active bookmark" id="bookmark11" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+          <a class="nav-link active bookmark" id="bookmark12" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+        <a class="nav-link active bookmark" id="bookmark13" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
       </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
+      <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+      <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
       </form>
     </div>
   </div>
 </nav>
 
-<div id="cont" style="margin-top:100px;">
+<div id="cont" style="margin-top:100px; margin-bottom:200px">
 <center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Moje Wizyty</span></h1></center>
 
 <div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:150px">
@@ -107,49 +107,45 @@ Tutaj znajdziesz wszystkie informacje dotyczące Twoich planowanych i zrealizowa
 <div style="width:40%; height:50px; float: left; padding:30px; margin-left:70px; margin-bottom:300px">
 
   <h2 class="mb-4" style="text-align:center">Nadchodzące Wizyty</h2>
+
   <% if @user_appointments.any? %>
+  <table class="table table-bordered table-striped bg-primary text-white" style="margin-bottom:100px; box-shadow: 0 4px 6px #333;">
+  <thead>
+    <tr>
+      <th>Termin rozpoczęcia wizyty</th>
+      <th>Termin zakończenia wizyty</th>
+      <th>Imię i nazwisko lekarza</th>
+      <th>Rezygnacja</th>
+    </tr>
+  </thead>
+  <tbody>
   <% has_current_appointments = false %>
   <% @user_appointments.each do |appointment| %>
   <% if appointment.appointment.start_time.present? && appointment.appointment.end_time >= DateTime.now + 2.hour %>
   <% has_current_appointments = true %>
-  <table class="table table-bordered table-striped bg-primary text-white">
-    <thead>
-      <tr>
-        <th>Termin rozpoczęcia wizyty</th>
-        <th>Termin zakończenia wizyty</th>
-        <th>Imię i nazwisko lekarza</th>
-        <th>Rezygnacja</th>
-      </tr>
-    </thead>
-    <tbody>
       <tr>
         <td><%= appointment.appointment.start_time %></td>
         <td><%= appointment.appointment.end_time %></td>
         <td><%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></td>
         <td><center><%= link_to 'Kliknij, aby zrezygnować', user_appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure you want to cancel this appointment?'}, class:"btn btn-outline-danger" %></td></center>
       </tr>
-    </tbody>
-  </table>
   <% end %>
   <% end %>
   <% else %>
   <center><span class="badge text-bg-danger" style="font-size:20px;">Nie masz żadnych nadchodzących wizyt ☹️</span></center>
   <% end %>
+    </tbody>
+</table>
 
 
 
 </div>
 
-<div style="width:40%; height:50px; float: right; padding:30px; margin-right:70px; margin-bottom:300px">
+<div style="width:40%; height:50px; float: right; padding:30px; margin-right:70px; margin-bottom:500px">
 
   <h2 class="mb-4" style="text-align:center">Historia wizyt</h2>
   <% if @user_appointments.any? %>
-  <% has_past_appointments = false %>
-  <center><span class="badge text-bg-danger" style="font-size:20px;">Nie masz żadnych minionych wizyt ☹️</span></center>
-  <% @user_appointments.each do |appointment| %>
-  <% if appointment.appointment.start_time.present? && appointment.appointment.end_time < DateTime.now + 2.hour %>
-  <% has_past_appointments = true %>
-  <table class="table table-bordered table-striped bg-primary text-white">
+    <table class="table table-bordered table-striped bg-primary text-white" style="box-shadow: 0 4px 6px #333; margin-bottom:100px">
     <thead>
       <tr>
         <th>Termin rozpoczęcia wizyty</th>
@@ -158,18 +154,23 @@ Tutaj znajdziesz wszystkie informacje dotyczące Twoich planowanych i zrealizowa
       </tr>
     </thead>
     <tbody>
+  <% has_past_appointments = false %>
+  
+  <% @user_appointments.each do |appointment| %>
+  <% if appointment.appointment.start_time.present? && appointment.appointment.end_time < DateTime.now + 2.hour %>
+  <% has_past_appointments = true %>
       <tr>
         <td><%= appointment.appointment.start_time %></td>
         <td><%= appointment.appointment.end_time %></td>
         <td><%= appointment.appointment.doctor.first_name %> <%= appointment.appointment.doctor.last_name %></td>
       </tr>
-    </tbody>
-  </table>
 <% end %>
 <% end %>
 <% else %>
 <center><span class="badge text-bg-danger" style="font-size:20px;">Nie masz żadnych minionych wizyt ☹️</span></center>
 <% end %>
+</tbody>
+</table>
 
 </div>
 
@@ -182,3 +183,43 @@ Tutaj znajdziesz wszystkie informacje dotyczące Twoich planowanych i zrealizowa
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>

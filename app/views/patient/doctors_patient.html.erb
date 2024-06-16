@@ -4,16 +4,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
-    /* Dodatkowe style */
-    .checked {
-      color: orange; /* Kolor gwiazdek */
-    }
+    body { background-color: #d5f3fe; }
   </style>
 
 </head>
 
-
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,14 +21,14 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
+          <a class="nav-link active bookmark" id="bookmark1" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
+          <a class="nav-link active bookmark" id="bookmark2" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
         </li>
         <li class="nav-item">
           <% unless current_user %>
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active bookmark" id="bookmark3" href="<%= login_path(@login) %>">Logowanie</a>
           <%end%>
         </li>
                 <li class="nav-item dropdown">
@@ -40,13 +36,13 @@
             Moje
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark4" href="<%= patient_appointments_path %>">Wizyty</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark5" href="<%= patient_lab_results_path %>">Badania</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark6" href="<%= patient_prescriptions_path %>">Recepty</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark7" href="<%= patient_reviews_path %>">Recenzje</a></li>
           </ul>
         </li>
 
@@ -55,26 +51,26 @@
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark8" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark9" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark10" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
+          <a class="nav-link active bookmark" id="bookmark11" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+          <a class="nav-link active bookmark" id="bookmark12" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+        <a class="nav-link active bookmark" id="bookmark13" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
       </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
+      <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+      <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
       </form>
     </div>
   </div>
@@ -88,28 +84,410 @@
 <div style="width:50%; height:80px; float: left; padding:30px;">
 <h5 class="fw-lighter" style="text-align:justify">Zakładka "Lekarze" zawiera profile naszych specjalistów, wraz z informacjami o ich specjalizacji oraz doświadczeniu. </h5>
 <h5 class="fw-lighter" style="text-align:justify">
-Wartościowym elementem są również recenzje od pacjentów, które pomagają w wyborze odpowiedniego lekarza.</h5>
+Wartościowym elementem są również recenzje od pacjentów, które pomagają w wyborze odpowiedniego lekarza. <b>Znajdziesz je na samym dole strony.</b></h5>
 </div>
 
 <div style="width:50%; height:80px; float:right; padding:30px">
 <h5 class="fw-lighter" style="text-align:justify">Dzięki nim możesz poznać opinie innych osób na temat kompetencji i empatii danego specjalisty.</h5>
 <h5 class="fw-lighter" style="text-align:justify">Zachęcamy do zapoznania się z profilami naszych lekarzy i dzielenia się swoimi doświadczeniami.</h5>
-<h1>Lista lekarzy</h1>
 
-<% @doctors.each do |doctor| %>
-  <div>
-    <h2><%= link_to "#{doctor.last_name} #{doctor.first_name}", doctor_id_path(doctor), class: 'btn btn-primary' %></h2>
-  </div>
-  <hr>
-<% end %>
 <div class="alert alert-primary" role="alert" style="margin-top:10px">
 <p class="fw-lighter"> ℹ️ Aby wystawić opinię o lekarzu prosimy o przejście do sekcji <b>Moje ➡️ Recenzje</b>.</p>
 </div>
 </div>
 
+<div style="width:100%;height:300px; margin: 250px 0px 2450px 0px">
+
+<center><hr class="hr hr-blurry" style="width:50%"></center>
+
+<div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
+
+  <div class="col">
+    <div class="card h-90">
+    <%= image_tag "doctor1.png", class:"d-block", height:450%>
+      <div class="card-body">
+        <h5 class="card-title">Dr. Aleksandra Nowak
+        </h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+        Kliknij tutaj, aby dowiedzieć się więcej
+        </button>
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Aleksandra Nowak</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <center><%= image_tag "doctor1.png", class:"d-block", height:300%>
+            <p class="fw-lighter" style="padding:20px; text-align:justify">Dr. Aleksandra Nowak to doświadczony lekarz ogólny, który poświęca się kompleksowej opiece zdrowotnej dla dorosłych pacjentów. Z pasją i zaangażowaniem podejmuje się diagnozowania i leczenia różnorodnych schorzeń, dbając o dobro i komfort każdego pacjenta. Jej empatyczne podejście oraz profesjonalizm sprawiają, że wizyta u niej to pewność skutecznej pomocy i wsparcia. </p>
+            </center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary"><span class="badge text-bg-primary">Poradnia Ogólna</span></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-90">
+      <%= image_tag "doctor2.png", class:"d-block", height:450%>
+      <div class="card-body">
+        <h5 class="card-title">Dr. Tomasz Kowalczyk
+        </h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+        Kliknij tutaj, aby dowiedzieć się więcej
+        </button>
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Tomasz Kowalczyk</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <center><%= image_tag "doctor2.png", class:"d-block", height:300%>
+            <p class="fw-lighter" style="padding:20px; text-align:justify">Dr. Tomasz Kowalczyk to lekarz ogólny dla dorosłych, który kładzie nacisk na profilaktykę zdrowotną oraz holistyczne podejście do pacjenta. Jego bogate doświadczenie kliniczne oraz troska o dobro pacjentów sprawiają, że wizyta u niego to nie tylko diagnoza i leczenie, ale także wsparcie w utrzymaniu zdrowego trybu życia i dobrego samopoczucia. </p>
+            </center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary"><span class="badge text-bg-primary">Poradnia Ogólna</span></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+  <div class="card h-90">
+    <%= image_tag "doctor3.png", class:"d-block", height:450%>
+    <div class="card-body">
+      <h5 class="card-title">Dr. Marta Lewandowska
+      </h5>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+      Kliknij tutaj, aby dowiedzieć się więcej
+      </button>
+      <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Marta Lewandowska</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <center><%= image_tag "doctor3.png", class:"d-block", height:300%>
+          <p class="fw-lighter" style="padding:20px; text-align:justify">Dr. Marta Lewandowska to lekarz ogólny, którego celem jest zapewnienie kompleksowej opieki zdrowotnej dla dorosłych pacjentów. Jej cierpliwość i indywidualne podejście do każdego przypadku sprawiają, że pacjenci czują się bezpiecznie i zrozumiale podczas wizyty. Dzięki jej zaangażowaniu i wiedzy medycznej pacjenci mogą liczyć na skuteczną pomoc w utrzymaniu zdrowia i dobrego samopoczucia. </p>
+          </center>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="card-footer">
+      <small class="text-body-secondary"><span class="badge text-bg-primary">Poradnia Ogólna</span></small>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
+
+  <div class="col">
+    <div class="card h-90">
+    <%= image_tag "doctor5.jpg", class:"d-block", height:450%>
+      <div class="card-body">
+        <h5 class="card-title">Dr. Katarzyna Nowakowska
+        </h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+        Kliknij tutaj, aby dowiedzieć się więcej
+        </button>
+        <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Katarzyna Nowakowska</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <center><%= image_tag "doctor5.jpg", class:"d-block", height:300%>
+            <p class="fw-lighter" style="padding:20px; text-align:justify">Dr. Katarzyna Nowakowska jest doświadczoną pediatrą, specjalizującą się w opiece nad najmłodszymi pacjentami. Jej empatia, cierpliwość i zrozumienie dla potrzeb dzieci sprawiają, że wizyta u niej jest komfortowa zarówno dla małych pacjentów, jak i ich rodziców. Dr. Nowakowska dba nie tylko o leczenie, ale także o wszechstronny rozwój i zdrowie dzieci. </p>
+            </center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary"><span class="badge rounded-pill text-bg-warning">Poradnia Dziecięca</span></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-90">
+      <%= image_tag "doctor4.jpg", class:"d-block", height:450%>
+      <div class="card-body">
+        <h5 class="card-title">Dr. Marcin Wojciechowski
+        </h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal5">
+        Kliknij tutaj, aby dowiedzieć się więcej
+        </button>
+        <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Marcin Wojciechowski</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <center><%= image_tag "doctor4.jpg", class:"d-block", height:300%>
+            <p class="fw-lighter" style="padding:20px; text-align:justify">Dr. Marcin Wojciechowski to specjalista rehabilitacji, który pomaga pacjentom powrócić do pełnej sprawności fizycznej po urazach, operacjach czy chorobach przewlekłych. Jego holistyczne podejście do terapii, skuteczność i zaangażowanie sprawiają, że każdy pacjent otrzymuje indywidualnie dostosowane plany leczenia, mające na celu poprawę jakości życia.</p>
+            </center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary"><span class="badge rounded-pill text-bg-success">Poradnia Rehabilitacyjna</span></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+  <div class="card h-90">
+    <%= image_tag "doctor8.jpg", class:"d-block", height:450%>
+    <div class="card-body">
+      <h5 class="card-title">Dr. Joanna Kowalska
+      </h5>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal6">
+      Kliknij tutaj, aby dowiedzieć się więcej
+      </button>
+      <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Joanna Kowalska</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <center><%= image_tag "doctor8.jpg", class:"d-block", height:300%>
+          <p class="fw-lighter" style="padding:20px; text-align:justify"> Dr. Joanna Kowalska to lekarz medycyny pracy, który troszczy się o zdrowie pracowników i bezpieczeństwo w miejscu pracy. Jej profesjonalizm, skrupulatność i dbałość o detale sprawiają, że każda wizyta w poradni medycyny pracy to kompleksowa ocena stanu zdrowia, zgodnie z wymaganiami zawodowymi.</p>
+          </center>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="card-footer">
+      <small class="text-body-secondary"><span class="badge rounded-pill text-bg-danger">Poradnia Medycyny Pracy</span></small>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
+
+  <div class="col">
+    <div class="card h-90">
+    <%= image_tag "doctor6.jpg", class:"d-block", height:450%>
+      <div class="card-body">
+        <h5 class="card-title">Dr. Magdalena Szymańska
+        </h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal7">
+        Kliknij tutaj, aby dowiedzieć się więcej
+        </button>
+        <div class="modal fade" id="exampleModal7" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Magdalena Szymańska</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <center><%= image_tag "doctor6.jpg", class:"d-block", height:300%>
+            <p class="fw-lighter" style="padding:20px; text-align:justify">Dr. Magdalena Szymańska to doświadczona ginekolog, która poświęca się zdrowiu i dobrostanowi swoich pacjentek. Jej empatyczne podejście, delikatność oraz zaangażowanie w opiekę ginekologiczną sprawiają, że każda kobieta czuje się komfortowo i zrozumiale podczas wizyty. Dr. Szymańska oferuje kompleksową opiekę od badań profilaktycznych po leczenie schorzeń ginekologicznych. </p>
+            </center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary"><span class="badge rounded-pill text-bg-info">Poradnia Ginekologiczna</span></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-90">
+      <%= image_tag "doctor7.jpg", class:"d-block", height:450%>
+      <div class="card-body">
+        <h5 class="card-title">Dr. Zbigniew Adamczyk
+        </h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal8">
+        Kliknij tutaj, aby dowiedzieć się więcej
+        </button>
+        <div class="modal fade" id="exampleModal8" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Zbigniew Adamczyk</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <center><%= image_tag "doctor7.jpg", class:"d-block", height:300%>
+            <p class="fw-lighter" style="padding:20px; text-align:justify">Dr. Zbigniew Adamczyk to specjalista laryngologii, który pomaga pacjentom w diagnozowaniu i leczeniu schorzeń związanych z układem oddechowym i głosem. Jego wiedza, doświadczenie i nowoczesne podejście do terapii zapewniają skuteczną pomoc w przypadku chorób gardła, nosa, uszu i krtani.</p>
+            </center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary"><span class="badge rounded-pill" style="background-color:#fd7e14">Poradnia Laryngologiczna</span></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+  <div class="card h-90">
+    <%= image_tag "doctor9.jpg", class:"d-block", height:450%>
+    <div class="card-body">
+      <h5 class="card-title">Dr. Tomasz Kaczmarek
+      </h5>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal9">
+      Kliknij tutaj, aby dowiedzieć się więcej
+      </button>
+      <div class="modal fade" id="exampleModal9" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Tomasz Kaczmarek</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <center><%= image_tag "doctor9.jpg", class:"d-block", height:300%>
+          <p class="fw-lighter" style="padding:20px; text-align:justify"> Dr. Tomasz Kaczmarek to doświadczony stomatolog, którego głównym celem jest zapewnienie pacjentom zdrowego i pięknego uśmiechu. Jego zaangażowanie w doskonalenie technik leczenia, indywidualne podejście do każdego przypadku oraz troska o komfort pacjenta sprawiają, że wizyta w poradni stomatologicznej przebiega sprawnie i efektywnie.</p>
+          </center>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="card-footer">
+      <small class="text-body-secondary"><span class="badge rounded-pill" style="background-color:purple">Poradnia Stomatologiczna</span></small>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
+
+  <div class="col" style="margin-left:468px; margin-bottom:100px">
+    <div class="card h-90">
+    <%= image_tag "doctor10.jpg", class:"d-block", height:450%>
+      <div class="card-body">
+        <h5 class="card-title">Dr. Paweł Nowicki</h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal10">
+        Kliknij tutaj, aby dowiedzieć się więcej
+        </button>
+        <div class="modal fade" id="exampleModal10" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Dr. Paweł Nowicki</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <center><%= image_tag "doctor10.jpg", class:"d-block", height:300%>
+            <p class="fw-lighter" style="padding:20px; text-align:justify">Dr. Paweł Nowicki to renomowany kardiolog, który poświęca się zdrowiu serca swoich pacjentów. Jego zaangażowanie, precyzja w diagnozowaniu oraz skuteczne metody leczenia chorób serca sprawiają, że pacjenci mogą liczyć na kompleksową opiekę i wsparcie w utrzymaniu zdrowia serca i układu krążenia. </p>
+            </center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary"><span class="badge rounded-pill" style="background-color:#d63384">Poradnia Kardiologiczna</span></small>
+      </div>
+    </div>
+  </div>
+  </div>
 
 
-<!-- Sekcja recenzje do przycisku Recenzja -->
+</div>
+
+<div style="width:100%; margin-bottom:100px">
+<center><hr class="hr hr-blurry" style="width:80%; margin:0"></center>
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Recenzje Pacjentów 📝</span></h1></center>
+<div class="alert alert-warning fw-lighter fs-6" role="alert" style="float: left; margin: 50px; width:25%; margin-left:320px; box-shadow: 0 4px 6px #333">
+<b>Co nasi pacjenci mówią o naszej przychodni?</b>
+<p>Dbamy o to, aby każdy pacjent czuł się u nas komfortowo i otrzymywał najlepszą opiekę medyczną. Przeczytaj, co nasi pacjenci mówią o swoich doświadczeniach w naszej przychodni.
+</p></div>
+
+<div class="alert alert-warning fw-lighter fs-6" role="alert" style="float: right; margin: 50px; width:25%; margin-right:320px; height:170px; box-shadow: 0 4px 6px #333">
+<b>👨‍⚕️ Wybierz lekarza, aby przeczytać recenzje:</b>
+<p>Kliknij na imię i nazwisko wybranego lekarza, aby zobaczyć recenzje dotyczące jego pracy.</p>
+</div>
+
+<center><hr class="hr hr-blurry" style="width:80%"></center>
+
+<div class="list-group fw-lighter" style="float:left;width:30%; margin-left:160px; margin-top:50px; margin-bottom:200px">
+<button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+  <h4>Lista naszych specjalistów ⬇️</h4>
+  </button>
+  <% @doctors.each do |doctor| %>
+    <a href="<%= doctor_id_path(doctor) %>" class="list-group-item list-group-item-action fs-5">
+        <%= "Dr. #{doctor.last_name} #{doctor.first_name}" %>
+    </a>
+  <% end %>
+</div>
+
+<%= image_tag "review.jpg", class:"d-block", height: 500, style:"border-radius:20px; margin-left:800px; margin-top:30px"%>
+<p><center><h4 class="fw-lighter" style="margin:50px">Każda recenzja jest autentycznym wyrazem wdzięczności i zaufania naszych pacjentów. Dziękujemy za wszystkie opinie, które pomagają nam nieustannie podnosić jakość naszych usług.
+<p style="color: #000080"><i>~ DoctorSeeker</i></b></p>
+</h4>
+<center><hr class="hr hr-blurry" style="width:50%"></center>
+</div>
+
+</div>
 
 
 <footer class="footer">
@@ -117,3 +495,43 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>
