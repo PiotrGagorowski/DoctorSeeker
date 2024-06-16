@@ -27,7 +27,7 @@ class MedicalFilesController < ApplicationController
     respond_to do |format|
       if @medical_file.save
         @medical_file.file.attach(params[:medical_file][:file])
-        format.html { redirect_to medical_file_url(@medical_file), notice: "Medical file was successfully created." }
+        format.html { redirect_to issue_prescription_path, notice: "Recepta została dodana pomyślnie" }
         format.json { render :show, status: :created, location: @medical_file }
        
       else

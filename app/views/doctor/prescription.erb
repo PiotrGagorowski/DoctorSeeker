@@ -42,7 +42,7 @@
 <center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Wydaj receptę</span></h1></center>
 <div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:200px">
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
-W tym miejscu masz możliowść wystwić receptę po spotakaniu z pacjentem. Po prawej stronie jest zakładka do wystawienia recept dla osób, które jej jeszcze nie otzrymały, po lewej stronie jest spis recept, które już wystawiłeś.
+W tym miejscu masz możliowść wystwić receptę po spotakaniu z pacjentem. Po prawej stronie jest zakładka do wystawienia recept dla osób, które jej jeszcze nie otrzymały, po lewej stronie jest spis recept, które już wystawiłeś.
 </h5>
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
 Jeśli potrzebujesz zmienić plik lub masz pytania dotyczące wystawiania recept, zachęcamy do kontaktu z naszym działem administracji.
@@ -63,50 +63,83 @@ Dziękujemy, że jesteś częścią naszej przychodni.
 
 <center><hr style="width:80%; margin-top:20px; padding:0px" /></center>
 
+ <style>
+      .custom-file-input {
+        position: relative;
+        display: inline-block;
+      }
 
-<div class="left_prescription">
+      .custom-file-input input[type="file"] {
+        display: none;
+      }
+
+      .custom-file-input .custom-file-label {
+        cursor: pointer;
+      }
+
+      .file-name {
+        display: none;
+        margin-top: 10px;
+      }
+    </style>
+
+
+
+<div class="left_prescription" >
+  
 
 <center><h2 class="mb-4" style="margin-top:20px">Odbyte wizyty ⬇️</h2></center>
-<div class="cont_prescription">
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th><center>Nr ID Pacjenta</center></th>
-      <th><center>Imie</center></th>
-      <th><center>Nazwisko</center></th>
-      <th><center>Pesel</center></th>
-      <th><center>Akcje</center></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if @patients.present? %>
-      <% @patients.each do |user| %>
+
+<table class="table table-hover" style="margin-top:0px; width:600px; margin-left:40px"> 
+      <thead>
         <tr>
-          <td><center><%= user.id %></center></td>
-          <td><center><%= user.first_name %></center></td>
-          <td><center><%= user.last_name %></center></td>
-          <td><center><%= user.pesel_number %></center></td>
-          <td><center>
-            <%= form_with(model: @medical_file, url: medical_files_path) do |form| %>
-              <%= form.file_field :file, class: "form-control-file btn btn-secondary" %>
-              <%= form.hidden_field :category, value: 'prescription' %>
-              <%= form.hidden_field :user_id, value: user.id %>
-              <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
-              <div class="btn-group mt-2" role="group" aria-label="Akcje">
-                <%= form.submit "Dodaj receptę", class: "btn btn-primary"%>
-              </div>
-            <% end %></center>
-          </td>
+          <th scope="col" style="background-color:#c6c6c6">ID</th>
+          <th scope="col" style="background-color:#c6c6c6">Imię</th>
+          <th scope="col" style="background-color:#c6c6c6">Nazwisko</th>
+          <th scope="col" style="background-color:#c6c6c6">Pesel</th>
+          <th scope="col" style="background-color:#c6c6c6">Email</th>
+          <th scope="col" style="background-color:#c6c6c6">Rola</th>
+          <th scope="col" style="background-color:#c6c6c6">Recepta</th>
         </tr>
-      <% end %>
-    <% else %>
-      <tr>
-        <td colspan="6">Brak danych do wyświetlenia</td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
+      </thead>
+      <tbody>
+        <% if @patients.present? %>
+          <% @patients.each do |patient| %>
+            <tr>
+              <td class="id"><%= patient.id %></td>
+              <td><%= patient.first_name %></td>
+              <td><%= patient.last_name %></td>
+              <td><%= patient.pesel_number %></td>
+              <td><%= patient.email %></td>
+              <td><%= patient.role %></td>
+              <td>
+                <%= form_with(model: @medical_file, url: medical_files_path, local: true, multipart: true) do |form| %>
+                  <div class="custom-file-input">
+                    <label class="btn btn-outline-primary custom-file-label" for="file-input-<%= patient.id %>">Wybierz plik</label>
+                    <%= form.file_field :file, id: "file-input-#{patient.id}", class: 'file-input', data: { id: patient.id } %>
+                    <div class="file-name" id="file-name-<%= patient.id %>"></div>
+                  </div>
+                  <%= form.hidden_field :category, value: 'prescription' %>
+                  <%= form.hidden_field :user_id, value: patient.id %>
+                  <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
+                  <div class="btn-group mt-2" role="group" aria-label="Akcje">
+                    <%= form.submit "Dodaj receptę", class: "btn btn-outline-success" %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="7"><center>Brak danych do wyświetlenia</center></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+
+
+
 
 
 
@@ -117,13 +150,13 @@ Dziękujemy, że jesteś częścią naszej przychodni.
 <div class="right_prescription">
   <center><h2 class="mb-4" style="margin-top:20px">Wystawione recepty ⬇️</h2></center>
 
-<table class="table table-hover">
+<table class="table table-hover" style="margin-top:0px; width:600px;  margin-right:40px">
   <thead>
     <tr>
-      <th><center>Nr ID Pacjenta</center></th>
-      <th><center>Imie</center></th>
-      <th><center>Nazwisko</center></th>
-      <th><center>Pesel</center></th>
+      <th scope="col" style="background-color:#c6c6c6">ID</th>
+          <th scope="col" style="background-color:#c6c6c6">Imię</th>
+          <th scope="col" style="background-color:#c6c6c6">Nazwisko</th>
+          <th scope="col" style="background-color:#c6c6c6">Pesel</th>
       <!-- <th>Adres email</th> -->
       <!-- <th><center>Akcje</center></th> -->
     </tr>
@@ -204,4 +237,15 @@ function updateDateTime() {
 
 setInterval(updateDateTime, 1000);
 window.onload = updateDateTime;
+
+
+document.querySelectorAll('.file-input').forEach(function(input) {
+  input.addEventListener('change', function() {
+    var fileName = input.files[0].name;
+    var fileLabel = document.getElementById('file-name-' + input.dataset.id);
+    fileLabel.textContent = fileName;
+    fileLabel.style.display = 'block';
+  });
+});
 </script>
+

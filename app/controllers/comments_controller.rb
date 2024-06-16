@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to lab_results_path, notice: "Comment was successfully created." }
+        format.html { redirect_to lab_results_path, notice: "Komentarz został dodany poprawnie." }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new, status: :unprocessable_entity }

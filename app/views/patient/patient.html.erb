@@ -174,7 +174,7 @@
 </script>
 
 <div id="cont" style="margin-top:100px;">
-  <div class="left">
+  <div class="left" style="height: 980px;">
     <h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker<span class="badge rounded-pill text-bg-warning" style="margin:10px"> <%= current_user.first_name %></span>👨‍⚕️</strong></center></h2>
     <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Twoje zdrowie jest dla nas najważniejsze. Dzięki DoctorSeeker, rezerwacja wizyty u lekarza jest teraz szybka, łatwa i wygodna. Nasza platforma łączy Cię z szeroką siecią specjalistów medycznych, abyś mógł znaleźć odpowiedniego lekarza dla swoich potrzeb.</h5>
 
@@ -216,6 +216,13 @@
   <strong><center><h2 class="fw-lighter badge rounded-pill text-bg-primary" style="margin-top:10px;font-size:25px;">Kalendarz terminów 📅</h2></center></strong>
   <b><h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; padding-left:10px; margin-top:20px">Kliknij na wybrany dzień, aby sprawdzić i zarezerwować wybrany termin:</h5>
   </b>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Pokaż instrukcję
+    </button>
+  </div>
+  
   <div id="calendar">
     <div class="container mt-5 text-center">
      <%= month_calendar(events: @free_appointments_calendar) do |date, appointments| %>
@@ -300,3 +307,24 @@ function updateDateTime() {
 setInterval(updateDateTime, 1000);
 window.onload = updateDateTime;
 </script>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Instrukcja</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <ul>
+            <li>Szare i białe pola to dni, w których nie ma żadnych wolny wizyt.<br><br>
+            <li>Pole zaznaczone kolorem niebieskim oznacza dzień dzisieszy.<br><br>
+            <li>Pole zaznaczone najjaśniejszym kolorem niebieskim oznacza dzień, w którym są wolne terminy u danego lekarza.<br><br>
+          </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+      </div>
+    </div>
+  </div>
+</div>

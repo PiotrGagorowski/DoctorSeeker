@@ -175,6 +175,30 @@
       <% end %>
     </div>
 
+    <div class="flash-messages">
+  <% flash.each do |type, message| %>
+    <div class="flash-message flash-<%= type %>">
+      <%= message %>
+    </div>
+  <% end %>
+</div>
+
+<div class="flash-messages">
+  <% flash.each do |type, message| %>
+    <% flash_class = case type.to_sym
+                     when :notice then 'flash-success'
+                     when :alert then 'flash-error'
+                     else "flash-#{type}"
+                     end %>
+    <div class="flash-message <%= flash_class %>">
+      <%= message %>
+    </div>
+  <% end %>
+</div>
+
+
+
+
 
     <% if flash[:alert] %>
     <div class="flash-messages">
