@@ -2,8 +2,15 @@
   #cont {
     display: flex;
   }
- .left, .right {
-  width: 50%;
+ .left{
+  width: 40%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.right {
+  width: 60%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -75,7 +82,7 @@
     border-radius: 4px;
     position: absolute;
     bottom: 0;
-    width: 100px;
+    width: 90%;
     left: 5%;
     box-sizing: border-box;
   }
@@ -95,44 +102,69 @@
     width: 200px; /* Ustaw szerokość inputów na 200px */
   }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.complete-appointment').click(function(e) {
+      e.preventDefault(); // Zapobiegamy domyślnej akcji przycisku (przekierowaniu)
 
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= issue_prescription_path %>">Wydaj receptę</a>
-        </li>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= lab_results_path %>">Wyniki badań</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
-        </li>
-         <li class="nav-item">
-        <a class="nav-link active" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+      var appointmentId = $(this).data('appointment-id');
+
+      // Wysyłamy żądanie AJAX
+      $.ajax({
+        url: '/mark_as_completed_user_appointment/' + appointmentId, // Ścieżka do Twojej akcji kontrolera
+        type: 'PATCH', // Metoda HTTP, zakładam że używasz PATCH do aktualizacji
+        success: function(response) {
+          // Jeśli aktualizacja powiodła się, możesz zaktualizować widok
+          $(e.target).closest('.card-body').find('.complete-appointment').remove(); // Usuwamy przycisk
+          $(e.target).closest('.card-body').append('<span>Wizyta zakończona</span>'); // Dodajemy informację
+        },
+        error: function(xhr, status, error) {
+          console.error('Wystąpił błąd podczas aktualizacji wizyty:', error);
+          alert('Wystąpił błąd podczas aktualizacji wizyty. Spróbuj ponownie.');
+        }
+      });
+    });
+  });
+</script>
+
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
+<div class="container-fluid">
+  <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
+    </li>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark1" aria-current="page" href="<%= doctor_path(@doctor) %>">Strona główna</a>
       </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
-      </form>
-    </div>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark2" href="<%= issue_prescription_path %>">Wydaj receptę</a>
+      </li>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark3" href="<%= lab_results_path %>">Wyniki badań</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark4" href="<%= set_appointment_path %>">Dostępne terminy wizyt</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active bookmark" id="bookmark5" href="<%= doctor_profile_path(@doctor_profile) %>">Mój profil</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link active bookmark" id="bookmark6" href="<%= doctor_logout_path(@doctor_logout) %>">Wyloguj</a>
+    </li>
+    </ul>
+    <form class="d-flex" role="search">
+    <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+    <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
+    </form>
   </div>
+</div>
 </nav>
 
 
@@ -150,36 +182,78 @@
   </div>
 
   <div class="right">
-    <div id="calendar">
-      <h2 class="fw-lighter"><strong><center>Kalendarz terminów</strong></h2>
-      <div class="container mt-5 text-center">
-        <%= month_calendar(events: @appointments) do |date, appointments| %>
-          <div class="day">
-            <%= date.day %>
-          </div>
-          <% appointments.each do |appointment| %>
-            <%= link_to appointment_path(appointment), class: "card", style: "display: block; text-decoration: none; color: inherit;" do %>
+  <div id="calendar">
+    <h2 class="fw-lighter"><strong><center>Kalendarz terminów</center></strong></h2>
+    <div class="container mt-5 text-center">
+      <%= month_calendar(events: @appointments) do |date, appointments| %>
+        <div class="day">
+          <%= date.day %>
+        </div>
+        <% appointments.each do |appointment| %>
+          <% appointment.user_appointments.each do |user_appointment| %>
+            
+            <div class="card" style="display: block; text-decoration: none; color: inherit;">
               <div class="card-header">
-                <%= appointment.start_time.strftime("%k:%M") %> - <%= appointment.end_time.strftime("%k:%M") %>
+                <strong><%= link_to "#{appointment.start_time.strftime("%k:%M")} - #{appointment.end_time.strftime("%k:%M")}", appointment_path(appointment), class: "link" %></strong> </br>
               </div>
               <div class="card-body">
-                <% if appointment.user_appointments.present? %>
-                  <% appointment.user_appointments.each do |user_appointment| %>
-                    <% patient = @users.find { |user| user.id == user_appointment.patient_user_id } %>
-                    <%= patient.first_name %> <%= patient.last_name %>
-                  <% end %>
+                <% patient = User.find(user_appointment.patient_user_id) %>
+                <%= patient.first_name %> <%= patient.last_name %>
+                <% if user_appointment.visit_completed? %>
+                  <span>Wizyta zakończona</span>
                 <% else %>
-                  Brak przypisanego pacjenta
+                  <button class="complete-appointment" data-appointment-id="<%= user_appointment.id %>">Oznacz jako zakończoną</button>
                 <% end %>
               </div>
-            <% end %>
+            </div>
           <% end %>
         <% end %>
-      </div>
+      <% end %>
     </div>
   </div>
+</div>
 </div>
 
 <footer class="footer">
   <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>

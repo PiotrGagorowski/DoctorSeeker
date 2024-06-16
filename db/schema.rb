@@ -91,6 +91,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_123715) do
     t.bigint "patient_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "visit_completed", default: false
     t.bigint "appointment_id"
     t.index ["appointment_id"], name: "index_user_appointments_on_appointment_id"
     t.index ["patient_user_id"], name: "index_user_appointments_on_patient_user_id"
