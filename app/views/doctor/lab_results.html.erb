@@ -41,15 +41,12 @@
   <center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Wyniki badań</span></h1></center>
   <div style="width:40%; height:50px; float: left; padding:30px; margin-top:10px; margin-left:70px; margin-bottom:200px">
     <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
-      W tym miejscu masz możliowść dodania kometarza do wyników badań po spotakaniu z pacjentem. Po prawej stronie jest zakładka do wystawienia recept dla osób, które jej jeszcze nie otzrymały, po lewej stronie jest spis recept, które już wystawiłeś.
-    </h5>
-    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
-      Jeśli potrzebujesz zmienić plik lub masz pytania dotyczące wystawiania recept, zachęcamy do kontaktu z naszym działem administracji.
+      W tym miejscu masz możliowść dodania kometarza do wyników badań po spotakaniu z pacjentem. Po prawej stronie jest zakładka do napisania komentarza do wyników badań dla osób, które jeszcze go nie otrzymały, po lewej stronie jest spis wszystkich komentarzy, które napsiałeś.
     </h5>
   </div>
   <div style="width:40%; height:50px; float: right; padding:30px; margin-top:10px; margin-right:70px; margin-bottom:200px">
     <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
-      Pamiętaj, aby podczas wystawiania recepty wypisać PESEL odpowidniego pacjenta, kod recepty wygeneruje się automatycznie.
+      Jeśli potrzebujesz zmienić komentarz lub masz pytania dotyczące wystawiania recept, zachęcamy do kontaktu z naszym działem administracji.
     </h5>
     <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px">
       Dziękujemy, że jesteś częścią naszej przychodni.
@@ -62,15 +59,15 @@
   <div class="left_prescription">
     <center><h2 class="mb-4" style="margin-top:20px">Wyniki badań pacjentów ⬇️</h2></center>
     <div class="cont_prescription">
-      <table class="table table-hover">
+      <table class="table table-hover" style="margin-top:0px; width:650px; ; margin-left:10px">
         <thead>
           <tr>
-            <th><center>Imię</center></th>
-            <th><center>Nazwisko</center></th>
-            <th><center>PESEL</center></th>
-            <th><center>Wyniki badań</center></th>
-            <th><center>Dodany Komentarz</center></th>
-            <th><center>Komentarz</center></th>
+          <th scope="col" style="background-color:#c6c6c6">Imię</th>
+          <th scope="col" style="background-color:#c6c6c6">Nazwisko</th>
+          <th scope="col" style="background-color:#c6c6c6">Pesel</th>
+          <th scope="col" style="background-color:#c6c6c6">Wyniki badań</th>
+          <th scope="col" style="background-color:#c6c6c6">Dodany komentarz</th>
+          <th scope="col" style="background-color:#c6c6c6">Komentarz</th> 
           </tr>
         </thead>
         <tbody>
@@ -85,7 +82,7 @@
                   <% medical_files.each do |medical_file| %>
                     <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
                     <% unless comment %>
-                      <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+                      <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file , class: "text-white"%></span>
                     <% end %>
                   <% end %>
                 </center></td>
@@ -101,11 +98,11 @@
                   <% medical_files.each do |medical_file| %>
                     <% comment = Comment.find_by(doctor_user_id: current_user.id, file_id: medical_file.id) %>
                     <% unless comment %>
-                      <%= form_with(model: Comment.new, url: comments_path, method: :post) do |form| %>
+                    <%= form_with(model: Comment.new, url: comments_path, method: :post, class: "form-floating mb-2") do |form| %>
                         <%= form.hidden_field :doctor_user_id, value: current_user.id %>
                         <%= form.hidden_field :file_id, value: medical_file.id %>
                         <div>
-                          <%= form.text_area :comment, placeholder: "Dodaj komentarz" %>
+                          <%= form.text_area :comment, placeholder: "Dodaj komentarz" , class: "form-control"%>
                           <%= form.submit "Dodaj komentarz", class: "btn btn-primary" %>
                         </div>
                       <% end %>
@@ -123,16 +120,16 @@
       </table>
     </div>
   </div>
-  <div class="right_prescription">
+  <div class="right_prescription ">
     <center><h2 class="mb-4" style="margin-top:20px">Dodane komentarze ⬇️</h2></center>
-    <table class="table table-hover">
+    <table class="table table-hover" style="margin-top:0px; width:650px ">
       <thead>
         <tr>
-          <th><center>Imię</center></th>
-          <th><center>Nazwisko</center></th>
-          <th><center>PESEL</center></th>
-          <th><center>Wyniki badań</center></th>
-          <th><center>Dodany Komentarz</center></th>
+          <th scope="col" style="background-color:#c6c6c6">Imię</th>
+          <th scope="col" style="background-color:#c6c6c6">Nazwisko</th>
+          <th scope="col" style="background-color:#c6c6c6">Pesel</th>
+          <th scope="col" style="background-color:#c6c6c6">Wyniki badań</th>
+          <th scope="col" style="background-color:#c6c6c6">Dodany komentarz</th>
         </tr>
       </thead>
       <tbody>
@@ -147,7 +144,7 @@
                   <td><center><%= patient.last_name %></center></td>
                   <td><center><%= patient.pesel_number %></center></td>
                   <td><center>
-                    <span class="badge rounded-pill text-bg-success"><%= link_to "Wynik badań", medical_file.file %></span>
+                    <span class="badge rounded-pill text-bg-success "><%= link_to "Wynik badań", medical_file.file , class: "text-white" %></span>
                   </center></td>
                   <td><center>
                     <span class="badge rounded-pill text-bg-success"><%= comment.comment %></span>
@@ -209,3 +206,4 @@ function updateDateTime() {
 setInterval(updateDateTime, 1000);
 window.onload = updateDateTime;
 </script>
+

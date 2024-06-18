@@ -145,11 +145,17 @@ document.addEventListener("DOMContentLoaded", function() {
     display: flex;
   }
  .right {
-  width: 80%;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 80%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #87cefa, #dda0dd);
+    height: 850px;
+    border: 2px solid black;
+    border-radius: 30px;
+    margin-right: 15px;
+    padding-left: 30px;
 }
 .left{
   width: 20%;
@@ -158,6 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 850px;
 }
   #calendar {
     width: 100%;
@@ -244,11 +251,14 @@ document.addEventListener("DOMContentLoaded", function() {
   .form-control {
     width: 200px; /* Ustaw szerokość inputów na 200px */
   }
+
+
+  
 </style>
   <div id="cont" style="margin-top: 80px;">
     <div class="left">
       <!-- Formularz do tworzenia nowego terminu -->
-      <h3>Dodaj nowy termin</h3>
+      <strong><center><h2 class="fw-lighter badge rounded-pill text-bg-primary" style="margin-top:10px;font-size:25px;">Dodaj nowy termin</h2></center></strong>
       <%= form_with model: @appointment, url: appointments_path, local: true, data: { turbo: false } do |form| %>
         <div class="mb-3">
           <%= form.label :start_time, "Data i godzina rozpoczęcia" %>
@@ -264,7 +274,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     <div class="right">
-              <h3>Kalendarz terminów</h3>
+              <strong><center><h2 class="fw-lighter badge rounded-pill text-bg-primary" style="margin-top:10px;font-size:25px;">Kalendarz terminów 📅</h2></center></strong>
+              <b><h5 class="fw-lighter" style="text-align:justify; margin-bottom:0px; padding-left:10px; margin-top:20px">W tym miejscu będą wyświetlać się wszystkie Twoje wizyty, te zarezerwowane przez pacjentów jak i wolne:</h5>
+              </b>
       <div id="calendar">
         <div class="container mt-5 text-center">
           <%= month_calendar(events: @appointments) do |date, appointments| %>
@@ -272,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function() {
               <%= date.day %>
             </div>
             <div class="appointments-info" style="display: none;">
-              <h4>Wizyty na <%= date.day %>/<%= date.month %>/<%= date.year %>:</h4>
+             <h5 class="badge rounded-pill text-bg-warning fw-bold" style="font-size:11px; padding:10px">Wizyty na <%= date.strftime("%d/%m/%Y") %></h5>
               <ul class="list-group">
               <% appointments.each do |appointment| %>
                 <li class="list-group-item">

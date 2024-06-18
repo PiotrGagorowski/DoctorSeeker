@@ -31,7 +31,7 @@ class UserAppointmentsController < ApplicationController
 
     respond_to do |format|
       if @user_appointment.save
-        format.html { redirect_to patient_appointments_path, alert: "Zostałeś pomyślnie zapisany na wizytę." }
+        format.html { redirect_to patient_appointments_path, notice: "Zostałeś pomyślnie zapisany na wizytę." }
         format.json { render :show, status: :created, location: @user_appointment }
       else
         format.html { render :new, status: :unprocessable_entity }
