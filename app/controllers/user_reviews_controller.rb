@@ -36,7 +36,7 @@ class UserReviewsController < ApplicationController
 
       respond_to do |format|
         if @user_review.save
-          format.html { redirect_to patient_reviews_path, alert: "Recenzja została pomyślnie dodana." }
+          format.html { redirect_to patient_reviews_path, notice: "Recenzja została pomyślnie dodana." }
           format.json { render :show, status: :created, location: @user_review }
         else
           format.html { redirect_to patient_reviews_path, alert: "Musisz wprowadzic wartości we wszystkie pola formularza w celu dodania recenzji."  }

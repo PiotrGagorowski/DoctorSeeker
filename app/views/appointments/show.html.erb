@@ -1,10 +1,14 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @appointment %>
-
-<div>
-  <%= link_to "Edit this appointment", edit_appointment_path(@appointment) %> |
-  <%= link_to "Back to appointments", appointments_path %>
-
-  <%= button_to "Destroy this appointment", @appointment, method: :delete %>
+<div class="container d-flex justify-content-center mt-5">
+  <div class="card w-30 p-3">
+    <div class="card-body">
+      <h5 class="card-title text-center">Szczegóły wizyty:</h5>
+      <%= render @appointment %>
+      <hr>
+      <h6 class="card-subtitle mb-3 text-center">Możesz wykonać następujące akcje:</h6>
+      <div class="d-flex flex-column align-items-center">
+        <%= link_to "Wróć do kalendarza wizyt", doctor_path, class: "btn btn-outline-success mb-2 w-100" %>
+        <%= button_to "Usuń tę wizytę", @appointment, method: :delete, class: "btn btn-outline-danger mb-2 w-100", data: { confirm: "Czy jesteś pewnien?" } %>
+      </div>
+    </div>
+  </div>
 </div>
