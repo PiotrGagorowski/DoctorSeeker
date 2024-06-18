@@ -183,13 +183,56 @@
 
 <div id="cont" style="margin-top: 0px;">
 
-  <div class="left">
-    <h2 class="fw-lighter"><strong><center>Witaj w DoctorSeeker<span class="badge rounded-pill text-bg-warning" style="margin:10px"> <%= current_user.first_name %></span>👨‍⚕️</strong></center></h2>
-    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">Dziękujemy za Twoją pracę! Twoje zaangażowanie i profesjonalizm są nieocenione. Dziękujemy, że jesteś częścią zespołu DoctorSeeker. Życzymy udanego dnia!</h5>
-    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px; margin-top:30px">Jeśli potrzebujesz wsparcia, skontaktuj się z nami poprzez zakładkę <strong>Kontakt</strong>.</h5>
+ <div class="left">
+    <h2 class="fw-lighter text-center">
+        <strong>Witaj w DoctorSeeker
+            <span class="badge rounded-pill text-bg-warning" style="margin:10px">
+                <%= current_user.first_name %>
+            </span>👨‍⚕️
+        </strong>
+    </h2>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px;">
+        Dziękujemy za Twoją pracę! Twoje zaangażowanie i profesjonalizm są nieocenione. Dziękujemy, że jesteś częścią zespołu DoctorSeeker. Życzymy udanego dnia!
+    </h5>
+    <h5 class="fw-lighter" style="text-align:justify; margin-bottom:10px; margin-top:10px;">
+        Jeśli potrzebujesz wsparcia, skontaktuj się z nami poprzez zakładkę <strong>Kontakt</strong>.
+    </h5>
     
- 
+
+    <p class="d-inline-flex gap-1" >
+    <a class="btn btn-outline-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Dodaj nowy termin wizyty</a>
+    <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Wystaw receptę</button>
+   <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" aria-expanded="false" aria-controls="#multiCollapseExample3">Wystaw komentarz na wyniki badań</button>
+    </p>
+<div class="row" style="width: 30%">
+
+  <div class="col" style="width: 30%">
+    <div class="collapse multi-collapse" id="multiCollapseExample1" style="width: 35%">
+      <div class="card card-body" style="width: 30%; margin-bottom:70px">
+        Dodaj nowy termin wizyty, który będzie dla Ciebie odpowiedni. Przejdź do zakładki "Dodaj nowy termin" i wybierz dzień oraz godzinę, która będzie dla Ciebie najlepsza. Wizyta ustawi się na automatycznie 30 minut ale możesz zmienć jej czas trwania według swoich potrzeb.
+      </div>
+    </div>
   </div>
+
+  <div class="col" style="width: 30%">
+    <div class="collapse multi-collapse" id="multiCollapseExample2" style="width: 35%">
+      <div class="card card-body" style="width: 30% ; margin-bottom:70px">
+        Wystaw receptę online dla swoich pacjentów. Po zakończonej wizycie możesz wystawić receptę dla pacjenta. Przedj do zakładki"Wydaj receptę" i wybierz odpowiedniego pacjenta, którmu chcesz wystawić receptę. Wybierz plik i prześlij go za pomocą przycisku "Dodaj receptę".
+      </div>
+    </div>
+  </div>
+
+  <div class="col" style="width: 30%">
+    <div class="collapse multi-collapse" id="multiCollapseExample3">
+      <div class="card card-body" style="width: 30% ; margin-bottom:70px;">
+        Napisz komentarz na wyniki badań dla Twoich pacjentów. Przejdź do zakładki "Wyniki badań", wybierz pacjenta, któremu chcesz wystawić komentrarz do wyników badań. Za pomocą przycisku "Wyniki" zapoznaj się z dokumntacją i napisz swoją opinię na jej temat.
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
 
   <div class="right">
      <strong><center><h2 class="fw-lighter badge rounded-pill text-bg-primary" style="font-size:25px;">Kalendarz terminów 📅</h2></center></strong>
