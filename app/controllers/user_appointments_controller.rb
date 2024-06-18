@@ -1,5 +1,5 @@
 class UserAppointmentsController < ApplicationController
-  before_action :set_user_appointment, only: %i[ show edit update destroy ]
+  before_action :set_user_appointment, only: %i[ show edit update destroy]
 
   # GET /user_appointments or /user_appointments.json
   def index
@@ -90,7 +90,6 @@ class UserAppointmentsController < ApplicationController
       existing_appointments.each do |existing_user_appointment|
         existing_appointment_start_time = existing_user_appointment.appointment.start_time
         existing_appointment_end_time = existing_user_appointment.appointment.end_time
-        
 
         if (new_appointment_start_time..new_appointment_end_time).overlaps?(existing_appointment_start_time..existing_appointment_end_time)
           return true

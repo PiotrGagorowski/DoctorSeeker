@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,83 +14,108 @@
         
         <li class="nav-item dropdown">
         <li class="nav-item">
-        <a class="nav-link active" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Strona główna</a>
+        <a class="nav-link active bookmark" id="bookmark1" aria-disabled="true" href="<%= labworker_path(@labworker) %>">Strona główna</a>
         </li>
         </li>
         <li class="nav-item dropdown">
         <li class="nav-item">
-        <a class="nav-link active" aria-disabled="true" href="<%= profile_path(@profile) %>">Mój profil</a>
+        <a class="nav-link active bookmark" id="bookmark2" aria-disabled="true" href="<%= profile_path(@profile) %>">Mój profil</a>
         </li>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= patients_path(@patients) %>">Pacjenci</a>
+          <a class="nav-link active bookmark" id="bookmark3" aria-disabled="true" href="<%= patients_path(@patients) %>">Pacjenci</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
            Badania
           </a>
           <ul class="dropdown-menu">
-            <li><a class="nav-link active" href="<%= comresearch_path(@comresearch) %>">Zlecone Badania</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="nav-link active" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
+            <li><a class="nav-link active bookmark" id="bookmark4" href="<%= exeresearch_path(@exeresearch) %>">Dodaj Badania</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= logout_labworker_path(@logout_labworker) %>">Wyloguj</a>
+          <a class="nav-link active bookmark" id="bookmark5" href="<%= logout_labworker_path(@logout_labworker) %>">Wyloguj</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
+      <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+      <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
       </form>
     </div>
   </div>
 </nav>
 
-<div id="cont">
-<div style="width:50%; height:100px; float: left; padding:20px; margin-top:20px; margin-left:40px">
-<table class="table" style="margin-top:0px; width:700px">
+
+<div id="cont" style="margin-top:150px">
+<div style="width:50%; float: left; padding:20px; margin-top:0px; margin-left:40px; margin-bottom:100px">
+
+
+<style>
+.custom-file-input {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-file-input input[type="file"] {
+    display: none; /* Ukrywa domyślny przycisk wyboru pliku */
+}
+
+.custom-file-input .custom-file-label {
+    cursor: pointer;
+}
+
+.file-name {
+    display: none;
+    margin-top: 10px;
+}
+</style>
+
+<table class="table" style="margin-top:0px; width:700px;">
   <thead>
     <tr>
-    <th scope="col" style="background-color:#c6c6c6">ID</th>
-    <th scope="col" style="background-color:#c6c6c6">Imie</th>
-    <th scope="col" style="background-color:#c6c6c6">Nazwisko</th>
-    <th scope="col" style="background-color:#c6c6c6">Pesel</th>
-    <th scope="col" style="background-color:#c6c6c6">Email</th>
-    <th scope="col" style="background-color:#c6c6c6">Rola</th>
-    <th scope="col" style="background-color:#c6c6c6">Wyniki badań </th>
+      <th scope="col" style="background-color:#c6c6c6">ID</th>
+      <th scope="col" style="background-color:#c6c6c6">Imię</th>
+      <th scope="col" style="background-color:#c6c6c6">Nazwisko</th>
+      <th scope="col" style="background-color:#c6c6c6">Pesel</th>
+      <th scope="col" style="background-color:#c6c6c6">Email</th>
+      <th scope="col" style="background-color:#c6c6c6">Rola</th>
+      <th scope="col" style="background-color:#c6c6c6">Wyniki badań</th>
     </tr>
   </thead>
   <tbody>
-  <% if @patients.present? %>
-  <% @patients.each do |patient| %>
-    <tr>
-      <td class="id"><%= patient.id %></td>
-      <td><%= patient.first_name %></td>
-      <td><%= patient.last_name %></td>
-      <td><%= patient.pesel_number %></td>
-      <td><%= patient.email %></td>
-      <td><%= patient.role %></td>
-      <td>
-        <%= form_with(model: @medical_file, url: labworker_path, local: true, multipart: true) do |form| %>
-          <%= form.file_field :file %>
-          <%= form.hidden_field :category, value: 'lab_results' %>
-          <%= form.hidden_field :user_id, value: patient.id %>
-          <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
-          <div class="btn-group mt-2" role="group" aria-label="Akcje">
-            <%= form.submit "Dodaj wynik badań", class: "btn btn-outline-success" %>
-          </div>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-  <% end %>
+    <% if @patients.present? %>
+      <% @patients.each do |patient| %>
+        <tr>
+          <td class="id"><%= patient.id %></td>
+          <td><%= patient.first_name %></td>
+          <td><%= patient.last_name %></td>
+          <td><%= patient.pesel_number %></td>
+          <td><%= patient.email %></td>
+          <td><%= patient.role %></td>
+          <td>
+            <%= form_with(model: @medical_file, url: labworker_path, local: true, multipart: true) do |form| %>
+              <div class="custom-file-input">
+                <label class="btn btn-outline-primary custom-file-label" for="file-input-<%= patient.id %>">Wybierz plik</label>
+                <%= form.file_field :file, id: "file-input-#{patient.id}", class: 'file-input', data: { id: patient.id } %>
+                <div class="file-name" id="file-name-<%= patient.id %>"></div>
+              </div>
+              <%= form.hidden_field :category, value: 'lab_results' %>
+              <%= form.hidden_field :user_id, value: patient.id %>
+              <%= form.hidden_field :utility_date, value: Time.now.strftime('%Y-%m-%d %H:%M:%S') %>
+              <div class="btn-group mt-2" role="group" aria-label="Akcje">
+                <%= form.submit "Dodaj wynik badań", class: "btn btn-outline-success" %>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
   </tbody>
 </table>
 
 
 </div>
-<div style="width:45%; height:100px; float:right; padding:30px; margin-top:10px; margin-left:0px">
+<div style="width:45%; float:right; padding:30px; margin-left:0px">
 <center><h1><span class="badge text-bg-primary" style="margin-bottom:10px">Sekcja Dodaj Badania</span></h1>
 <h5 class="fw-lighter" style="text-align:justify; margin-bottom:30px">
 Tutaj możesz wprowadzać nowe zlecenia laboratoryjne dla naszych pacjentów. 
@@ -110,3 +135,75 @@ Pamiętaj o terminowości i profesjonalizmie w wykonywaniu swoich obowiązków, 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const fileInput = document.getElementById('file_input');
+  const fileChosen = document.getElementById('file-chosen');
+
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files.length > 0) {
+      fileChosen.textContent = fileInput.files[0].name;
+    } else {
+      fileChosen.textContent = 'Nie wybrano pliku';
+    }
+  });
+});
+</script>
+
+<script>
+  document.querySelectorAll('.file-input').forEach(input => {
+    input.addEventListener('change', function() {
+      var fileName = this.files && this.files.length > 0 ? this.files[0].name : '';
+      var fileId = this.dataset.id;
+      var fileNameElement = document.getElementById('file-name-' + fileId);
+
+      if (fileName) {
+        fileNameElement.textContent = fileName;
+        fileNameElement.style.display = 'block';
+      } else {
+        fileNameElement.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>

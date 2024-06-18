@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,14 +10,14 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
+          <a class="nav-link active bookmark" id="bookmark1" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
+          <a class="nav-link active bookmark" id="bookmark2" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
         </li>
         <li class="nav-item">
           <% unless current_user %>
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active bookmark" id="bookmark3" href="<%= login_path(@login) %>">Logowanie</a>
           <%end%>
         </li>
                 <li class="nav-item dropdown">
@@ -25,13 +25,13 @@
             Moje
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark4" href="<%= patient_appointments_path %>">Wizyty</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark5" href="<%= patient_lab_results_path %>">Badania</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark6" href="<%= patient_prescriptions_path %>">Recepty</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark7" href="<%= patient_reviews_path %>">Recenzje</a></li>
           </ul>
         </li>
 
@@ -40,26 +40,26 @@
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark8" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark9" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark10" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
+          <a class="nav-link active bookmark" id="bookmark11" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+          <a class="nav-link active bookmark" id="bookmark12" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+        <a class="nav-link active bookmark" id="bookmark13" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
       </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
+      <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+      <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
       </form>
     </div>
   </div>
@@ -67,9 +67,9 @@
 
 
 
-<div id="cont">
-<div style="width:50%; height:300px; float:left">
-<div class="card mb-3" style="max-width: 540px; margin-left: 120px; margin-top: 30px; margin-top:110px; height: 200px;">
+<div id="cont" style="display:flex; margin-top:150px">
+<div style="width:50%; height:5px; float:left">
+<div class="card mb-3" style="max-width: 540px; margin-left: 120px; height: 200px;">
   <div class="row g-0">
     <div class="col-md-4">
     <%= image_tag "helpdesk.jpg", class:"d-block", height: 200%>
@@ -85,20 +85,19 @@
 </div>
 </div>
 
-<div style="width:50%; height:300px; float: right">
-<div class="card border-primary mb-3" style="max-width: 540px; margin-top: 30px; margin-left: 90px; height:370px;">
+<div style="width:50%; height:5px; float:right">
+<div class="card border-primary mb-3" style="max-width: 540px; margin-left: 90px; height:370px;">
   <div class="card-body">
-  <h5 class="card-title"><b>Napisz do nas</b></h5>
-    <p class="card-text">A my postaramy się odpowiedzieć najszybciej jak to możliwe.</p>
-    <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Adres e-mail</label>
-  <input type="email" class="form-control" id="exampleFormControlInput1">
+  <h5 class="card-title" style="margin-top:30px"><b>Napisz do nas</b></h5>
+    <p class="card-text">Jesteśmy zawsze gotowi, aby pomóc Ci z wszelkimi pytaniami lub potrzebami jakie możesz mieć. Nasz zespół wsparcia jest dostępny 24/7, aby zapewnić jak najlepszą obsługę. Możesz skontaktować się z nami bezpośrednio na nasz adres e-mail.</p>
+    <div class="mb-3 mt-5">
+  <center>
+  <p class="fs-4"><span class="badge text-bg-warning" style="margin:5px">kontakt@doctorseeker.pl</span>
+ </center>
 </div>
-<div class="mb-3">
-  <label for="exampleFormControlTextarea1" class="form-label">Pytanie</label>
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Tutaj wpisz swoje pytanie..."></textarea>
-</div>
-<button type="button" class="btn btn-primary">Wyślij</button>
+<center>
+<%= link_to "Kliknij tutaj, aby przejść do poczty 📧", "https://mail.google.com", class: "btn btn-dark fw-lighter-bold" %>
+</center>
   </div>
 </div>
 </div>
@@ -227,9 +226,7 @@
 </div>
 </div>
 
-  
 </div>
-
 
 </div>
 
@@ -237,3 +234,43 @@
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>

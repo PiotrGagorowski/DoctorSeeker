@@ -4,16 +4,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
-    /* Dodatkowe style */
-    .checked {
-      color: orange; /* Kolor gwiazdek */
-    }
+    body { background-color: #d5f3fe; }
   </style>
 
 </head>
 
-
-<nav class="navbar navbar-expand-lg" style="background-color: #66d3fa;">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #66d3fa;" id="bookmarksContainer">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%= image_tag "navbar.png", height: 70 %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,14 +21,14 @@
         <a class="nav-link active" aria-current="page" href="#"><b>DoctorSeeker</b></a>
       </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
+          <a class="nav-link active bookmark" id="bookmark1" aria-current="page" href="<%= patient_path(@patient) %>">Strona główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
+          <a class="nav-link active bookmark" id="bookmark2" aria-current="page" href="<%= profile_patient_path(@profile_patient) %>">Mój profil</a>
         </li>
         <li class="nav-item">
           <% unless current_user %>
-          <a class="nav-link active" href="<%= login_path(@login) %>">Logowanie</a>
+          <a class="nav-link active bookmark" id="bookmark3" href="<%= login_path(@login) %>">Logowanie</a>
           <%end%>
         </li>
                 <li class="nav-item dropdown">
@@ -40,13 +36,13 @@
             Moje
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= patient_appointments_path %>">Wizyty</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark4" href="<%= patient_appointments_path %>">Wizyty</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_lab_results_path %>">Badania</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark5" href="<%= patient_lab_results_path %>">Badania</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_prescriptions_path %>">Recepty</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark6" href="<%= patient_prescriptions_path %>">Recepty</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= patient_reviews_path %>">Recenzje</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark7" href="<%= patient_reviews_path %>">Recenzje</a></li>
           </ul>
         </li>
 
@@ -55,40 +51,40 @@
             O przychodni 
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark8" href="<%= doctors_patient_path(@doctors_patient) %>">Lekarze</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark9" href="<%= price_patient_path(@price_patient) %>">Cennik</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
+            <li><a class="dropdown-item bookmark" id="bookmark10" href="<%= lab_patient_path(@lab_patient) %>">Spis wykonywanych badań</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
+          <a class="nav-link active bookmark" id="bookmark11" aria-disabled="true" href="<%= help_patient_path(@help_patient) %>">Pomoc</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
+          <a class="nav-link active bookmark" id="bookmark12" href="<%= contact_patient_path(@contact_patient) %>">Kontakt</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link active" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
+        <a class="nav-link active bookmark" id="bookmark13" href="<%= logout_patient_path(@logout_patient) %>">Wyloguj</a>
       </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wyszukaj na stronie..." aria-label="Search">
-        <button class="btn btn-primary" type="submit">Szukaj</button>
+      <input class="form-control me-2" id="searchInput" type="search" placeholder="Wyszukaj na stronie..." >
+      <button class="btn btn-primary" id="searchButton" type="button">Szukaj</button>
       </form>
     </div>
   </div>
 </nav>
 
 
-<div id="cont">
+<div id="cont" style="margin-top:100px">
 
 <center><h1 style="margin-bottom:20px"><b>Witaj w sekcji<span class="badge text-bg-primary" style="margin-top: 30px; margin-left:10px">Lekarze</span></h1></center></b>
 <center><hr class="hr hr-blurry" style="width:80%; margin:0"></center>
 <div style="width:50%; height:80px; float: left; padding:30px;">
 <h5 class="fw-lighter" style="text-align:justify">Zakładka "Lekarze" zawiera profile naszych specjalistów, wraz z informacjami o ich specjalizacji oraz doświadczeniu. </h5>
 <h5 class="fw-lighter" style="text-align:justify">
-Wartościowym elementem są również recenzje od pacjentów, które pomagają w wyborze odpowiedniego lekarza.</h5>
+Wartościowym elementem są również recenzje od pacjentów, które pomagają w wyborze odpowiedniego lekarza. <b>Znajdziesz je na samym dole strony.</b></h5>
 </div>
 
 <div style="width:50%; height:80px; float:right; padding:30px">
@@ -107,24 +103,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
 <div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
 
   <div class="col">
-    <div class="card h-100">
+    <div class="card h-90">
     <%= image_tag "doctor1.png", class:"d-block", height:450%>
       <div class="card-body">
         <h5 class="card-title">Dr. Aleksandra Nowak
-        <span style="float:right;">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        </span>
         </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
-        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal20" style="margin-top:20px">
-        Recenzje
-        </button></p>
         <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -151,24 +137,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
   </div>
 
   <div class="col">
-    <div class="card h-100">
+    <div class="card h-90">
       <%= image_tag "doctor2.png", class:"d-block", height:450%>
       <div class="card-body">
         <h5 class="card-title">Dr. Tomasz Kowalczyk
-        <span style="float:right;">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        </span>
         </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
-        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal19" style="margin-top:20px">
-        Recenzje
-        </button></p>
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -195,24 +171,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
   </div>
 
   <div class="col">
-  <div class="card h-100">
+  <div class="card h-90">
     <%= image_tag "doctor3.png", class:"d-block", height:450%>
     <div class="card-body">
       <h5 class="card-title">Dr. Marta Lewandowska
-      <span style="float:right;">
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star"></span>
-      <span class="fa fa-star"></span>
-      </span>
       </h5>
       <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
       Kliknij tutaj, aby dowiedzieć się więcej
       </button>
-      <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal18" style="margin-top:20px">
-        Recenzje
-        </button></p>
       <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -242,24 +208,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
 <div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
 
   <div class="col">
-    <div class="card h-100">
+    <div class="card h-90">
     <%= image_tag "doctor5.jpg", class:"d-block", height:450%>
       <div class="card-body">
         <h5 class="card-title">Dr. Katarzyna Nowakowska
-        <span style="float:right;">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        </span>
         </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal4">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
-        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal17" style="margin-top:20px">
-        Recenzje
-        </button></p>
         <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -286,24 +242,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
   </div>
 
   <div class="col">
-    <div class="card h-100">
+    <div class="card h-90">
       <%= image_tag "doctor4.jpg", class:"d-block", height:450%>
       <div class="card-body">
         <h5 class="card-title">Dr. Marcin Wojciechowski
-        <span style="float:right;">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        </span>
         </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal5">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
-        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal16" style="margin-top:20px">
-        Recenzje
-        </button></p>
         <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -330,24 +276,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
   </div>
 
   <div class="col">
-  <div class="card h-100">
+  <div class="card h-90">
     <%= image_tag "doctor8.jpg", class:"d-block", height:450%>
     <div class="card-body">
       <h5 class="card-title">Dr. Joanna Kowalska
-      <span style="float:right;">
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star"></span>
-      <span class="fa fa-star"></span>
-      <span class="fa fa-star"></span>
-      </span>
       </h5>
       <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal6">
       Kliknij tutaj, aby dowiedzieć się więcej
       </button>
-      <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal15" style="margin-top:20px">
-        Recenzje
-        </button></p>
       <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -377,24 +313,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
 <div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
 
   <div class="col">
-    <div class="card h-100">
+    <div class="card h-90">
     <%= image_tag "doctor6.jpg", class:"d-block", height:450%>
       <div class="card-body">
         <h5 class="card-title">Dr. Magdalena Szymańska
-        <span style="float:right;">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        </span>
         </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal7">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
-        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal14" style="margin-top:20px">
-        Recenzje
-        </button></p>
         <div class="modal fade" id="exampleModal7" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -421,24 +347,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
   </div>
 
   <div class="col">
-    <div class="card h-100">
+    <div class="card h-90">
       <%= image_tag "doctor7.jpg", class:"d-block", height:450%>
       <div class="card-body">
         <h5 class="card-title">Dr. Zbigniew Adamczyk
-        <span style="float:right;">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        </span>
         </h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal8">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
-        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal13" style="margin-top:20px">
-        Recenzje
-        </button></p>
         <div class="modal fade" id="exampleModal8" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -465,24 +381,14 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
   </div>
 
   <div class="col">
-  <div class="card h-100">
+  <div class="card h-90">
     <%= image_tag "doctor9.jpg", class:"d-block", height:450%>
     <div class="card-body">
       <h5 class="card-title">Dr. Tomasz Kaczmarek
-      <span style="float:right;">
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star"></span>
-      <span class="fa fa-star"></span>
-      <span class="fa fa-star"></span>
-      <span class="fa fa-star"></span>
-      </span>
       </h5>
       <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal9">
       Kliknij tutaj, aby dowiedzieć się więcej
       </button>
-      <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal12" style="margin-top:20px">
-        Recenzje
-        </button></p>
       <div class="modal fade" id="exampleModal9" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -512,23 +418,13 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
 <div class="row row-cols-1 row-cols-md-3 g-4" style="width:95%; margin:40px;">
 
   <div class="col" style="margin-left:468px; margin-bottom:100px">
-    <div class="card h-100">
+    <div class="card h-90">
     <%= image_tag "doctor10.jpg", class:"d-block", height:450%>
       <div class="card-body">
-        <h5 class="card-title">Dr. Paweł Nowicki
-        <span style="float:right;">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        </span></h5>
+        <h5 class="card-title">Dr. Paweł Nowicki</h5>
         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal10">
         Kliknij tutaj, aby dowiedzieć się więcej
         </button>
-        <p><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal11" style="margin-top:20px">
-        Recenzje
-        </button></p>
         <div class="modal fade" id="exampleModal10" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -557,182 +453,85 @@ Wartościowym elementem są również recenzje od pacjentów, które pomagają w
 
 
 </div>
+
+<div style="width:100%; margin-bottom:100px">
+<center><hr class="hr hr-blurry" style="width:80%; margin:0"></center>
+<center><h1><span class="badge text-bg-primary" style="margin-top: 30px; margin-bottom:0">Recenzje Pacjentów 📝</span></h1></center>
+<div class="alert alert-warning fw-lighter fs-6" role="alert" style="float: left; margin: 50px; width:25%; margin-left:320px; box-shadow: 0 4px 6px #333">
+<b>Co nasi pacjenci mówią o naszej przychodni?</b>
+<p>Dbamy o to, aby każdy pacjent czuł się u nas komfortowo i otrzymywał najlepszą opiekę medyczną. Przeczytaj, co nasi pacjenci mówią o swoich doświadczeniach w naszej przychodni.
+</p></div>
+
+<div class="alert alert-warning fw-lighter fs-6" role="alert" style="float: right; margin: 50px; width:25%; margin-right:320px; height:170px; box-shadow: 0 4px 6px #333">
+<b>👨‍⚕️ Wybierz lekarza, aby przeczytać recenzje:</b>
+<p>Kliknij na imię i nazwisko wybranego lekarza, aby zobaczyć recenzje dotyczące jego pracy.</p>
 </div>
 
-<!-- Sekcja recenzje do przycisku Recenzja -->
+<center><hr class="hr hr-blurry" style="width:80%"></center>
 
-<div class="modal fade" tabindex="-1" id="exampleModal11">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Pawła Nowickiego</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
+<div class="list-group fw-lighter" style="float:left;width:30%; margin-left:160px; margin-top:50px; margin-bottom:200px">
+<button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+  <h4>Lista naszych specjalistów ⬇️</h4>
+  </button>
+  <% @doctors.each do |doctor| %>
+    <a href="<%= doctor_id_path(doctor) %>" class="list-group-item list-group-item-action fs-5">
+        <%= "Dr. #{doctor.last_name} #{doctor.first_name}" %>
+    </a>
+  <% end %>
 </div>
 
-<div class="modal fade" tabindex="-1" id="exampleModal12">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Tomasza Kaczmarka</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
+<%= image_tag "review.jpg", class:"d-block", height: 500, style:"border-radius:20px; margin-left:800px; margin-top:30px"%>
+<p><center><h4 class="fw-lighter" style="margin:50px">Każda recenzja jest autentycznym wyrazem wdzięczności i zaufania naszych pacjentów. Dziękujemy za wszystkie opinie, które pomagają nam nieustannie podnosić jakość naszych usług.
+<p style="color: #000080"><i>~ DoctorSeeker</i></b></p>
+</h4>
+<center><hr class="hr hr-blurry" style="width:50%"></center>
 </div>
 
-<div class="modal fade" tabindex="-1" id="exampleModal13">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Zbigniewa Adamczyka</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
 </div>
 
-<div class="modal fade" tabindex="-1" id="exampleModal14">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Magdaleny Szymańskiej</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="exampleModal15">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Joanny Kowalskiej</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="exampleModal16">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Marcina Wojciechowskiego</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="exampleModal17">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Katarzyny Nowakowskiej</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="exampleModal18">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Marty Lewandowskiej</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="exampleModal19">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Tomasza Kowalczyka</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" tabindex="-1" id="exampleModal20">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recenzje użytkowników</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tutaj beda recenzje Aleksandy Nowak</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Wyjdź</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <footer class="footer">
 <p><b>Copyright © 2024 </b>DoctorSeeker. Wszelkie prawa zastrzeżone.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function redirectToMatchingBookmark(event) {
+  event.preventDefault();
+  var searchText = document.getElementById('searchInput').value.toLowerCase();
+  var bookmarks = document.querySelectorAll('.bookmark');
+  var found = false;
+
+  for (var i = 0; i < bookmarks.length; i++) {
+    var bookmark = bookmarks[i];
+    var bookmarkText = bookmark.innerText.toLowerCase();
+
+    if (bookmarkText.includes(searchText)) {
+      // Przekieruj do pasującej zakładki
+      window.location.href = bookmark.href;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Nie znaleziono pasującej zakładki 😢");
+  }
+}
+
+document.getElementById('searchButton').addEventListener('click', function (event) {
+  redirectToMatchingBookmark(event);
+});
+
+function updateDateTime() {
+  var currentDate = new Date();
+  var day = currentDate.toLocaleDateString();
+  var time = currentDate.toLocaleTimeString();
+  var dateTimeString = day + ' ' + time;
+  document.getElementById('currentDateTime').innerHTML = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+window.onload = updateDateTime;
+</script>
